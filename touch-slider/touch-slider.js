@@ -8,13 +8,26 @@
         // Convenience event for going to the next pane
         $(this).on('slide-next', function()
         {
-            
+            var current = $(this).find('.touch-pane.current');
+            var index = current.index();
+
+            var next = index + 1;
+
+            if(next >= $(this).find('.touch-pane').length)
+                next = 0;
+
+            $(this).trigger('slide-to', next);
         });
 
         // Convenience event for going to the previous pane        
         $(this).on('slide-prev', function()
         {
-            
+            var current = $(this).find('.touch-pane.current');
+            var index = current.index();
+
+            var prev = index - 1;
+
+            $(this).trigger('slide-to', prev);            
         });
 
         // Allows sliding to any pane based on its index
@@ -27,7 +40,8 @@
             var from = $(this).find('.touch-pane.current');
 
             // Make sure we're actually going somewhere
-            if(to != from)
+            // Also make sure we're not already animating
+            if(to.index() != from.index() && !to[0].dataset.to && !from[0].dataset.from)
             {
                 var distance = $(this).width();
 
@@ -90,4 +104,3 @@
         }
     };
 })(jQuery);
-
