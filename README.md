@@ -1,4 +1,4 @@
 testing
 =======
 
-Miscellaneous functions for testing &amp; learning 
+Miscellaneous projects for testing &amp; learning 

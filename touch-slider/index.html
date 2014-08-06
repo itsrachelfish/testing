@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Slip-n-slide!</title>
+        <link href="touch-slider.css" rel="stylesheet" type="text/css">
+
+        <script src="../vendor/jquery-1.11.1.min.js"></script>
+        <script src="touch-slider.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                $('.touch-slider').touchSlider();
+            });
+        </script>
+        
+        <style>
+            .image-slider { width: 260px; height: 200px; }
+            .text-slider { width: 400px; height: 200px; }
+            .touch-slider { border: 1px solid #000; margin: 1em; }
+        </style>
+    </head>
+    
+    <body>
+        <p>Hello world!</p>
+
+        <div class='image-slider touch-slider'>
+            <img class='touch-pane' src='../assets/kristyfish.png'>
+            <img class='touch-pane' src='../assets/spacefish.png'>
+            <img class='touch-pane' src='../assets/dat-fish.png'>
+            <img class='touch-pane' src='../assets/gun-fish.png'>
+            <img class='touch-pane' src='../assets/dead-fish.png'>
+        </div>
+        
+        <div class='text-slider touch-slider'>
+            <div class='touch-pane'>
+                This is a text slider!
+            </div>
+
+            <div class='touch-pane'>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec mi convallis, rutrum quam et, aliquam arcu. Duis laoreet tellus eget posuere luctus. Maecenas id metus sit amet nunc laoreet convallis. Aenean at velit mi. Morbi rhoncus libero a odio egestas blandit. Donec laoreet euismod ante, non volutpat eros dignissim quis. Morbi sem libero, interdum et congue eget, pharetra non massa. Donec adipiscing urna risus. Integer luctus fermentum tellus sit amet bibendum. Vestibulum fringilla purus purus, at scelerisque est mattis et.
+            </div>
+
+            <div class='touch-pane'>
+                Aliquam erat volutpat. Mauris justo ante, aliquet nec tincidunt et, fringilla vitae libero. Donec fermentum, mauris vel mattis sollicitudin, lectus lacus scelerisque purus, at faucibus justo ligula non magna. Duis eu urna viverra, dignissim velit in, laoreet arcu. Aenean ligula sem, vehicula et leo ac, cursus suscipit tellus.            
+            </div>
+
+            <div class='touch-pane'>
+                Vestibulum dignissim eget metus non gravida. Nunc accumsan lorem vel nisl molestie accumsan. Praesent vitae elementum ligula, in feugiat eros. Vivamus vel porttitor justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pulvinar hendrerit tellus, vitae vestibulum est accumsan ut. Mauris bibendum pellentesque erat. Nullam nunc libero, mollis sit amet justo ut, malesuada volutpat odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+            </div>
+        </div>
+    </body>
+</html>

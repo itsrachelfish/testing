@@ -1,0 +1,8 @@
+.touch-slider { overflow: hidden; position: relative; }
+.touch-pane { height: 100%; position: absolute; top: 0; left: 0; opacity: 0; }
+.touch-pane.current { opacity: 1; }
+
+.init-transition { transition: transform 0.01s; opacity: 0 }
+.init-transition.current { opacity: 1 }
+.active-transition { transition: transform 1s; opacity: 1 }
+
