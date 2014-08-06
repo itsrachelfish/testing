@@ -1,0 +1,11 @@
+p { margin-bottom: 4px; }
+.bold { font-weight: bold; }
+
+.active:after { content: "On"; color: green; }
+.inactive:after { content: "Off"; color: red; } 
+
+.transition { transition: all 1s; }
+.no-transition { transition-property: none; }
+
+.init-transition { transition: all 0.01s; }
+.active-transition { transition: all 1s; }

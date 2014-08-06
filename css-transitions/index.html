@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>jQuery and CSS sitting in a tree~</title>
+        <link href="test.css" rel="stylesheet" type="text/css">
+        <script src="../vendor/jquery-1.11.1.min.js"></script>
+        <script src="test.js"></script>
+    </head>
+    
+    <body>
+        <p>Hello world!</p>
+
+        <div class="controls">
+            <div><input type="button" value="Transition" data-action='toggle' data-class='transition'> <span class='inactive'></span></div>
+            <div><input type="button" value="No Transition" data-action='toggle' data-class='no-transition'> <span class='inactive'></span></div>
+            <p class='bold'>Translate</p>
+            <input type="button" value="Reset Position" data-action='transform' data-value='translate(0, 0)'>
+            <input type="button" value="x + 100" data-action='translate' data-value='100, 0'>
+            <input type="button" value="x - 100" data-action='translate' data-value='-100, 0'>
+            <input type="button" value="y + 100" data-action='translate' data-value='0, 100'>
+            <input type="button" value="y - 100" data-action='translate' data-value='0, -100'>
+            <p class='bold'>Misc</p>
+            <input type="button" value="Set Position, Then Translate" data-action="magic">
+        </div>
+        
+        <img src='../assets/dat-fish.png' class='test'>
+        
+    </body>
+</html>
