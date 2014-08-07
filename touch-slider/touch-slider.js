@@ -1,5 +1,5 @@
 (function($)
-{    
+{
     var Slider = function(options)
     {
         // Ensure the first pane is set as current
@@ -19,7 +19,7 @@
             $(this).trigger('slide-to', next);
         });
 
-        // Convenience event for going to the previous pane        
+        // Convenience event for going to the previous pane
         $(this).on('slide-prev', function()
         {
             var current = $(this).find('.touch-pane.current');
@@ -27,14 +27,21 @@
 
             var prev = index - 1;
 
-            $(this).trigger('slide-to', prev);            
+            $(this).trigger('slide-to', {index: prev, direction: 'right'});
         });
 
         // Allows sliding to any pane based on its index
-        $(this).on('slide-to', function(event, index)
-        {            
+        $(this).on('slide-to', function(event, request)
+        {
+            var slide = {index: 0, direction: 'left'};
+
+            // If the request is simply a number
+            if(request === parseInt(request))   slide.index = request;
+            // Else, if it's an object?
+            else if(typeof request == "object") $.extend(slide, request);
+            
             // Find index
-            var to = $(this).find('.touch-pane').eq(index);
+            var to = $(this).find('.touch-pane').eq(slide.index);
 
             // Find current element
             var from = $(this).find('.touch-pane.current');
@@ -46,7 +53,7 @@
                 var distance = $(this).width();
 
                 // If we're sliding to a previous image, negate the distance
-                if(from.index() > to.index()) distance *= -1;
+                if(slide.direction == 'right') distance *= -1;
 
                 transform(to, 'translate('+distance+'px, 0px)', 'translate(0px, 0px)');
                 transform(from, 'translate(0px, 0px)', 'translate('+(distance * -1)+'px, 0px)');
@@ -93,6 +100,8 @@
                 $(this).removeClass('current');
                 delete(this.dataset.from);
             }
+
+            if(typeof options.transitionend == "function") options.transitionend(this);
         });
     };
     

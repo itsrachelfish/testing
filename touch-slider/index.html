@@ -9,7 +9,24 @@
         <script>
             $(document).ready(function()
             {
-                $('.touch-slider').touchSlider();
+                $('.touch-slider').touchSlider({transitionend: function(target)
+                {
+                    $('.slider-buttons input').prop('disabled', false);
+                }});
+
+                // Simple click
+                $('.image-buttons input').on('click', function()
+                {
+                    $(this).parents('.touch-slider').trigger('slide-'+this.dataset.value);
+                    $('.image-buttons input').prop('disabled', true);
+                });
+
+                // AJAX agnostic click
+                $('body').on('click', '.text-buttons input', function()
+                {
+                    $('.text-slider.touch-slider').trigger('slide-'+this.dataset.value);
+                    $('.text-buttons input').prop('disabled', true);                    
+                });
             });
         </script>
         
@@ -17,6 +34,8 @@
             .image-slider { width: 260px; height: 200px; }
             .text-slider { width: 400px; height: 200px; }
             .touch-slider { border: 1px solid #000; margin: 1em; }
+
+            .slider-buttons { position: absolute; z-index: 1; }
         </style>
     </head>
     
@@ -29,6 +48,12 @@
             <img class='touch-pane' src='../assets/dat-fish.png'>
             <img class='touch-pane' src='../assets/gun-fish.png'>
             <img class='touch-pane' src='../assets/dead-fish.png'>
+
+            <!-- The buttons can be wherever you want! -->
+            <div class='slider-buttons image-buttons'>
+                <input type="button" data-value="next" value="Next">
+                <input type="button" data-value="prev" value="Previous">
+            </div>
         </div>
         
         <div class='text-slider touch-slider'>
@@ -47,6 +72,12 @@
             <div class='touch-pane'>
                 Vestibulum dignissim eget metus non gravida. Nunc accumsan lorem vel nisl molestie accumsan. Praesent vitae elementum ligula, in feugiat eros. Vivamus vel porttitor justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pulvinar hendrerit tellus, vitae vestibulum est accumsan ut. Mauris bibendum pellentesque erat. Nullam nunc libero, mollis sit amet justo ut, malesuada volutpat odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
             </div>
+        </div>
+
+        <!-- Inside, outside, it makes no difference! -->
+        <div class='slider-buttons text-buttons'>
+            <input type="button" data-value="next" value="Next">
+            <input type="button" data-value="prev" value="Previous">
         </div>
     </body>
 </html>

@@ -4,5 +4,5 @@
 
 .init-transition { transition: transform 0.01s; opacity: 0 }
 .init-transition.current { opacity: 1 }
-.active-transition { transition: transform 1s; opacity: 1 }
+.active-transition { transition: transform 0.5s; opacity: 1 }
 
