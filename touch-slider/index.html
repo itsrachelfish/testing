@@ -4,6 +4,7 @@
         <link href="touch-slider.css" rel="stylesheet" type="text/css">
 
         <script src="../vendor/jquery-1.11.1.min.js"></script>
+        <script src="../vendor/hammer.min.js"></script>
         <script src="touch-slider.js"></script>
         
         <script>
@@ -26,6 +27,22 @@
                 {
                     $('.text-slider.touch-slider').trigger('slide-'+this.dataset.value);
                     $('.text-buttons input').prop('disabled', true);                    
+                });
+
+                $('.touch-slider').each(function()
+                {
+                    var slider = this;
+                    var mc = new Hammer(slider);
+
+                    mc.on('panleft', function(event)
+                    {
+                        $(slider).trigger('slide-next');
+                    });
+
+                    mc.on('panright', function(event)
+                    {
+                        $(slider).trigger('slide-prev');
+                    });
                 });
             });
         </script>
