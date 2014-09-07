@@ -81,6 +81,12 @@
         <script>
             // Initialize local storage
             if(typeof localStorage.routes == "undefined") localStorage.routes = '[]';
+            if(typeof localStorage.route_data == "undefined") localStorage.route_data = '{}';
+            if(typeof localStorage.options == "undefined") localStorage.options = '{}';
+ 
+            var routes = JSON.parse(localStorage.routes);
+            var route_data = JSON.parse(localStorage.route_data);
+            var options = JSON.parse(localStorage.options);
             
             function populate_routes(routes)
             {
@@ -92,11 +98,49 @@
                     $('.saved-routes').append('<option>'+routes[i]+'</option>');
                 }
             }
+
+            function populate_options(options)
+            {
+                if(options.enableHighAccuracy)
+                    $('.accuracy').prop('checked', true);
+                else
+                    $('.accuracy').prop('checked', false);
+            }
+
+            var geolocation = {
+                id: false,
+                
+                success: function(position)
+                {
+                    var current_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    
+                    // Create marker at current position
+                    var marker = new google.maps.Marker({
+                        position: current_location,
+                        map: map,
+                        title: ''+position.timestamp
+                    });
+
+                    // Recenter map
+                    map.setZoom(15);
+                    map.panTo(current_location);
+                    
+                    // Save position data to route_data                    
+                    
+                    console.log(position);
+                },
+
+                error: function(message)
+                {
+                    console.log("There was an error!", message);
+                }
+            };
             
             $(document).ready(function()
             {
-                var routes = JSON.parse(localStorage.routes);
-
+                // Populate any saved options
+                populate_options(options);
+                
                 // If we have saved routes, populate the dropdown
                 if(routes.length)
                 {
@@ -125,6 +169,8 @@
                     $('.status .color').addClass('green');
 
                     $('.status .text').text('Recording');
+
+                    geolocation.id = navigator.geolocation.watchPosition(geolocation.success, geolocation.error, options);
                 });
 
                 $('body').on('click', '.route .stop', function()
@@ -137,6 +183,22 @@
                     $('.status .color').addClass('red');
 
                     $('.status .text').text('Stopped');
+                    
+                    navigator.geolocation.clearWatch(geolocation.id);
+                });
+
+                $('body').on('click', '.accuracy', function()
+                {
+                    if($(this).prop('checked'))
+                    {
+                        options.enableHighAccuracy = true;
+                    }
+                    else
+                    {
+                        options.enableHighAccuracy = false;
+                    }
+
+                    localStorage.options = JSON.stringify(options);
                 });
             });
         </script>
@@ -184,10 +246,9 @@
                     <h2>Options</h2>
                 </div>
                 
-
-                <div class='accuracy'>
+                <div>
                     Enable High Accuracy
-                    <input type='checkbox'>
+                    <input type='checkbox' class='accuracy'>
                 </div>
 
             </div>
