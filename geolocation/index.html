@@ -37,7 +37,7 @@
                 margin-top: 2em;
             }
 
-            .status-color {
+            .status .color {
                 width: 2em;
                 height: 1em;
                 display: inline-block;
@@ -77,59 +77,122 @@
 
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
+
+        <script>
+            // Initialize local storage
+            if(typeof localStorage.routes == "undefined") localStorage.routes = '[]';
+            
+            function populate_routes(routes)
+            {
+                // Clear out existing values
+                $('.saved-routes').html('');
+                
+                for(var i = 0, l = routes.length; i < l; i++)
+                {
+                    $('.saved-routes').append('<option>'+routes[i]+'</option>');
+                }
+            }
+            
+            $(document).ready(function()
+            {
+                var routes = JSON.parse(localStorage.routes);
+
+                // If we have saved routes, populate the dropdown
+                if(routes.length)
+                {
+                    populate_routes(routes);
+                }
+                
+                $('body').on('keyup', '.route .name', function()
+                {
+                    if($.trim($(this).val()))
+                    {
+                        $('.route .start').prop('disabled', false);
+                    }
+                    else
+                    {
+                        $('.route .start').prop('disabled', true);
+                    }
+                });
+
+                $('body').on('click', '.route .start', function()
+                {
+                    $(this).prop('disabled', true);
+                    $('.route .name').prop('disabled', true);
+                    $('.route .stop').prop('disabled', false);
+
+                    $('.status .color').removeClass('grey green red');
+                    $('.status .color').addClass('green');
+
+                    $('.status .text').text('Recording');
+                });
+
+                $('body').on('click', '.route .stop', function()
+                {
+                    $(this).prop('disabled', true);
+                    $('.route .name').prop('disabled', false);
+                    $('.route .start').prop('disabled', false);
+
+                    $('.status .color').removeClass('grey green red');
+                    $('.status .color').addClass('red');
+
+                    $('.status .text').text('Stopped');
+                });
+            });
+        </script>
     </head>
     
     <body>
-        <div class="sidebar-wrap">
-            <div class="sidebar">
-                <div class="title">
+        <div class='sidebar-wrap'>
+            <div class='sidebar'>
+                <div class='title'>
                     <h2>Route Name</h2>
                 </div>
 
-                <div class="name">
-                    <input type="text" value="Hello World!">
-                    <input type="button" value="Start">
-                    <input type="button" value="Stop">
+                <div class='route'>
+                    <input type='text' class='name'>
+                    <input type='button' value='Start' class='start' disabled>
+                    <input type='button' value='Stop' class='stop' disabled>
                 </div>
 
                 <div class='spacer'></div>
 
-                <div class="title">
+                <div class='title'>
                     <h2>Saved Routes</h2>
                 </div>
 
-                <div class="name">
-                    <select>
+                <div>
+                    <select class='saved-routes'>
                         <option>None yet!</option>
                     </select>
                 </div>
 
                 <div class='spacer'></div>
 
-                <div class="title">
+                <div class='title'>
                     <h2>Status</h2>
                 </div>
 
                 <div class='status'>
-                    <div class='status-color grey'></div>
+                    <div class='color grey'></div>
                     <span class='text'>Inactive</span>
                 </div>
 
                 <div class='spacer'></div>
 
-                <div class="title">
+                <div class='title'>
                     <h2>Options</h2>
                 </div>
                 
 
-                <div class="accuracy">
+                <div class='accuracy'>
                     Enable High Accuracy
-                    <input type="checkbox">
+                    <input type='checkbox'>
                 </div>
 
             </div>
         </div>
             
-        <div id="map-canvas"></div>
+        <div id='map-canvas'></div>
     </body>
 </html>
