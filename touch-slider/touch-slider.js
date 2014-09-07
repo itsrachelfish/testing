@@ -75,7 +75,7 @@
         }
         
         // Called when a transition is set to its initial position
-        $(this).on('transitionend', '.init-transition', function(event)
+        $(this).on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', '.init-transition', function(event)
         {
             $(this).removeClass('init-transition');
             $(this).addClass('active-transition');
@@ -84,7 +84,7 @@
         });
 
         // Called when a transition is actually completed
-        $(this).on('transitionend', '.active-transition', function()
+        $(this).on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', '.active-transition', function()
         {
             $(this).removeClass('active-transition');
             $(this).removeAttr('style');
