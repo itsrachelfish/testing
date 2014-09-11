@@ -58,7 +58,42 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
         <script>
-            var map;
+            var map =
+            {
+                canvas: false,
+
+                markers: [],
+
+                marker:
+                {
+                    add: function(position, title)
+                    {
+                        var new_marker = new google.maps.Marker({
+                            position: position,
+                            map: map.canvas,
+                            title: title
+                        });
+
+                        map.markers.push(new_marker);
+                    },
+
+                    remove: function(index)
+                    {
+                        map.markers[index].setMap(null);
+                    },
+
+                    remove_all: function()
+                    {
+                        for(var i = 0, l = map.markers.length; i < l; i++)
+                        {
+                            map.marker.remove(i);
+                        }
+
+                        map.markers = [];
+                    }
+                }
+            };
+            
             function initialize()
             {
                 var mapOptions = {
@@ -72,7 +107,7 @@
                     }
                 };
                 
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                map.canvas = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
             }
 
             google.maps.event.addDomListener(window, 'load', initialize);
@@ -91,7 +126,7 @@
             function populate_routes(routes)
             {
                 // Clear out existing values
-                $('.saved-routes').html('');
+                $('.saved-routes').html('<option value=""> ----- </option>');
                 
                 for(var i = 0, l = routes.length; i < l; i++)
                 {
@@ -115,17 +150,21 @@
                     var current_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     
                     // Create marker at current position
-                    var marker = new google.maps.Marker({
-                        position: current_location,
-                        map: map,
-                        title: ''+position.timestamp
-                    });
+                    map.marker.add(current_location, ''+position.timestamp);
 
-                    // Recenter map
-                    map.setZoom(15);
-                    map.panTo(current_location);
-                    
-                    // Save position data to route_data                    
+                    // Recenter map                        
+                    map.canvas.panTo(current_location);
+
+                    // Change the map zoom level when we're zoomed out really far
+                    if(map.canvas.getZoom() < 10)
+                        map.canvas.setZoom(18);
+
+                    // Save position data to route_data
+                    var route = $('.route .name').val();
+                    var route64 = window.btoa(route);
+
+                    route_data[route64].push(position);
+                    localStorage.route_data = JSON.stringify(route_data);
                     
                     console.log(position);
                 },
@@ -171,6 +210,24 @@
                     $('.status .text').text('Recording');
 
                     geolocation.id = navigator.geolocation.watchPosition(geolocation.success, geolocation.error, options);
+
+                    var route = $('.route .name').val();
+                    var route64 = window.btoa(route);
+
+                    // If this is a new route...
+                    if(routes.indexOf(route) == -1)
+                    {
+                        // Push it to the routes array!
+                        routes.push(route);
+                        populate_routes(routes);
+                    }
+
+                    if(typeof route_data[route64] == "undefined")
+                        route_data[route64] = [];
+
+                    // Save data to local storage
+                    localStorage.routes = JSON.stringify(routes);
+                    localStorage.route_data = JSON.stringify(route_data);
                 });
 
                 $('body').on('click', '.route .stop', function()
@@ -199,6 +256,37 @@
                     }
 
                     localStorage.options = JSON.stringify(options);
+                });
+
+                $('body').on('change', '.saved-routes', function()
+                {
+                    var route = $(this).val();
+                    
+                    if(route)
+                    {
+                        map.marker.remove_all();
+                        var route64 = window.btoa(route);
+
+                        for(var i = 0, l = route_data[route64].length; i < l; i++)
+                        {
+                            var position = route_data[route64][i];
+                            var current_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                            
+                            // Create marker at current position
+                            map.marker.add(current_location, ''+position.timestamp);
+
+                            // If we're at the last position
+                            if(i + 1 == l)
+                            {
+                                // Recenter map                        
+                                map.canvas.panTo(current_location);
+
+                                // Change the map zoom level when we're zoomed out really far
+                                if(map.canvas.getZoom() < 10)
+                                    map.canvas.setZoom(18);
+                            }
+                        }
+                    }
                 });
             });
         </script>
