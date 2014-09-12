@@ -63,6 +63,7 @@
                 canvas: false,
 
                 markers: [],
+                circles: [],
 
                 marker:
                 {
@@ -91,7 +92,41 @@
 
                         map.markers = [];
                     }
-                }
+                },
+
+                circle:
+                {
+                    add: function(position, radius)
+                    {
+                        var new_circle = new google.maps.Circle({
+                            center: position,
+                            map: map.canvas,
+                            strokeColor: '#2D4471',
+                            strokeOpacity: 0.5,
+                            strokeWeight: 2,
+                            fillColor: '#2D4471',
+                            fillOpacity: 0.1,
+                            radius: radius
+                        });
+
+                        map.circles.push(new_circle);
+                    },
+
+                    remove: function(index)
+                    {
+                        map.circles[index].setMap(null);
+                    },
+
+                    remove_all: function()
+                    {
+                        for(var i = 0, l = map.circles.length; i < l; i++)
+                        {
+                            map.circle.remove(i);
+                        }
+
+                        map.circles = [];
+                    }
+                },
             };
             
             function initialize()
@@ -137,9 +172,14 @@
             function populate_options(options)
             {
                 if(options.enableHighAccuracy)
-                    $('.accuracy').prop('checked', true);
+                    $('.high-accuracy').prop('checked', true);
                 else
-                    $('.accuracy').prop('checked', false);
+                    $('.high-accuracy').prop('checked', false);
+
+                if(options.accuracyCircles)
+                    $('.accuracy-circles').prop('checked', true);
+                else
+                    $('.accuracy-circles').prop('checked', false);
             }
 
             var geolocation = {
@@ -152,6 +192,12 @@
                     // Create marker at current position
                     map.marker.add(current_location, ''+position.timestamp);
 
+                    if(options.accuracyCircles)
+                    {
+                        // Create a circle for accuracy
+                        map.circle.add(current_location, position.coords.accuracy);
+                    }
+                    
                     // Recenter map                        
                     map.canvas.panTo(current_location);
 
@@ -244,7 +290,7 @@
                     navigator.geolocation.clearWatch(geolocation.id);
                 });
 
-                $('body').on('click', '.accuracy', function()
+                $('body').on('click', '.high-accuracy', function()
                 {
                     if($(this).prop('checked'))
                     {
@@ -258,13 +304,30 @@
                     localStorage.options = JSON.stringify(options);
                 });
 
+                $('body').on('click', '.accuracy-circles', function()
+                {
+                    if($(this).prop('checked'))
+                    {
+                        options.accuracyCircles = true;
+                    }
+                    else
+                    {
+                        options.accuracyCircles = false;
+                    }
+
+                    $('.saved-routes').trigger('change');
+                    localStorage.options = JSON.stringify(options);
+                });
+
                 $('body').on('change', '.saved-routes', function()
                 {
+                    map.marker.remove_all();
+                    map.circle.remove_all();
+                    
                     var route = $(this).val();
                     
                     if(route)
                     {
-                        map.marker.remove_all();
                         var route64 = window.btoa(route);
 
                         for(var i = 0, l = route_data[route64].length; i < l; i++)
@@ -274,6 +337,12 @@
                             
                             // Create marker at current position
                             map.marker.add(current_location, ''+position.timestamp);
+
+                            if(options.accuracyCircles)
+                            {
+                                // Create a circle for accuracy
+                                map.circle.add(current_location, position.coords.accuracy);
+                            }
 
                             // If we're at the last position
                             if(i + 1 == l)
@@ -336,7 +405,12 @@
                 
                 <div>
                     Enable High Accuracy
-                    <input type='checkbox' class='accuracy'>
+                    <input type='checkbox' class='high-accuracy'>
+                </div>
+
+                <div>
+                    Display Accuracy Circles
+                    <input type='checkbox' class='accuracy-circles'>
                 </div>
 
             </div>
