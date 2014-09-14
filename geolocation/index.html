@@ -255,8 +255,6 @@
 
                     $('.status .text').text('Recording');
 
-                    geolocation.id = navigator.geolocation.watchPosition(geolocation.success, geolocation.error, options);
-
                     var route = $('.route .name').val();
                     var route64 = window.btoa(route);
 
@@ -268,8 +266,18 @@
                         populate_routes(routes);
                     }
 
+                    // Set saved routes value to current route
+                    $('.saved-routes').val(route);
+
+                    // Clear any existing data
+                    map.marker.remove_all();
+                    map.circle.remove_all();
+
                     if(typeof route_data[route64] == "undefined")
                         route_data[route64] = [];
+
+                    // Start geolocation
+                    geolocation.id = navigator.geolocation.watchPosition(geolocation.success, geolocation.error, options);
 
                     // Save data to local storage
                     localStorage.routes = JSON.stringify(routes);
