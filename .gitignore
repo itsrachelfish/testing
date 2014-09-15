@@ -1,0 +1,2 @@
+geolocation/saved/*
+!geolocation/saved/index.html
