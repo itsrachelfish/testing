@@ -54,10 +54,21 @@
             .red {
                 background-color: rgba(255, 25, 25, 0.5);
             }
+
+            .link:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         </style>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
         <script>
+            var locations =
+            {
+                create: false,
+                list: []
+            };
+            
             var map =
             {
                 canvas: false,
@@ -67,12 +78,18 @@
 
                 marker:
                 {
-                    add: function(position, title)
+                    add: function(position, request)
                     {
+                        if(typeof request != "object")
+                            request = {title: request};
+
+                        var options = {};
+                        $.extend(options, request);
+                                                
                         var new_marker = new google.maps.Marker({
                             position: position,
                             map: map.canvas,
-                            title: title
+                            title: options.title
                         });
 
                         map.markers.push(new_marker);
@@ -96,17 +113,23 @@
 
                 circle:
                 {
-                    add: function(position, radius)
+                    add: function(position, request)
                     {
+                        if(typeof request != "object")
+                            request = {radius: request};
+
+                        var options = {color: '#2D4471'};
+                        $.extend(options, request);
+                        
                         var new_circle = new google.maps.Circle({
                             center: position,
                             map: map.canvas,
-                            strokeColor: '#2D4471',
+                            strokeColor: options.color,
                             strokeOpacity: 0.5,
                             strokeWeight: 2,
-                            fillColor: '#2D4471',
+                            fillColor: options.color,
                             fillOpacity: 0.1,
-                            radius: radius
+                            radius: options.radius
                         });
 
                         map.circles.push(new_circle);
@@ -143,6 +166,25 @@
                 };
                 
                 map.canvas = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                google.maps.event.addListener(map.canvas, "click", function(event)
+                {
+                    if(locations.create)
+                    {
+                        var event_location = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+                    
+                        // Create marker at the clicked position
+                        map.marker.add(event_location, '');
+
+                        var radius = parseInt(prompt("Now enter an event radius (in meters)"));
+
+                        // Create a circle for the event radius
+                        map.circle.add(event_location, {radius: radius, color: '#2B803E'});
+
+                        locations.list.push({location: event_location, radius: radius});
+                        locations.create = false;
+                    }
+                });
             }
 
             google.maps.event.addDomListener(window, 'load', initialize);
@@ -365,6 +407,12 @@
                         }
                     }
                 });
+
+                $('body').on('click', '.add-location', function()
+                {
+                    alert("Now click somewhere on the map!");
+                    locations.create = true;
+                });
             });
         </script>
     </head>
@@ -421,6 +469,9 @@
                     <input type='checkbox' class='accuracy-circles'>
                 </div>
 
+                <div>
+                    <span class='link add-location'>Add A Location</span>
+                </div>
             </div>
         </div>
             

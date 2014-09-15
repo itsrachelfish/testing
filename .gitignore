@@ -1,2 +1,3 @@
 geolocation/saved/*
 !geolocation/saved/index.html
+node_modules

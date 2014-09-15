@@ -1,0 +1,11 @@
+{
+      "name": "geoserver",
+      "version": "0.0.1",
+      "author": "Rachel Fish <itsrachelfish@gmail.com>",
+      "description": "A simple server to save geolocation data.",
+      "dependencies" : {
+            "express": "*",
+      },
+      
+      "license": "MIT"
+}
