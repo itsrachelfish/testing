@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Scrollybits</title>
+        <script src="../vendor/jquery-1.11.1.min.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                $(window).on('scroll mousewheel keydown', function(event)
+                {
+                    event.preventDefault();
+                    console.log(event);
+                });
+            });
+        </script>
+        
+        <style>
+            body { height: 5000px; }
+        </style>
+    </head>
+    
+    <body>
+        <p>Hello world!</p>
+    </body>
+</html>
