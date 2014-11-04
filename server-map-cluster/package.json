@@ -1,0 +1,9 @@
+{
+  "name": "random-testing",
+  "version": "0.0.0",
+  "author": "Rachel <rachel@wetfish.net>",
+  "description": "Testing project",
+  "dependencies" : {
+    "express": "*"
+  }
+}

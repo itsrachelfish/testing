@@ -1,0 +1,1 @@
+// Generate random coordinates to be saved in data.js
