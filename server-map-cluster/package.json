@@ -4,6 +4,7 @@
   "author": "Rachel <rachel@wetfish.net>",
   "description": "Testing project",
   "dependencies" : {
-    "express": "*"
+    "express": "*",
+    "jquery": "*"
   }
 }
