@@ -5,6 +5,7 @@
   "description": "Testing project",
   "dependencies" : {
     "express": "*",
-    "jquery": "*"
+    "cheerio": "*",
+    "geopoint": "*"
   }
 }
