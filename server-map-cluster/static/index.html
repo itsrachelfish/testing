@@ -41,6 +41,16 @@
                 text-decoration: underline;
                 cursor: pointer;
             }
+
+           .labels {
+             color: white;
+             background-color: red;
+             font-family: "Lucida Grande", "Arial", sans-serif;
+             font-size: 10px;
+             text-align: center;
+             width: 10px;     
+             white-space: nowrap;
+           }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -66,10 +76,72 @@ function D(a,b){var c=[];c.push("background-image:url("+a.ea+");");c.push("backg
 l.prototype.getExtendedBounds=l.prototype.v;l.prototype.getMap=l.prototype.getMap;l.prototype.getMarkers=l.prototype.o;l.prototype.getMaxZoom=l.prototype.J;l.prototype.getStyles=l.prototype.w;l.prototype.getTotalClusters=l.prototype.V;l.prototype.getTotalMarkers=l.prototype.W;l.prototype.redraw=l.prototype.i;l.prototype.removeMarker=l.prototype.Z;l.prototype.removeMarkers=l.prototype.$;l.prototype.resetViewport=l.prototype.m;l.prototype.repaint=l.prototype.M;l.prototype.setCalculator=l.prototype.aa;
 l.prototype.setGridSize=l.prototype.ba;l.prototype.setMaxZoom=l.prototype.ca;l.prototype.onAdd=l.prototype.onAdd;l.prototype.draw=l.prototype.draw;v.prototype.getCenter=v.prototype.getCenter;v.prototype.getSize=v.prototype.U;v.prototype.getMarkers=v.prototype.o;w.prototype.onAdd=w.prototype.onAdd;w.prototype.draw=w.prototype.draw;w.prototype.onRemove=w.prototype.onRemove;Object.keys=Object.keys||function(a){var b=[],c;for(c in a)a.hasOwnProperty(c)&&b.push(c);return b};
 </script>
+
+        <script>
+            function CustomMarker(latlng,  map, count) {
+             this.latlng_ = latlng;
+
+            this.count = count;
+             // Once the LatLng and text are set, add the overlay to the map.  This will
+             // trigger a call to panes_changed which should in turn call draw.
+             this.setMap(map);
+            }
+
+            CustomMarker.prototype = new google.maps.OverlayView();
+
+            CustomMarker.prototype.draw = function() {
+             var me = this;
+
+             // Check if the div has been created.
+             var div = this.div_;
+             if (!div) {
+               // Create a overlay text DIV
+               div = this.div_ = document.createElement('DIV');
+               // Create the DIV representing our CustomMarker
+               div.style.border = '2px solid blue';
+               div.style.position = 'absolute';
+               div.style.backgroundColor = "#fff";
+               div.style.paddingLeft = '5px';
+               div.style.paddingRight = '5px';
+               div.style.paddingTop = '5px';
+               div.style.paddingBottom = '5px';
+               div.style.cursor = 'pointer';
+               div.innerHTML = this.count;
+
+               google.maps.event.addDomListener(div, "click", function(event) {
+                 google.maps.event.trigger(me, "click");
+               });
+
+               // Then add the overlay to the DOM
+               var panes = this.getPanes();
+               panes.overlayImage.appendChild(div);
+             }
+
+             // Position the overlay 
+             var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+             if (point) {
+               div.style.left = point.x + 'px';
+               div.style.top = point.y + 'px';
+             }
+            };
+
+            CustomMarker.prototype.remove = function() {
+             // Check if the overlay was on the map and needs to be removed.
+             if (this.div_) {
+               this.div_.parentNode.removeChild(this.div_);
+               this.div_ = null;
+             }
+            };
+
+            CustomMarker.prototype.getPosition = function() {
+            return this.latlng_;
+            };
+        </script>
         
         <script>
             var map;
             var markers = [];
+            var clusters = [];
             var cluster;
 
             function create_marker(source)
@@ -83,6 +155,14 @@ l.prototype.setGridSize=l.prototype.ba;l.prototype.setMaxZoom=l.prototype.ca;l.p
 
                 markers.push(marker);
             };
+
+            function create_cluster(source)
+            {
+                var latlng = new google.maps.LatLng(source.coordinate[1], source.coordinate[0]);
+                var marker = new CustomMarker(latlng, map, source.count);
+
+                clusters.push(marker);
+            }
             
             function initialize()
             {
@@ -99,6 +179,7 @@ l.prototype.setGridSize=l.prototype.ba;l.prototype.setMaxZoom=l.prototype.ca;l.p
                 
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+/*
                 $.get('/markers', function(response)
                 {
                     var locations = JSON.parse(response);
@@ -109,6 +190,15 @@ l.prototype.setGridSize=l.prototype.ba;l.prototype.setMaxZoom=l.prototype.ca;l.p
                     });
 
                     cluster = new MarkerClusterer(map, markers, {gridSize: 75, averageCenter: true});
+                });
+*/
+
+                $.get('/clusters.json', function(locations)
+                {
+                    $.each(locations, function(index, location)
+                    {
+                        create_cluster(location);
+                    });
                 });
 
                 // Generate latitude / longitude grid
