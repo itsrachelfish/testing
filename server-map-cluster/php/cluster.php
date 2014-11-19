@@ -53,7 +53,7 @@ class Cluster {
  
         if ($moreThen > 0) $moreThen -= 1;
         if ($moreThen < 0) $moreThen = 0;
- 
+        
         $clustered = array();
  
         for ($i = 0; $i < count($locationPoints); ) {
@@ -62,9 +62,10 @@ class Cluster {
  
             $cluster = 0;
             $clusterFinderIndex = array();
-            $movePercent = 0.5;
+ //           $movePercent = 0.5;
  
             $clusterPoint = $marker["location"];
+            $clusterPoints = array();
  
             for ($j = 0; $j < count($locationPoints); $j++) {
  
@@ -80,15 +81,18 @@ class Cluster {
                     $cluster ++;
                     $clusterFinderIndex[] = $j;
  
-                    $clusterPoint = $this->newClusterPoint(
+ //                   $clusterPoint =  $locationPoints[$j]["location"];
+                    $clusterPoints[] =  $locationPoints[$j]["location"];
+
+                    /* $this->newClusterPoint(
                                                             $clusterPoint[0],
                                                             $locationPoints[$j]["location"][0],
                                                             $clusterPoint[1],
                                                             $locationPoints[$j]["location"][1],
                                                             $movePercent
-                                                            );
+                                                           );*/
  
-                    $movePercent -= ($movePercent * 0.03);
+                 //$movePercent -= ($movePercent * 0.03);
                 }
             }
  
@@ -102,6 +106,7 @@ class Cluster {
  
                 $clusterData["count"] = $cluster + 1;
                 $clusterData["coordinate"] = $clusterPoint;
+                $clusterData['points'] = $clusterPoints;
  
                 $clustered[] = $clusterData;
  
@@ -112,7 +117,27 @@ class Cluster {
             }
  
         }
- 
+
+
+        // Loop through cluster points to determine average position
+        foreach($clustered as $index => $cluster)
+        {
+            $total = array('lat' => 0, 'lng' => 0);
+            
+            foreach($cluster['points'] as $point)
+            {
+                $total['lng'] += $point[0];
+                $total['lat'] += $point[1];
+            }
+
+            $total['lng'] /= count($cluster['points']);
+            $total['lat'] /= count($cluster['points']);
+
+
+            $clustered[$index]['coordinate'] = array($total['lng'], $total['lat']);
+            unset($clustered[$index]['points']);
+        }
+
         return $clustered;
  
     }

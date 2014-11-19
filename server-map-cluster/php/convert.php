@@ -13,8 +13,8 @@ foreach($locations as $location)
 }
 
 $cluster = new Cluster;
-$clusters = $cluster->createCluster($points, 4000, 11, 0);
- 
+$clusters = $cluster->createCluster($points, 100, 7, 1);
+
 echo "<pre>";
 print_r(json_encode($clusters));
 
