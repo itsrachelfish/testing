@@ -9,7 +9,7 @@ $points = array();
 // Convert saved markers to clusters
 foreach($locations as $location)
 {
-    $points[] = array("location" => array($location['lng'], $location['lat']));
+    $points[] = $location;
 }
 
 $cluster = new Cluster;

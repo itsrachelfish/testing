@@ -158,7 +158,7 @@ l.prototype.setGridSize=l.prototype.ba;l.prototype.setMaxZoom=l.prototype.ca;l.p
 
             function create_cluster(source)
             {
-                var latlng = new google.maps.LatLng(source.coordinate[1], source.coordinate[0]);
+                var latlng = new google.maps.LatLng(source.position.lat, source.position.lng);
                 var marker = new CustomMarker(latlng, map, source.count);
 
                 clusters.push(marker);
