@@ -1,0 +1,11 @@
+{
+    "name": "node-upload",
+    "version": "0.0.1",
+    "author": "Rachel <rachel@wetfish.net>",
+    "description": "A simple file upload server",
+    "dependencies" : {
+        "express": "*",
+        "connect-busboy": "*"
+    },
+    "license": "MIT"
+}
