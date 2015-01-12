@@ -1,0 +1,11 @@
+{
+    "name": "testing-node-irc",
+    "version": "0.0.1",
+    "description": "A testing project for node-irc",
+    "author": "Rachel Fish <rachel@wetfish.net>",
+
+    "dependencies":
+    {
+        "irc": "0.3.8"
+    }
+}
