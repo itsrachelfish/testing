@@ -1,0 +1,30 @@
+rachel@office:~/Projects/testing/node-irc$ node bot.js rizon
+12 Jan 11:29:03 - Connection got "close" event
+12 Jan 11:29:03 - Disconnected: reconnecting
+12 Jan 11:29:03 - Waiting 2000ms before retrying
+12 Jan 11:29:03 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:29:03 - Connection got "end" event
+12 Jan 11:29:05 - Connection got "close" event
+12 Jan 11:29:05 - Disconnected: reconnecting
+12 Jan 11:29:05 - Waiting 2000ms before retrying
+12 Jan 11:29:05 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:29:05 - Connection got "end" event
+rachel@office:~/Projects/testing/node-irc$ node bot.js oftc
+12 Jan 11:29:12 - Connection got "close" event
+12 Jan 11:29:12 - Disconnected: reconnecting
+12 Jan 11:29:12 - Waiting 2000ms before retrying
+12 Jan 11:29:12 - Connection got "end" event
+12 Jan 11:29:14 - Connection got "close" event
+12 Jan 11:29:14 - Disconnected: reconnecting
+12 Jan 11:29:14 - Waiting 2000ms before retrying
+12 Jan 11:29:14 - Connection got "end" event

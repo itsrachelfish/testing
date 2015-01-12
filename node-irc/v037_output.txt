@@ -1,0 +1,82 @@
+rachel@office:~/Projects/testing/node-irc$ node bot.js wetfish
+12 Jan 11:14:24 - Sending irc NICK/USER
+12 Jan 11:14:24 - SEND: NICK irctest
+12 Jan 11:14:24 - SEND: USER nodebot 8 * :nodeJS IRC client
+12 Jan 11:14:25 - Unhandled message: { prefix: 'irc.svchost.ca',
+  server: 'irc.svchost.ca',
+  command: '042',
+  rawCommand: '042',
+  commandType: 'normal',
+  args: [ 'irctest', '5VCAAAB2V', 'your unique ID' ] }
+12 Jan 11:14:25 - SEND: JOIN #nodetest
+12 Jan 11:14:25 - Unhandled message: { prefix: 'irc.svchost.ca',
+  server: 'irc.svchost.ca',
+  command: '396',
+  rawCommand: '396',
+  commandType: 'normal',
+  args: 
+   [ 'irctest',
+     'Fish-fjv.iuj.160.216.IP',
+     'is now your displayed host' ] }
+12 Jan 11:14:25 - MODE: irctest sets mode: +x
+12 Jan 11:14:25 - GOT NOTICE from the server: "*** You are connected using SSL cipher "ECDHE-RSA-AES-256-GCM-AEAD""
+12 Jan 11:14:25 - SEND: MODE #nodetest
+rachel@office:~/Projects/testing/node-irc$ node bot.js freenode
+12 Jan 11:14:38 - Sending irc NICK/USER
+12 Jan 11:14:38 - SEND: NICK irctest
+12 Jan 11:14:38 - SEND: USER nodebot 8 * :nodeJS IRC client
+12 Jan 11:14:43 - Unhandled message: { prefix: 'kornbluth.freenode.net',
+  server: 'kornbluth.freenode.net',
+  command: 'rpl_luserunknown',
+  rawCommand: '253',
+  commandType: 'reply',
+  args: [ 'irctest', '10', 'unknown connection(s)' ] }
+12 Jan 11:14:43 - SEND: JOIN #nodetest
+12 Jan 11:14:43 - MODE: irctest sets mode: +Zi
+rachel@office:~/Projects/testing/node-irc$ node bot.js dalnet
+12 Jan 11:14:55 - Connection got "close" event
+12 Jan 11:14:55 - Disconnected: reconnecting
+12 Jan 11:14:55 - Waiting 2000ms before retrying
+12 Jan 11:14:55 - Connection got "end" event
+12 Jan 11:14:57 - Connection got "close" event
+12 Jan 11:14:57 - Disconnected: reconnecting
+12 Jan 11:14:57 - Waiting 2000ms before retrying
+rachel@office:~/Projects/testing/node-irc$ node bot.js rizon
+12 Jan 11:15:08 - Connection got "close" event
+12 Jan 11:15:08 - Disconnected: reconnecting
+12 Jan 11:15:08 - Waiting 2000ms before retrying
+12 Jan 11:15:08 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:15:08 - Connection got "end" event
+12 Jan 11:15:10 - Connection got "close" event
+12 Jan 11:15:10 - Disconnected: reconnecting
+12 Jan 11:15:10 - Waiting 2000ms before retrying
+12 Jan 11:15:10 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:15:10 - Connection got "end" event
+12 Jan 11:15:13 - Connection got "close" event
+12 Jan 11:15:13 - Disconnected: reconnecting
+12 Jan 11:15:13 - Waiting 2000ms before retrying
+12 Jan 11:15:13 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:15:13 - Connection got "end" event
+rachel@office:~/Projects/testing/node-irc$ node bot.js oftc
+12 Jan 11:15:46 - Connection got "close" event
+12 Jan 11:15:46 - Disconnected: reconnecting
+12 Jan 11:15:46 - Waiting 2000ms before retrying
+12 Jan 11:15:46 - Connection got "end" event
+12 Jan 11:15:49 - Connection got "close" event
+12 Jan 11:15:49 - Disconnected: reconnecting
+12 Jan 11:15:49 - Waiting 2000ms before retrying

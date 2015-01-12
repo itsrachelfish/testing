@@ -1,0 +1,49 @@
+rachel@office:~/Projects/testing/node-irc$ node bot.js rizon
+12 Jan 11:24:33 - Sending irc NICK/USER
+12 Jan 11:24:33 - SEND: NICK irctest
+12 Jan 11:24:33 - SEND: USER regularperson 8 * :Totally Human
+12 Jan 11:24:33 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:24:35 - GOT NOTICE from the server: "*** Connected securely via TLSv1.2 AES256-GCM-SHA384-256"
+12 Jan 11:24:35 - GOT NOTICE from the server: "*** Your host is masked (F298D202.5A531A2E.970CEFCB.IP)"
+12 Jan 11:24:35 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: '042',
+  rawCommand: '042',
+  commandType: 'normal',
+  args: [ 'irctest', '89CAABVBD', 'your unique ID' ] }
+12 Jan 11:24:35 - Unhandled message: { prefix: 'irc.rizon.io',
+  server: 'irc.rizon.io',
+  command: 'rpl_luserunknown',
+  rawCommand: '253',
+  commandType: 'reply',
+  args: [ 'irctest', '9', 'unknown connection(s)' ] }
+12 Jan 11:24:35 - SEND: JOIN #nodetest
+12 Jan 11:24:35 - MODE: irctest sets mode: +Six
+12 Jan 11:24:35 - GOT NOTICE from "Global": "[Logon News - May 21 2011] First time on Rizon? Be sure to read the FAQ! http://s.rizon.net/FAQ"
+12 Jan 11:24:35 - GOT NOTICE from "Global": "[Logon News - Dec 16 2013] Own a large/active channel or plan to get one going? Please read http://s.rizon.net/authline"
+12 Jan 11:24:35 - GOT NOTICE from "Global": "[Random News - May 07 2013] Looking for a quotes, trivia, or other extra bots? /msg funserv help"
+12 Jan 11:24:35 - SEND: MODE #nodetest
+12 Jan 11:24:35 - GOT NOTICE from "peer": "For network safety, your client is being scanned for open proxies by scanner.rizon.net (80.65.51.221). This scan will not harm your computer."
+rachel@office:~/Projects/testing/node-irc$ node bot.js oftc
+12 Jan 11:24:56 - Sending irc NICK/USER
+12 Jan 11:24:56 - SEND: NICK irctest
+12 Jan 11:24:56 - SEND: USER regularperson 8 * :Totally Human
+12 Jan 11:25:07 - GOT NOTICE from the server: "*** Connected securely via UNKNOWN AES256-GCM-SHA384-256"
+12 Jan 11:25:07 - Unhandled message: { prefix: 'larich.oftc.net',
+  server: 'larich.oftc.net',
+  command: '042',
+  rawCommand: '042',
+  commandType: 'normal',
+  args: [ 'irctest', '1CIAAEXAN', 'your unique ID' ] }
+12 Jan 11:25:07 - SEND: JOIN #nodetest
+12 Jan 11:25:07 - MODE: irctest sets mode: +i
+12 Jan 11:25:07 - SEND: MODE #nodetest
+12 Jan 11:25:07 - GOT NOTICE from "NickServ": "This nickname is registered and protected.  If it is your nickname, you may"
+12 Jan 11:25:07 - GOT NOTICE from "NickServ": "authenticate yourself to services with the IDENTIFY command.  You are"
+12 Jan 11:25:07 - GOT NOTICE from "NickServ": "getting this message because you are not on the access list for the"
+12 Jan 11:25:07 - GOT NOTICE from "NickServ": "irctest nickname."

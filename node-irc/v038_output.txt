@@ -1,0 +1,65 @@
+rachel@office:~/Projects/testing/node-irc$ node bot.js wetfish
+12 Jan 11:02:42 - Connection got "close" event
+12 Jan 11:02:42 - Disconnected: reconnecting
+12 Jan 11:02:42 - Waiting 2000ms before retrying
+12 Jan 11:02:42 - Connection got "end" event
+12 Jan 11:02:49 - Connection got "close" event
+12 Jan 11:02:49 - Disconnected: reconnecting
+rachel@office:~/Projects/testing/node-irc$ node bot.js freenode
+12 Jan 11:02:58 - Sending irc NICK/USER
+12 Jan 11:02:58 - SEND: NICK irctest
+12 Jan 11:02:58 - SEND: USER nodebot 8 * :nodeJS IRC client
+12 Jan 11:03:06 - Unhandled message: { prefix: 'verne.freenode.net',
+  server: 'verne.freenode.net',
+  command: 'rpl_luserunknown',
+  rawCommand: '253',
+  commandType: 'reply',
+  args: [ 'irctest', '13', 'unknown connection(s)' ] }
+12 Jan 11:03:06 - SEND: JOIN #nodetest
+12 Jan 11:03:06 - MODE: irctest sets mode: +Zi
+12 Jan 11:03:12 - SEND: MODE #nodetest
+rachel@office:~/Projects/testing/node-irc$ node bot.js dalnet
+rachel@office:~/Projects/testing/node-irc$ node bot.js dalnet
+rachel@office:~/Projects/testing/node-irc$ node bot.js dalnet
+rachel@office:~/Projects/testing/node-irc$ node bot.js rizon
+12 Jan 11:07:28 - Connection got "close" event
+12 Jan 11:07:28 - Disconnected: reconnecting
+12 Jan 11:07:28 - Waiting 2000ms before retrying
+12 Jan 11:07:28 - Connection got "end" event
+12 Jan 11:07:30 - Connection got "close" event
+12 Jan 11:07:30 - Disconnected: reconnecting
+12 Jan 11:07:30 - Waiting 2000ms before retrying
+12 Jan 11:07:33 - Unhandled message: { prefix: 'irc.sxci.net',
+  server: 'irc.sxci.net',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:07:33 - Connection got "end" event
+12 Jan 11:07:35 - Connection got "close" event
+12 Jan 11:07:35 - Disconnected: reconnecting
+12 Jan 11:07:35 - Waiting 2000ms before retrying
+12 Jan 11:07:35 - Unhandled message: { prefix: 'irc.broke-it.com',
+  server: 'irc.broke-it.com',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:07:35 - Connection got "end" event
+12 Jan 11:07:37 - Connection got "close" event
+12 Jan 11:07:37 - Disconnected: reconnecting
+12 Jan 11:07:37 - Waiting 2000ms before retrying
+12 Jan 11:07:37 - Unhandled message: { prefix: 'irc.sxci.net',
+  server: 'irc.sxci.net',
+  command: '439',
+  rawCommand: '439',
+  commandType: 'normal',
+  args: [ '*', 'Please wait while we process your connection.' ] }
+12 Jan 11:07:37 - Connection got "end" event
+rachel@office:~/Projects/testing/node-irc$ node bot.js oftc
+12 Jan 11:09:30 - Connection got "close" event
+12 Jan 11:09:30 - Disconnected: reconnecting
+12 Jan 11:09:30 - Waiting 2000ms before retrying
+12 Jan 11:09:30 - Connection got "end" event
+12 Jan 11:09:32 - Connection got "close" event
+12 Jan 11:09:32 - Disconnected: reconnecting
