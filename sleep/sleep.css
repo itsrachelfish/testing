@@ -1,0 +1,41 @@
+.timeline {
+    overflow-x: scroll;
+    white-space: nowrap;
+    height: 100px;
+}
+
+.day {
+    display: inline-block;
+    width: 240px;
+}
+
+.day .title {
+    border-right: 1px solid #000;
+    padding-left: 4px;
+    position: relative;
+}
+
+.day .title:after {
+    position: absolute;
+    content: ' ';
+    border-right: 1px solid #000;
+    height: 20px;
+    bottom: -55px;
+    right: -1px;
+}
+
+.hour {
+    display: inline-block;
+    width: 9px;
+    border-right: 1px solid #000;
+    position: relative;
+}
+
+.hour:after {
+    position: absolute;
+    content: ' ';
+    border-right: 1px solid #000;
+    height: 20px;
+    bottom: -20px;
+    right: -1px;
+}
