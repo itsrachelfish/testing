@@ -1,12 +1,9 @@
-.timeline {
-    overflow-x: scroll;
-    white-space: nowrap;
-    height: 100px;
-}
+.timeline { }
 
 .day {
     display: inline-block;
     width: 240px;
+    margin-bottom: 100px;
 }
 
 .day .title {
