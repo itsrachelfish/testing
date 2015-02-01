@@ -1,0 +1,31 @@
+So today I decided to move all of my commit history for a subfolder in this testing repo to its own repository.
+
+    Step 1. Clone original repo
+    Step 2. cd into cloned repo
+    Step 3. Create new repo on github, totally empty, without a readme or anything!
+    Step 4. git filter-branch --prune-empty --subdirectory-filter path/to/project master
+     - This will remove every file / commit not inside path/to/project!
+     - All of the matched files will now reside in the root of the repo
+    Step 5. Edit your .git/config and change the remote to the new repo you created in step 3
+    Step 6. Git push!
+    
+
+Ok cool, now you have a separate repo for that subfolder, but the original repo will still contain all the files and commits for the newly created standalone project.
+To remove those, do this:
+
+    Step 1. Clone original repo (or use your original copy if you're feeling lucky)
+    Step 2. cd into repo
+    Step 3. git filter-branch --prune-empty --tree-filter 'rm -rf path/to/project'
+     - This will remove every file / commit inside path/to/project!
+    Step 4. git push -f
+
+
+Great! Now the project is moved into its own repo and removed from the original, but your github graph / commit history now shows double commits! Oh no
+To get rid of the double commits:
+
+    Step 1. Delete the original repo from github (make sure you still have a local copy!)
+    Step 2. Recreate the original repo, but leave it totally empty
+    Step 3. git push your local copy
+
+
+Voila!
