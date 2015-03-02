@@ -11,7 +11,7 @@ $s3 = S3Client::factory(array
 ));
 
 // Define available commands
-$commands = array('help', 'buckets', 'objects', 'create', 'copy', 'delete', 'move', 'quit');
+$commands = array('help', 'buckets', 'objects', 'refresh', 'create', 'copy', 'delete', 'move', 'quit');
 
 // Basic information about each command
 $help = array
@@ -22,6 +22,69 @@ $help = array
         "For more information on a command, you can say help [command].",
         "",
         " - Available commands are: %s"
+    ),
+
+    'buckets' => array
+    (
+        "List all buckets in your account."
+    ),
+
+    'objects' => array
+    (
+        "List all objects in a bucket.",
+        "",
+        "When running this command for the first time, a list of all objects will be fetched from Amazon.",
+        "On subsequent requests, a cached version is displayed.",
+        "To force an update of the cache, use refresh.",
+        "",
+        " - Usage: objects [bucket]"
+    ),
+
+    'refresh' => array
+    (
+        "Refresh all objects in a bucket.",
+        "",
+        "List all objects in a bucket by making requests to Amazon.",
+        "This will also update the cache used by the objects command.",
+        "",
+        " - Usage: refresh [bucket]"
+    ),
+
+    'create' => array
+    (
+        "Create a text file. Useful for debugging?",
+        "If your bucket, path, or filename has spaces you should put it in quotes!",
+        "",
+        " - Usage: create [bucket/path/filename] [data]"
+    ),
+
+    'copy' => array
+    (
+        "Copy a file. Can be used to copy files within a bucket, or between buckets." ,
+        "If your bucket, path, or filename has spaces you should put it in quotes!",
+        "",
+        " - Usage: copy [bucket/path/filename] [bucket/path/filename]"
+    ),
+
+    'delete' => array
+    (
+        "Delete a file.",
+        "If your bucket, path, or filename has spaces you should put it in quotes!",
+        "",
+        " - Usage: delete [bucket/path/filename]"
+    ),
+
+    'move' => array
+    (
+        "Move a file. Equivalent to copying a file and then deleting the source.",
+        "If your bucket, path, or filename has spaces you should put it in quotes!",
+        "",
+        " - Usage: move [bucket/path/filename] [bucket/path/filename]"
+    ),
+
+    'quit' => array
+    (
+        "Quit this application."
     )
 );
 
@@ -83,6 +146,10 @@ while($running)
 
         }
         elseif($command == "objects")
+        {
+
+        }
+        elseif($command == "refresh")
         {
 
         }
