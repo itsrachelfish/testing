@@ -11,7 +11,7 @@ $s3 = S3Client::factory(array
 ));
 
 // Define available commands
-$commands = array('help', 'buckets', 'objects', 'refresh', 'upload', 'copy', 'delete', 'move', 'quit');
+$commands = array('help', 'buckets', 'objects', 'upload', 'copy', 'delete', 'move', 'quit');
 
 // Basic information about each command
 $help = array
@@ -33,21 +33,7 @@ $help = array
     (
         "List all objects in a bucket.",
         "",
-        "When running this command for the first time, a list of all objects will be fetched from Amazon.",
-        "On subsequent requests, a cached version is displayed.",
-        "To force an update of the cache, use refresh.",
-        "",
         " - Usage: objects [bucket]"
-    ),
-
-    'refresh' => array
-    (
-        "Refresh all objects in a bucket.",
-        "",
-        "List all objects in a bucket by making requests to Amazon.",
-        "This will also update the cache used by the objects command.",
-        "",
-        " - Usage: refresh [bucket]"
     ),
 
     'upload' => array
@@ -63,7 +49,7 @@ $help = array
         "Copy a file. Can be used to copy files within a bucket, or between buckets." ,
         "If your bucket, path, or filename has spaces you should put it in quotes!",
         "",
-        " - Usage: copy [bucket/path/filename] [bucket/path/filename]"
+        " - Usage: copy [bucket/from/filename] [bucket/to/filename]"
     ),
 
     'delete' => array
@@ -79,7 +65,7 @@ $help = array
         "Move a file. Equivalent to copying a file and then deleting the source.",
         "If your bucket, path, or filename has spaces you should put it in quotes!",
         "",
-        " - Usage: move [bucket/path/filename] [bucket/path/filename]"
+        " - Usage: move [bucket/from/filename] [bucket/to/filename]"
     ),
 
     'quit' => array
@@ -135,7 +121,7 @@ function process_path($path)
     $path = explode("/", $path);
     $bucket = array_shift($path);
 
-    return array($bucket, $path);
+    return array($bucket, implode("/", $path));
 }
 
 // Loop forever to read input from the user
@@ -184,33 +170,61 @@ while($running)
                 echo $object['Key'] . "\n";
             }
         }
-        elseif($command == "refresh")
-        {
-
-        }
         elseif($command == "upload")
         {
             list($bucket, $key) = process_path($input[1]);
 
-            $result = $s3->putObject(array(
+            $s3->putObject(array
+            (
                 'Bucket'     => $bucket,
                 'Key'        => $key,
                 'SourceFile' => $input[0],
             ));
 
-            print_r($result);
+            echo "File '{$input[0]}' uploaded to '{$bucket}/{$key}'! \n";
         }
         elseif($command == "copy")
         {
+            list($bucket, $key) = process_path($input[1]);
 
+            $s3->copyObject(array(
+                'Bucket'     => $bucket,
+                'Key'        => $key,
+                'CopySource' => $input[0],
+            ));
+
+            echo "File '{$input[0]}' copied to '{$bucket}/{$key}'! \n";
         }
         elseif($command == "delete")
         {
+            list($bucket, $key) = process_path($input[0]);
 
+            $s3->deleteObject(array
+            (
+                'Bucket' => $bucket,
+                'Key'    => $key
+            ));
+
+            echo "File '{$bucket}/{$key}' deleted! \n";
         }
         elseif($command == "move")
         {
+            list($sourceBucket, $sourceKey) = process_path($input[0]);
+            list($destBucket, $destKey) = process_path($input[1]);
 
+            $s3->copyObject(array(
+                'Bucket'     => $destBucket,
+                'Key'        => $destKey,
+                'CopySource' => $input[0],
+            ));
+
+            $s3->deleteObject(array
+            (
+                'Bucket' => $sourceBucket,
+                'Key'    => $sourceKey
+            ));
+
+            echo "File '{$input[0]}' moved to '{$destBucket}/{$destKey}'! \n";
         }
         elseif($command == "quit")
         {
