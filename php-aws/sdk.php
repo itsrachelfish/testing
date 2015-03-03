@@ -114,21 +114,33 @@ function display_help($message, $replacement)
 // Display initial help message
 display_help($help['help'], implode(", ", $commands));
 
+// Function for processing commands from user input
+function process_command($line)
+{
+    preg_match_all("/(?:'.*?'|\".*?\"|\S+)/", $line, $matches);
+
+    foreach($matches[0] as $key => $match)
+    {
+        $matches[0][$key] = preg_replace("/(^[\"']|[\"']$)/", "", $match);
+    }
+
+    $input = $matches[0];
+    $command = array_shift($input);
+    return array($command, $input);
+}
+
 // Loop forever to read input from the user
 $running = true;
 while($running)
 {
     $line = readline("> ");
-    preg_match_all("/(?:'.*?'|\".*?\"|\S+)/", $line, $matches);
-
-    $input = $matches[0];
-    $command = array_shift($input);
+    list($command, $input) = process_command($line);
 
     if(in_array($command, $commands))
     {
         if($command == "help")
         {
-            $topic = array_shift($line);
+            $topic = array_shift($input);
 
             if(empty($topic))
                 $topic = 'help';
