@@ -119,9 +119,10 @@ $running = true;
 while($running)
 {
     $line = readline("> ");
-    $line = explode(" ", $line);
+    preg_match_all("/(?:'.*?'|\".*?\"|\S+)/", $line, $matches);
 
-    $command = array_shift($line);
+    $input = $matches[0];
+    $command = array_shift($input);
 
     if(in_array($command, $commands))
     {
@@ -143,11 +144,24 @@ while($running)
         }
         elseif($command == "buckets")
         {
+            echo "Loading...\n";
 
+            $response = $s3->listBuckets();
+            
+            foreach ($response['Buckets'] as $bucket)
+            {
+                echo "| Bucket: {$bucket['Name']} ";
+                echo "| Created: {$bucket['CreationDate']} \n";
+            }
         }
         elseif($command == "objects")
         {
+            $iterator = $s3->getIterator('ListObjects', array('Bucket' => $input[0]));
 
+            foreach ($iterator as $object)
+            {
+                echo $object['Key'] . "\n";
+            }
         }
         elseif($command == "refresh")
         {
