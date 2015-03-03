@@ -11,7 +11,7 @@ $s3 = S3Client::factory(array
 ));
 
 // Define available commands
-$commands = array('help', 'buckets', 'objects', 'refresh', 'create', 'copy', 'delete', 'move', 'quit');
+$commands = array('help', 'buckets', 'objects', 'refresh', 'upload', 'copy', 'delete', 'move', 'quit');
 
 // Basic information about each command
 $help = array
@@ -50,12 +50,12 @@ $help = array
         " - Usage: refresh [bucket]"
     ),
 
-    'create' => array
+    'upload' => array
     (
-        "Create a text file. Useful for debugging?",
+        "Upload a file from your computer.",
         "If your bucket, path, or filename has spaces you should put it in quotes!",
         "",
-        " - Usage: create [bucket/path/filename] [data]"
+        " - Usage: upload [path/on/computer] [bucket/path/filename]"
     ),
 
     'copy' => array
@@ -129,6 +129,15 @@ function process_command($line)
     return array($command, $input);
 }
 
+// Function to process paths into buckets and keys
+function process_path($path)
+{
+    $path = explode("/", $path);
+    $bucket = array_shift($path);
+
+    return array($bucket, $path);
+}
+
 // Loop forever to read input from the user
 $running = true;
 while($running)
@@ -179,9 +188,17 @@ while($running)
         {
 
         }
-        elseif($command == "create")
+        elseif($command == "upload")
         {
+            list($bucket, $key) = process_path($input[1]);
 
+            $result = $s3->putObject(array(
+                'Bucket'     => $bucket,
+                'Key'        => $key,
+                'SourceFile' => $input[0],
+            ));
+
+            print_r($result);
         }
         elseif($command == "copy")
         {
