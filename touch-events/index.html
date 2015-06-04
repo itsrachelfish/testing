@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Touch events?</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; }
+            .content { position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: #ccc; }
+            .event { font-size: 24pt; font-weight: bold; }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+        
+            $(document).ready(function()
+            {
+                $('body').on('click', function(event)
+                {
+                    console.log(Object.keys(event));
+                    
+                    $('.event').elements[0].innerHTML = "HELLO";
+                    $('.output').elements[0].innerHTML = JSON.stringify(event, null, 4);
+                    console.log(event);
+                });
+
+
+                $('body').on('touchstart', function(event)
+                {
+                    $('.event').elements[0].innerHTML = "touchstart";
+                    $('.output').elements[0].innerHTML = JSON.stringify(event, false, 4);
+                    console.log(event);
+                });
+
+                $('.content').on('touchend', function(event)
+                {
+                    console.log(event);
+                });
+
+                $('.content').on('touchmove', function(event)
+                {
+                    console.log(event);
+                });
+
+                $('.content').on('touchcancel', function(event)
+                {
+                    console.log(event);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="content">
+            <div class="event"></div>
+            <pre class="output"></pre>
+        </div>
+    </body>
+</html>
