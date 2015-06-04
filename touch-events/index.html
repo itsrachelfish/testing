@@ -14,41 +14,73 @@
             .event { font-size: 24pt; font-weight: bold; }
         </style>
 
+        <script>
+            module = {};
+        </script>
+
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        <script src="node_modules/json-stringify-safe/stringify.js"></script>
         
         <script>
-        
+            function clone(object)
+            {
+                var copy = {};
+                
+                for(var key in object)
+                {
+                    // Ignore firefox specific properties
+                    if(key.match(/^moz/i))
+                        continue;
+                    
+                    try
+                    {
+                        copy[key] = JSON.parse(JSON.stringify(object[key]));
+                    }
+                    catch(error)
+                    {
+//                        copy[key] = "ERROR: Unable to stringify.";
+                    }
+                }
+
+                return copy;
+            }
+
             $(document).ready(function()
             {
+                /*
                 $('body').on('click', function(event)
                 {
-                    console.log(Object.keys(event));
-                    
-                    $('.event').elements[0].innerHTML = "HELLO";
-                    $('.output').elements[0].innerHTML = JSON.stringify(event, null, 4);
+                    $('.event').elements[0].innerHTML = "click";
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
                 });
-
-
+                */
+                
                 $('body').on('touchstart', function(event)
                 {
                     $('.event').elements[0].innerHTML = "touchstart";
-                    $('.output').elements[0].innerHTML = JSON.stringify(event, false, 4);
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
                 });
 
                 $('.content').on('touchend', function(event)
                 {
+                    $('.event').elements[0].innerHTML = "touchend";
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
                 });
 
                 $('.content').on('touchmove', function(event)
                 {
+                    $('.event').elements[0].innerHTML = "touchmove";
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
                 });
 
                 $('.content').on('touchcancel', function(event)
                 {
+                    $('.event').elements[0].innerHTML = "touchcancel";
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
                 });
             });
