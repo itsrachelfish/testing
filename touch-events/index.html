@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
-            body { overflow: hidden; }
+            body { overflow: hidden; font-size: 8pt; }
             .content { position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: #ccc; }
             .event { font-size: 24pt; font-weight: bold; }
         </style>
@@ -19,7 +19,6 @@
         </script>
 
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
-        <script src="node_modules/json-stringify-safe/stringify.js"></script>
         
         <script>
             function clone(object)
@@ -61,6 +60,11 @@
                     $('.event').elements[0].innerHTML = "touchstart";
                     $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
+
+                    var touch = event.touches[0] || event.changedTouches[0];
+
+                    $('.x').elements[0].innerHTML = touch.pageX;
+                    $('.y').elements[0].innerHTML = touch.pageY;
                 });
 
                 $('.content').on('touchend', function(event)
@@ -68,13 +72,23 @@
                     $('.event').elements[0].innerHTML = "touchend";
                     $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
+
+                    var touch = event.touches[0] || event.changedTouches[0];
+
+                    $('.x').elements[0].innerHTML = touch.pageX;
+                    $('.y').elements[0].innerHTML = touch.pageY;
                 });
 
                 $('.content').on('touchmove', function(event)
                 {
+                    var touch = event.touches[0] || event.changedTouches[0];
+
                     $('.event').elements[0].innerHTML = "touchmove";
-                    $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
+                    $('.output').elements[0].innerHTML = JSON.stringify(clone(touch), null, 4);
                     console.log(event);
+
+                    $('.x').elements[0].innerHTML = touch.pageX;
+                    $('.y').elements[0].innerHTML = touch.pageY;
                 });
 
                 $('.content').on('touchcancel', function(event)
@@ -82,12 +96,22 @@
                     $('.event').elements[0].innerHTML = "touchcancel";
                     $('.output').elements[0].innerHTML = JSON.stringify(clone(event), null, 4);
                     console.log(event);
+
+                    var touch = event.touches[0] || event.changedTouches[0];
+
+                    $('.x').elements[0].innerHTML = touch.pageX;
+                    $('.y').elements[0].innerHTML = touch.pageY;
                 });
             });
         </script>
     </head>
     <body>
         <div class="content">
+            <div style="float: right">
+                <h1 class="x"></h1>
+                <h1 class="y"></h1>
+            </div>
+            
             <div class="event"></div>
             <pre class="output"></pre>
         </div>
