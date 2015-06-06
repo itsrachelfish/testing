@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>SVG Fun time!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; }
+            
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+            }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            var drawing = false;
+            var path = [];
+
+            function draw()
+            {
+                var text = path.join(' ');
+                $('path').el[0].setAttribute('d', text);
+            }
+            
+            $(document).ready(function()
+            {
+                $('body').on('mousedown', function(event)
+                {
+                    drawing = true;
+                    path.push('M' + event.clientX + ' ' + event.clientY);
+                });
+
+                $('body').on('mousemove', function(event)
+                {
+                    if(drawing)
+                    {
+                        path.push('L' + event.clientX + ' ' + event.clientY);
+                        draw();
+                    }
+                });
+
+                $('body').on('mouseup', function(event)
+                {
+                    drawing = false;
+                    draw();
+                });
+
+                $('.reset').on('click', function(event)
+                {
+                    path = [];
+                    draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="controls">
+            <div><input type="button" class="reset" value="Erase Lines"></div>
+        </div>
+        
+        <div class="content">
+            <svg height="100%" width="100%">
+              <path
+                stroke="black"
+                stroke-width="3"
+                fill="none" />
+            </svg>
+        </div>
+    </body>
+</html>
