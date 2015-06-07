@@ -93,7 +93,7 @@
             {
                 $('body').on('mouseenter mousemove', line.position);
 
-                $('body').on('mousedown', function(event)
+                $('svg').on('mousedown', function(event)
                 {
                     if(line.playing) return;
                     
@@ -130,6 +130,17 @@
                         line.interval = setInterval(line.play, speed);
 
                         $(this).elements[0].value = 'Stop';
+                    }
+                });
+
+                $('.speed').on('change', function(event)
+                {
+                    if(line.playing)
+                    {
+                        clearInterval(line.interval);
+
+                        var speed = $('.speed').elements[0].value;
+                        line.interval = setInterval(line.play, speed);
                     }
                 });
 
