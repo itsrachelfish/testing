@@ -25,54 +25,77 @@
                 right: 0;
                 text-align: center;
             }
+
+            .controls input {
+                display: block;
+            }
         </style>
 
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
         
         <script>
-            var drawing = false;
-            var path = [];
-
-            function draw()
+            var line =
             {
-                var text = path.join(' ');
-                $('path').elements[0].setAttribute('d', text);
-            }
+                drawing: false,
+                path: [],
+
+                draw: function()
+                {
+                    var text = line.path.join(' ');
+                    $('path').elements[0].setAttribute('d', text);
+                },
+
+                position: function(event)
+                {
+                    line.x = event.clientX;
+                    line.y = event.clientY;
+                },
+
+                save: function()
+                {
+                    line.path.push('L' + line.x + ' ' + line.y);
+                    line.draw();
+                },
+
+                clear: function()
+                {
+                    line.path = [];
+                    line.draw();
+                }
+            };
             
             $(document).ready(function()
             {
+                $('body').on('mouseenter mousemove', line.position);
+
                 $('body').on('mousedown', function(event)
                 {
-                    drawing = true;
-                    path.push('M' + event.clientX + ' ' + event.clientY);
-                });
+                    line.drawing = true;
+                    line.path.push('M' + event.clientX + ' ' + event.clientY);
+                    line.save();
 
-                $('body').on('mousemove', function(event)
-                {
-                    if(drawing)
-                    {
-                        path.push('L' + event.clientX + ' ' + event.clientY);
-                        draw();
-                    }
+                    var speed = $('.speed').elements[0].value;
+                    line.interval = setInterval(line.save, speed);
                 });
 
                 $('body').on('mouseup', function(event)
                 {
-                    drawing = false;
-                    draw();
+                    line.drawing = false;
+                    clearInterval(line.interval);
                 });
 
                 $('.reset').on('click', function(event)
                 {
-                    path = [];
-                    draw();
+                    line.clear();
                 });
             });
         </script>
     </head>
     <body>
         <div class="controls">
-            <div><input type="button" class="reset" value="Erase Lines"></div>
+            <p>Speed</p>
+            <input type="range" class="speed" value="50" min="1" max="200" step="5">
+            <input type="button" class="reset" value="Erase">
         </div>
         
         <div class="content">
