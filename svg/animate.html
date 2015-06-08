@@ -75,10 +75,12 @@
                 center: function(element)
                 {
                     var position = element.getBoundingClientRect();
+
+                    console.log(position);
                     var center =
                     {
-                        x: position.x + (position.width / 2),
-                        y: position.y + (position.height / 2)
+                        x: position.left + (position.width / 2),
+                        y: position.top + (position.height / 2)
                     }
 
                     return center;
@@ -130,15 +132,15 @@
 
                     // Update animation properties
                     var speed = $('.speed').elements[0].value;
-                    $('svg animateMotion').el[0].setAttribute('dur', speed + 'ms');
+                    $('#chromesucks').el[0].setAttribute('dur', speed + 'ms');
 
                     if(rotate)
                     {
-                        $('svg animateMotion').el[0].setAttribute('rotate', rotate);
+                        $('#chromesucks').el[0].setAttribute('rotate', rotate);
                     }
                     else
                     {
-                        $('svg animateMotion').el[0].removeAttribute('rotate');
+                        $('#chromesucks').el[0].removeAttribute('rotate');
                     }
                 },
 
@@ -167,6 +169,7 @@
                     $('.record').el[0].removeAttribute('disabled');
                     $('.play').el[0].setAttribute('disabled', '');
                     $('.erase').el[0].setAttribute('disabled', '');
+                    $('.rotate').el[0].setAttribute('disabled', '');
                 },
 
                 play: function()
@@ -323,8 +326,12 @@
                 id="trogdor"
                 xlink:href="trogdor.png" />
 
-            <animateMotion 
+            <!-- We have to select this by ID because querySelectorAll doesn't work for animateMotion in chrome (chrome is dumb) -->
+            <!-- Without a default duration the animation never triggers in chrome and sometimes messes up in firefox -->
+            <animateMotion
+                id="chromesucks"
                 xlink:href="#trogdor"
+                dur="5s" 
                 begin="0s"
                 fill="freeze"
                 calcMode="linear"
