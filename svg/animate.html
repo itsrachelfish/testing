@@ -13,8 +13,16 @@
                 overflow: hidden;
             }
 
+            h1 {
+                margin: 0;
+            }
+
             .trogdor {
                 max-height: 50%;
+            }
+
+            svg image {
+                display: none;
             }
             
             .background {
@@ -28,15 +36,22 @@
             .controls {
                 z-index: 1;
                 position: absolute;
-                right: 0;
+                right: 2em;
                 text-align: center;
+                max-width: 25%;
+                box-sizing: border-box;
             }
 
             input {
-                padding: 1em;
-                margin: 1em;
+                padding: 1em 0em;
+                margin: 0.5em;
+                max-width: 100%;
                 width: 100%;
                 font-size:150%;
+            }
+
+            .speed {
+                margin-top: 0;
             }
 
             .controls input {
@@ -50,6 +65,7 @@
         <script>
             var recording = false;
             var playing = false;
+            var rotate = false;
             
             var path =
             {
@@ -93,7 +109,73 @@
             
             var animate =
             {
+                init: function()
+                {
+                    // Get required vars before changing anything
+                    var size = $('.trogdor').el[0].getBoundingClientRect();
+
+                    $('svg image').el[0].setAttribute('width', size.width);
+                    $('svg image').el[0].setAttribute('height', size.height);
+
+                    $('svg image').el[0].setAttribute('transform', 'translate(-'+(size.width / 2)+', -'+(size.height / 2)+')');
+                },
                 
+                start: function()
+                {
+                    // Hide the draggable trogdor
+                    $('.trogdor').style({display: 'none'});
+
+                    // Display the SVG trogdor
+                    $('svg image').style({display: 'block'});
+
+                    // Update animation properties
+                    var speed = $('.speed').elements[0].value;
+                    $('svg animateMotion').el[0].setAttribute('dur', speed + 'ms');
+
+                    if(rotate)
+                    {
+                        $('svg animateMotion').el[0].setAttribute('rotate', rotate);
+                    }
+                    else
+                    {
+                        $('svg animateMotion').el[0].removeAttribute('rotate');
+                    }
+                },
+
+                stop: function()
+                {
+                    // Hide the SVG trogdor
+                    $('svg image').style({display: 'none'});
+
+                    // Display the draggable trogdor
+                    $('.trogdor').style({display: 'block'});
+                }
+            }
+
+            var buttons =
+            {
+                enable: function()
+                {
+                    $('.record').el[0].removeAttribute('disabled');
+                    $('.play').el[0].removeAttribute('disabled');
+                    $('.erase').el[0].removeAttribute('disabled');
+                    $('.rotate').el[0].setAttribute('disabled', '');
+                },
+
+                record: function()
+                {
+                    $('.record').el[0].removeAttribute('disabled');
+                    $('.play').el[0].setAttribute('disabled', '');
+                    $('.erase').el[0].setAttribute('disabled', '');
+                },
+
+                play: function()
+                {
+                    $('.play').el[0].removeAttribute('disabled');
+                    $('.rotate').el[0].removeAttribute('disabled');
+                    $('.record').el[0].setAttribute('disabled', '');
+                    $('.erase').el[0].setAttribute('disabled', '');
+                }
             }
 
             $(document).ready(function()
@@ -109,45 +191,63 @@
 
                         if(path.history.length)
                         {
-                            $('.play').el[0].removeAttribute('disabled');
-                            $('.erase').el[0].removeAttribute('disabled');
+                            buttons.enable();
                         }
                     }
                     else
                     {
                         recording = true;
                         $(this).el[0].value = 'Stop';
+
+                        buttons.record();
                     }
                 });
 
                 $('.play').on('click', function()
                 {
+                    if(playing)
+                    {
+                        animate.stop();
+                        
+                        playing = false;
+                        $(this).el[0].value = 'Play';
+                        buttons.enable();
+                    }
+                    else
+                    {
+                        playing = true;
+                        $(this).el[0].value = 'Stop';
+                        buttons.play();
 
+                        animate.init();
+                        animate.start();
+                    }
                 });
 
                 $('.erase').on('click', function()
                 {
-
+                    path.history = [];
+                    path.draw();
+                    buttons.record();
                 });
 
                 $('.trogdor').on('dragstart', function()
                 {
                     if(recording)
                     {
-                        // Move the path to this element's location
-                        path.move(this);
+                        var dragon = this;
+                        
+                        // Move the path to the dragon's location
+                        path.move(dragon);
                         
                         // Save the current position
-                        path.save(this);
-                    }
-                });
+                        path.save(dragon);
 
-                $('.trogdor').on('dragmove', function()
-                {
-                    if(recording)
-                    {
-                        // Save the current position
-                        path.save(this);
+                        // Save the dragon's position every 25ms
+                        path.interval = setInterval(function()
+                        {
+                            path.save(dragon);
+                        }, 25);
                     }
                 });
 
@@ -157,8 +257,47 @@
                     {
                         // Save the current position
                         path.save(this);
+
+                        // Stop saving the dragon's position
+                        clearInterval(path.interval);
                     }
                 });
+
+                $('.speed').on('change', function()
+                {
+                    if(playing)
+                    {
+                        animate.start();
+                    }
+                });
+
+                $('.rotate').on('click', function()
+                {
+                    if(!rotate)
+                    {
+                        rotate = "auto";
+                        $(this).el[0].value = 'Rotate: Auto';
+                    }
+                    else if(rotate == "auto")
+                    {
+                        rotate = "auto-reverse";
+                        $(this).el[0].value = 'Rotate: Reverse';
+                    }
+                    else
+                    {
+                        rotate = false;
+                        $(this).el[0].value = 'Rotate: Off';
+                    }
+
+                    // If we're currently playing, update the animation
+                    if(playing)
+                    {
+                        animate.start();
+                    }
+                });
+
+                // Make sure buttons are disabled by default (firefox is dumb)
+                buttons.record();
             });
         </script>
     </head>
@@ -168,15 +307,30 @@
             <input type="range" class="speed" value="1000" min="100" max="10000" step="100">
             <input type="button" class="record" value="Record">
             <input type="button" class="play" value="Play" disabled>
+            <input type="button" class="rotate" value="Rotate: Off" disabled>
             <input type="button" class="erase" value="Erase" disabled>
         </div>
 
         <svg height="100%" width="100%" class="background">
-          <path
-            stroke="#ccc"
-            stroke-width="2"
-            stroke-dasharray="10, 5"
-            fill="none" />
+            <path
+                id="path"
+                stroke="#ccc"
+                stroke-width="2"
+                stroke-dasharray="10, 5"
+                fill="none" />
+
+            <image
+                id="trogdor"
+                xlink:href="trogdor.png" />
+
+            <animateMotion 
+                xlink:href="#trogdor"
+                begin="0s"
+                fill="freeze"
+                calcMode="linear"
+                repeatCount="indefinite">
+                <mpath xlink:href="#path" />
+            </animateMotion>
         </svg>
         
         <img class="trogdor" src="trogdor.png">
