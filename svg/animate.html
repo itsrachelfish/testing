@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>SVG Fun time!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            html, body {
+                overflow: hidden;
+            }
+
+            .trogdor {
+                max-height: 50%;
+            }
+            
+            .background {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+            }
+
+            input {
+                padding: 1em;
+                margin: 1em;
+                width: 100%;
+                font-size:150%;
+            }
+
+            .controls input {
+                display: block;
+            }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        <script src="node_modules/dragondrop/dragondrop.js"></script>
+
+        <script>
+            var recording = false;
+            var playing = false;
+            
+            var path =
+            {
+                history: [],
+                
+                // Find the center point of an element
+                center: function(element)
+                {
+                    var position = element.getBoundingClientRect();
+                    var center =
+                    {
+                        x: position.x + (position.width / 2),
+                        y: position.y + (position.height / 2)
+                    }
+
+                    return center;
+                },
+
+                // Move the path to a new position
+                move: function(element)
+                {
+                    var center = path.center(element);
+                    path.history.push('M' + center.x + ' ' + center.y);
+                },
+
+                // Save a new point in the path
+                save: function(element)
+                {
+                    var center = path.center(element);
+                    path.history.push('L' + center.x + ' ' + center.y);
+                    path.draw();
+                },
+
+                // Draw the current path
+                draw: function()
+                {
+                    var text = path.history.join(' ');
+                    $('path').el[0].setAttribute('d', text);
+                }
+            }
+            
+            var animate =
+            {
+                
+            }
+
+            $(document).ready(function()
+            {
+                $('.trogdor').dragondrop();
+
+                $('.record').on('click', function()
+                {
+                    if(recording)
+                    {
+                        recording = false;
+                        $(this).el[0].value = 'Record';
+
+                        if(path.history.length)
+                        {
+                            $('.play').el[0].removeAttribute('disabled');
+                            $('.erase').el[0].removeAttribute('disabled');
+                        }
+                    }
+                    else
+                    {
+                        recording = true;
+                        $(this).el[0].value = 'Stop';
+                    }
+                });
+
+                $('.play').on('click', function()
+                {
+
+                });
+
+                $('.erase').on('click', function()
+                {
+
+                });
+
+                $('.trogdor').on('dragstart', function()
+                {
+                    if(recording)
+                    {
+                        // Move the path to this element's location
+                        path.move(this);
+                        
+                        // Save the current position
+                        path.save(this);
+                    }
+                });
+
+                $('.trogdor').on('dragmove', function()
+                {
+                    if(recording)
+                    {
+                        // Save the current position
+                        path.save(this);
+                    }
+                });
+
+                $('.trogdor').on('dragend', function()
+                {
+                    if(recording)
+                    {
+                        // Save the current position
+                        path.save(this);
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="controls">
+            <h1>Speed</h1>
+            <input type="range" class="speed" value="1000" min="100" max="10000" step="100">
+            <input type="button" class="record" value="Record">
+            <input type="button" class="play" value="Play" disabled>
+            <input type="button" class="erase" value="Erase" disabled>
+        </div>
+
+        <svg height="100%" width="100%" class="background">
+          <path
+            stroke="#ccc"
+            stroke-width="2"
+            stroke-dasharray="10, 5"
+            fill="none" />
+        </svg>
+        
+        <img class="trogdor" src="trogdor.png">
+    </body>
+</html>
