@@ -37,11 +37,25 @@
             var line =
             {
                 drawing: false,
-                path: [],
+                playing: false,
+                path:
+                {
+                    drawing: [],
+                    playing: []
+                },
 
                 draw: function()
                 {
-                    var text = line.path.join(' ');
+                    if(line.drawing)
+                    {
+                        var text = line.path.drawing.join(' ');
+                    }
+
+                    if(line.playing)
+                    {
+                        var text = line.path.playing.join(' ');                    
+                    }
+                    
                     $('path').elements[0].setAttribute('d', text);
                 },
 
@@ -53,13 +67,24 @@
 
                 save: function()
                 {
-                    line.path.push('L' + line.x + ' ' + line.y);
+                    line.path.drawing.push('L' + line.x + ' ' + line.y);
+                    line.draw();
+                },
+
+                play: function()
+                {
+                    if(line.path.playing.length == line.path.drawing.length)
+                    {
+                        line.path.playing = [];
+                    }
+                    
+                    line.path.playing = line.path.drawing.slice(0, line.path.playing.length + 1);
                     line.draw();
                 },
 
                 clear: function()
                 {
-                    line.path = [];
+                    line.path.drawing = [];
                     line.draw();
                 }
             };
@@ -68,10 +93,12 @@
             {
                 $('body').on('mouseenter mousemove', line.position);
 
-                $('body').on('mousedown', function(event)
+                $('svg').on('mousedown', function(event)
                 {
+                    if(line.playing) return;
+                    
                     line.drawing = true;
-                    line.path.push('M' + event.clientX + ' ' + event.clientY);
+                    line.path.drawing.push('M' + event.clientX + ' ' + event.clientY);
                     line.save();
 
                     var speed = $('.speed').elements[0].value;
@@ -80,8 +107,42 @@
 
                 $('body').on('mouseup', function(event)
                 {
+                    if(line.playing) return;
+
                     line.drawing = false;
                     clearInterval(line.interval);
+                });
+
+                $('.replay').on('click', function(event)
+                {
+                    if(line.playing)
+                    {
+                        line.playing = false;
+                        clearInterval(line.interval);
+
+                        line.path.drawing = line.path.playing;
+                        $(this).elements[0].value = 'Replay';
+                    }
+                    else
+                    {
+                        line.playing = true;
+
+                        var speed = $('.speed').elements[0].value;
+                        line.interval = setInterval(line.play, speed);
+
+                        $(this).elements[0].value = 'Stop';
+                    }
+                });
+
+                $('.speed').on('change', function(event)
+                {
+                    if(line.playing)
+                    {
+                        clearInterval(line.interval);
+
+                        var speed = $('.speed').elements[0].value;
+                        line.interval = setInterval(line.play, speed);
+                    }
                 });
 
                 $('.reset').on('click', function(event)
@@ -95,6 +156,7 @@
         <div class="controls">
             <p>Speed</p>
             <input type="range" class="speed" value="50" min="1" max="200" step="5">
+            <input type="button" class="replay" value="Replay">
             <input type="button" class="reset" value="Erase">
         </div>
         
