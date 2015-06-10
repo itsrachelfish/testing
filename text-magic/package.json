@@ -1,0 +1,10 @@
+{
+  "name": "text-magic",
+  "version": "0.0.0",
+  "description": "Playing around with text",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "dragondrop": "^0.2.0",
+    "wetfish-basic": "^0.6.1"
+  }
+}
