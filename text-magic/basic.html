@@ -21,20 +21,9 @@
             // Helper function to initialize text on page load (saved form values)
             function init()
             {
-                $('.output text').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
+                $('.output').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
                 $('.output').style({'font-size': $('.size').el[0].value + 'pt'});
                 $('.output').style({'transform': 'rotate(' + $('.rotation').el[0].value + 'deg)'});
-            }
-
-            // Helper function to resize the svg based on text size
-            function resize()
-            {
-                var size = $('.output text').el[0].getBoundingClientRect();
-
-                $('.output').el[0].setAttribute('width', size.width + (size.width * 0.2));
-                $('.output').el[0].setAttribute('height', size.height + (size.height * 0.2));
-                
-                $('.output text').el[0].setAttribute('y', size.height);
             }
             
             $(document).ready(function()
@@ -43,14 +32,12 @@
                 
                 $('.text').on('input', function(event)
                 {
-                    $('.output text').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
-                    resize();
+                    $('.output').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
                 });
 
                 $('.size').on('input', function(event)
                 {
                     $('.output').style({'font-size': $(this).el[0].value + 'pt'});
-                    resize();
                 });
 
                 $('.rotation').on('input', function(event)
@@ -59,7 +46,6 @@
                 });
 
                 init();
-                resize();
             });
         </script>
     </head>
@@ -83,9 +69,7 @@
 
         <!-- Use a draggable wrapper to avoid transform conflicts -->
         <div class="output-wrap">
-            <svg class="output">
-                <text></text>
-            </svg>
+            <div class="output"></div>
         </div>
     </body>
 </html>
