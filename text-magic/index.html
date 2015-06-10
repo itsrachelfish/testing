@@ -18,9 +18,17 @@
         <script src="node_modules/dragondrop/dragondrop.js"></script>
 
         <script>
+            // Helper function to initialize text on page load (saved form values)
+            function init()
+            {
+                $('.output').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
+                $('.output').style({'font-size': $('.size').el[0].value + 'pt'});
+                $('.output').style({'transform': 'rotate(' + $('.rotation').el[0].value + 'deg)'});
+            }
+            
             $(document).ready(function()
             {
-                $('.output').dragondrop();
+                $('.output-wrap').dragondrop();
                 
                 $('.text').on('input', function(event)
                 {
@@ -36,6 +44,8 @@
                 {
                     $('.output').style({'transform': 'rotate(' + $(this).el[0].value + 'deg)'});
                 });
+
+                init();
             });
         </script>
     </head>
@@ -57,6 +67,9 @@
             </div>
         </div>
 
-        <div class="output"></div>
+        <!-- Use a draggable wrapper to avoid transform conflicts -->
+        <div class="output-wrap">
+            <div class="output"></div>
+        </div>
     </body>
 </html>
