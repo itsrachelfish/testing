@@ -10,11 +10,16 @@
 
         <style>
             .output-wrap {
-                border: 1px solid #000;
+                position: relative;
+                white-space: nowrap;
             }
-
-            .output {
-                border: 1px solid #444;
+            
+            .stroke {
+                color: red;
+                position: absolute;
+                top: 0;
+                z-index: -1;
+                left: -1pt;
             }
             
             label {
@@ -30,7 +35,9 @@
             function init()
             {
                 $('.output').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
+                $('.stroke').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
                 $('.output').style({'font-size': $('.size').el[0].value + 'pt'});
+                $('.stroke').style({'font-size': (parseInt($('.size').el[0].value) + 2) + 'pt'});
                 $('.output').style({'transform': 'rotate(' + $('.rotation').el[0].value + 'deg)'});
             }
             
@@ -41,16 +48,19 @@
                 $('.text').on('input', function(event)
                 {
                     $('.output').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
+                    $('.stroke').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
                 });
 
                 $('.size').on('input', function(event)
                 {
                     $('.output').style({'font-size': $(this).el[0].value + 'pt'});
+                    $('.stroke').style({'font-size': (parseInt($('.size').el[0].value) + 2) + 'pt'});
                 });
 
                 $('.rotation').on('input', function(event)
                 {
                     $('.output').style({'transform': 'rotate(' + $(this).el[0].value + 'deg)'});
+                    $('.stroke').style({'transform': 'rotate(' + $(this).el[0].value + 'deg)'});
                 });
 
                 init();
@@ -78,6 +88,7 @@
         <!-- Use a draggable wrapper to avoid transform conflicts -->
         <div class="output-wrap">
             <div class="output"></div>
+            <div class="stroke"></div>
         </div>
     </body>
 </html>
