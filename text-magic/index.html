@@ -10,15 +10,15 @@
 
         <style>
             .draggable {
-                border: 1px solid #000;
+                border: 1px solid red;
             }
 
             .rotatable {
-                border: 1px solid #444;
+                border: 1px solid green;
             }
 
             svg {
-                border: 1px solid #888;
+                border: 1px solid blue;
             }
             
             label {
@@ -29,31 +29,26 @@
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
         <script src="node_modules/dragondrop/dragondrop.js"></script>
 
-        <script>
-            var text =
-            {
-                content: '',
-                size: 0,
-                rotation: 0
-            }
-            
+        <script>            
             // Helper function to initialize text on page load (saved form values)
             function init()
             {
-                $('svg text').el[0].innerHTML = $('.text').el[0].value.replace(/</g, '&lt;');
-                $('svg text').el[0].setAttribute('font-size', $(this).el[0].value);
-                $('.rotatable').style({'transform': 'rotate(' + $(this).el[0].value + 'deg)'});
+                var controls = $('.controls textarea, .controls input');
+
+                // Haha wow this is such a hack
+                $(document).forEach(controls.el, function(index, element)
+                {
+                    $(element).trigger('input');
+                });
             }
 
             // Helper function to resize the svg based on text size
             function resize()
             {
-                var size = $('svg text').el[0].getBoundingClientRect();
+                var size = $('svg text').el[0].getBBox();
 
-                $('svg').el[0].setAttribute('width', size.width + (size.width * 0.2));
-                $('svg').el[0].setAttribute('height', size.height + (size.height * 0.2));
-                
-                $('svg text').el[0].setAttribute('y', size.height);
+                $('svg').el[0].setAttribute('width', size.width);
+                $('svg').el[0].setAttribute('height', size.height);
             }
             
             $(document).ready(function()
@@ -104,7 +99,7 @@
         <div class="draggable">
             <div class="rotatable">
                 <svg>
-                    <text></text>
+                    <text dominant-baseline="hanging"></text>
                 </svg>
             </div>
         </div>
