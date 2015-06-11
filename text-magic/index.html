@@ -11,6 +11,9 @@
         <style>
             .draggable {
                 border: 1px solid red;
+                position: absolute;
+                top: 50%;
+                left: 50%;
             }
 
             .rotatable {
@@ -22,6 +25,14 @@
             }
             
             label {
+                display: block;
+            }
+
+            .stroke-options {
+                display: none;
+            }
+
+            .active {
                 display: block;
             }
         </style>
@@ -45,7 +56,14 @@
             // Helper function to resize the svg based on text size
             function resize()
             {
-                var size = $('svg text').el[0].getBBox();
+                var size = $('svg .stroke').el[0].getBBox();
+
+                // Add the stroke size if stroke is enabled
+                if($('.enable-stroke').el[0].checked)
+                {
+                    size.height += parseInt($('.stroke-size').el[0].value);
+                    size.width += parseInt($('.stroke-size').el[0].value);
+                }
 
                 $('svg').el[0].setAttribute('width', size.width);
                 $('svg').el[0].setAttribute('height', size.height);
@@ -57,19 +75,65 @@
                 
                 $('.text').on('input', function(event)
                 {
-                    $('svg text').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
+                    $('svg .text').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
+                    $('svg .stroke').el[0].innerHTML = $(this).el[0].value.replace(/</g, '&lt;');
                     resize();
+                });
+
+                $('.color').on('input', function(event)
+                {
+                    $('svg .text').el[0].setAttribute('fill', $(this).el[0].value);
                 });
 
                 $('.size').on('input', function(event)
                 {
-                    $('svg text').el[0].setAttribute('font-size', $(this).el[0].value);
+                    $('svg .text').el[0].setAttribute('font-size', $(this).el[0].value);
+                    $('svg .stroke').el[0].setAttribute('font-size', $(this).el[0].value);
                     resize();
                 });
 
                 $('.rotation').on('input', function(event)
                 {
                     $('.rotatable').style({'transform': 'rotate(' + $(this).el[0].value + 'deg)'});
+                });
+
+                $('.enable-stroke').on('input click', function(event)
+                {
+                    if($(this).el[0].checked)
+                    {
+                        $('.stroke-options').addClass('active');
+                        $('.stroke-color').trigger('input');
+                    }
+                    else
+                    {
+                        $('.stroke-options').removeClass('active');
+                        $('svg .stroke').el[0].setAttribute('stroke', 'none');
+                    }
+                });
+
+                $('.stroke-color').on('input', function(event)
+                {
+                    if($('.enable-stroke').el[0].checked)
+                    {
+                        $('svg .stroke').el[0].setAttribute('stroke', $(this).el[0].value);
+                    }
+                });
+
+                $('.stroke-size').on('input', function(event)
+                {
+                    if($('.enable-stroke').el[0].checked)
+                    {
+                        $('svg .stroke').el[0].setAttribute('stroke-width', $(this).el[0].value);
+
+                        // Reposition text
+                        $('svg .stroke').el[0].setAttribute('x', $(this).el[0].value / 2);
+                        $('svg .stroke').el[0].setAttribute('y', $(this).el[0].value / 2);
+
+                        $('svg .text').el[0].setAttribute('x', $(this).el[0].value / 2);
+                        $('svg .text').el[0].setAttribute('y', $(this).el[0].value / 2);
+
+                        resize();
+                    }
                 });
 
                 init();
@@ -85,6 +149,11 @@
             </div>
 
             <div>
+                <label>Color</label>
+                <input class="color" type="text" value="black">
+            </div>
+
+            <div>
                 <label>Size</label>
                 <input class="size" type="range" value="12" min="1" max="100">
             </div>
@@ -93,13 +162,40 @@
                 <label>Rotation</label>
                 <input class="rotation" type="range" value="0" min="0" max="360">
             </div>
+
+            <div>
+                <label>Outline?</label>
+                <input class="enable-stroke" type="checkbox">
+            </div>
+            
+            <div class="stroke-options">
+                <div>
+                    <label>Outline Color</label>
+                    <input class="stroke-color" type="text" value="purple">
+                </div>
+
+                <div>
+                    <label>Outline Size</label>
+                    <input class="stroke-size" type="range" value="2" min="1" max="100">
+                </div>
+            </div>
         </div>
 
         <!-- Use a draggable wrapper to avoid transform conflicts -->
         <div class="draggable">
             <div class="rotatable">
                 <svg>
-                    <text dominant-baseline="hanging"></text>
+                    <text
+                        class="stroke"
+                        fill="none"
+                        dominant-baseline="hanging"
+                        stroke-linejoin="round">
+                    </text>
+                        
+                    <text
+                        class="text"
+                        dominant-baseline="hanging">
+                    </text>
                 </svg>
             </div>
         </div>
