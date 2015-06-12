@@ -82,21 +82,7 @@
 
                 $('.color').on('input', function(event)
                 {
-                    // Test if the "color" is actually a URL
-                    var url = document.createElement('a');
-                    url.href = $(this).el[0].value;
-
-                    // If a URL was found
-                    if(url.hostname)
-                    {
-                        $('#text-pattern image').el[0].setAttribute('xlink:href', url.href);
-                        $('svg .text').el[0].setAttribute('fill', 'url(#text-pattern)');
-                    }
-                    // Otherwise, it must be a color
-                    else
-                    {
-                        $('svg .text').el[0].setAttribute('fill', $(this).el[0].value);
-                    }
+                    $('svg .text').el[0].setAttribute('fill', $(this).el[0].value);
                 });
 
                 $('.size').on('input', function(event)
@@ -129,21 +115,7 @@
                 {
                     if($('.enable-stroke').el[0].checked)
                     {
-                        // Test if the "color" is actually a URL
-                        var url = document.createElement('a');
-                        url.href = $(this).el[0].value;
-
-                        // If a URL was found
-                        if(url.hostname)
-                        {
-                            $('#stroke-pattern image').el[0].setAttribute('xlink:href', url.href);
-                            $('svg .stroke').el[0].setAttribute('stroke', 'url(#stroke-pattern)');
-                        }
-                        // Otherwise, it must be a color
-                        else
-                        {
-                            $('svg .stroke').el[0].setAttribute('stroke', $(this).el[0].value);
-                        }
+                        $('svg .stroke').el[0].setAttribute('stroke', $(this).el[0].value);
                     }
                 });
 
@@ -213,14 +185,6 @@
         <div class="draggable">
             <div class="rotatable">
                 <svg>
-                    <pattern id="stroke-pattern" width="250" height="250" patternUnits="userSpaceOnUse">
-                        <image xlink:href="" width="250" height="250"></image>
-                    </pattern>
-                    
-                    <pattern id="text-pattern" width="250" height="250" patternUnits="userSpaceOnUse">
-                        <image xlink:href="" width="250" height="250"></image>
-                    </pattern>
-                    
                     <text
                         class="stroke"
                         fill="none"
