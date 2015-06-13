@@ -40,7 +40,7 @@
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
         <script src="node_modules/dragondrop/dragondrop.js"></script>
 
-        <script>            
+        <script>
             // Helper function to initialize text on page load (saved form values)
             function init()
             {
@@ -82,20 +82,18 @@
 
                 $('.color').on('input', function(event)
                 {
+                    var color = $(this).el[0].value;
+                    
                     // Test if the "color" is actually a URL
-                    var url = document.createElement('a');
-                    url.href = $(this).el[0].value;
-
-                    // If a URL was found
-                    if(url.hostname)
+                    if(color.match(/^http/))
                     {
-                        $('#text-pattern image').el[0].setAttribute('xlink:href', url.href);
+                        $('#text-pattern image').el[0].setAttribute('xlink:href', color);
                         $('svg .text').el[0].setAttribute('fill', 'url(#text-pattern)');
                     }
                     // Otherwise, it must be a color
                     else
                     {
-                        $('svg .text').el[0].setAttribute('fill', $(this).el[0].value);
+                        $('svg .text').el[0].setAttribute('fill', color);
                     }
                 });
 
@@ -129,20 +127,18 @@
                 {
                     if($('.enable-stroke').el[0].checked)
                     {
+                        var color = $(this).el[0].value;
+                        
                         // Test if the "color" is actually a URL
-                        var url = document.createElement('a');
-                        url.href = $(this).el[0].value;
-
-                        // If a URL was found
-                        if(url.hostname)
+                        if(color.match(/^http/))
                         {
-                            $('#stroke-pattern image').el[0].setAttribute('xlink:href', url.href);
+                            $('#stroke-pattern image').el[0].setAttribute('xlink:href', color);
                             $('svg .stroke').el[0].setAttribute('stroke', 'url(#stroke-pattern)');
                         }
                         // Otherwise, it must be a color
                         else
                         {
-                            $('svg .stroke').el[0].setAttribute('stroke', $(this).el[0].value);
+                            $('svg .stroke').el[0].setAttribute('stroke', color);
                         }
                     }
                 });
