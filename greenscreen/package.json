@@ -1,0 +1,9 @@
+{
+  "name": "greenscreen",
+  "version": "0.0.0",
+  "description": "Chroma key canvas",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.6.1"
+  }
+}
