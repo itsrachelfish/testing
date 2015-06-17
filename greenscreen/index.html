@@ -13,8 +13,12 @@
                 margin: 0;
                 background-image: url(bald-eagle.jpg);
             }
-            
+
             video {
+                display: none;
+            }
+            
+            video, canvas {
                 height: 100%;
                 width: 100%;
                 position: absolute;
@@ -24,6 +28,28 @@
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
         
         <script>
+            $(document).ready(function()
+            {
+                var video = $('video').el[0];
+                var canvas = $('canvas').el[0];
+                var buffer = canvas.getContext('2d');
+
+                function draw()
+                {
+                    buffer.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    var	frame = buffer.getImageData(0, 0, canvas.width, canvas.height);
+
+                    for(var i = 1, l = frame.data.length; i < l; i += 4)
+                    {
+                        frame.data[i + 2] = frame.data[i];
+                        frame.data[i] = 0;
+                    }
+
+                    buffer.putImageData(frame, 0, 0, 0, 0, canvas.width, canvas.height);
+                }
+                
+                setInterval(draw, 100);
+            });
         </script>
     </head>
     <body>
@@ -31,5 +57,7 @@
             <source src="American-Flag.mp4" type="video/mp4">
             Your browser does not support the <code>video</code> element.
         </video>
+
+        <canvas></canvas>
     </body>
 </html>
