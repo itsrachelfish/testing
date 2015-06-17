@@ -39,10 +39,14 @@
                     buffer.drawImage(video, 0, 0, canvas.width, canvas.height);
                     var	frame = buffer.getImageData(0, 0, canvas.width, canvas.height);
 
-                    for(var i = 1, l = frame.data.length; i < l; i += 4)
+                    for(var i = 0, l = frame.data.length; i < l; i += 4)
                     {
-                        frame.data[i + 2] = frame.data[i];
-                        frame.data[i] = 0;
+//                        var rgb = frame.data.slice(i, i + 3);
+
+  //                      if(
+                        
+                        frame.data[i + 3] = frame.data[i];
+//                        frame.data[i] = 0;
                     }
 
                     buffer.putImageData(frame, 0, 0, 0, 0, canvas.width, canvas.height);
