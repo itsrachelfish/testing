@@ -43,7 +43,8 @@
 
                     for(var i = 0, l = frame.data.length; i < l; i += 4)
                     {
-                        var rgb = frame.data.slice(i, i + 3);
+                        var rgb = Array.prototype.slice.call(frame.data, i, i + 3);
+//                        var rgb = frame.data.slice(i, i + 3);
 
                         //console.log(rgb);
                         //return;
