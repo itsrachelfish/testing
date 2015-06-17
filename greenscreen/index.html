@@ -19,9 +19,11 @@
             }
             
             video, canvas {
-                height: 100%;
-                width: 100%;
+                height: 50%;
+                width: 50%;
                 position: absolute;
+                bottom: 0;
+                right: 0;
             }
         </style>
 
@@ -41,18 +43,21 @@
 
                     for(var i = 0, l = frame.data.length; i < l; i += 4)
                     {
-//                        var rgb = frame.data.slice(i, i + 3);
+                        var rgb = frame.data.slice(i, i + 3);
 
-  //                      if(
+                        //console.log(rgb);
+                        //return;
                         
-                        frame.data[i + 3] = frame.data[i];
-//                        frame.data[i] = 0;
+                        if(rgb[0] < 125 && rgb[1] > 150 && rgb[2] < 125)
+                        {
+                            frame.data[i + 3] = 0;
+                        }
                     }
 
                     buffer.putImageData(frame, 0, 0, 0, 0, canvas.width, canvas.height);
                 }
                 
-                setInterval(draw, 100);
+                setInterval(draw, 20);
             });
         </script>
     </head>
