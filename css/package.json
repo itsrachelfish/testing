@@ -1,0 +1,9 @@
+{
+  "name": "css",
+  "version": "0.0.0",
+  "description": "Miscelaneous CSS stuff",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.6.1"
+  }
+}
