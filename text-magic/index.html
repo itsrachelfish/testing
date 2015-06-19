@@ -44,13 +44,7 @@
             // Helper function to initialize text on page load (saved form values)
             function init()
             {
-                var controls = $('.controls textarea, .controls input');
-
-                // Haha wow this is such a hack
-                $(document).forEach(controls.el, function(index, element)
-                {
-                    $(element).trigger('input');
-                });
+                $('.controls textarea, .controls input').trigger('input');
             }
 
             // Helper function to resize the svg based on text size
