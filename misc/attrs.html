@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Attribute tests</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                $('.add').el[0].setAttribute('one', 'test');
+                $('.add').el[0].setAttribute('two', true);
+                $('.add').el[0].setAttribute('three', false);
+                $('.add').el[0].setAttribute('four', '');
+                $('.add').el[0].setAttribute('five', 5);
+
+                $('.remove').el[0].removeAttribute('remove');
+                
+                $('.replace').el[0].setAttribute('replace', 'replaced!');
+
+                console.log($('.get').el[0].getAttribute('title'));
+                console.log($('.get').el[0].getAttribute('example'));
+                console.log($('.get').el[0].getAttribute('numeric'));
+            });
+        </script>
+    </head>
+    <body>
+        <div class="add"></div>
+        <div class="remove" remove="me"></div>
+        <div class="replace" replace="me"></div>
+        <div class="get" title="Neato!" example="true" numeric="1"></div>
+    </body>
+</html>
