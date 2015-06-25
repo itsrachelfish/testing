@@ -13,19 +13,30 @@
         <script>
             $(document).ready(function()
             {
-                $('.add').el[0].setAttribute('one', 'test');
-                $('.add').el[0].setAttribute('two', true);
-                $('.add').el[0].setAttribute('three', false);
-                $('.add').el[0].setAttribute('four', '');
-                $('.add').el[0].setAttribute('five', 5);
+                $('.trigger-attrs').on('click', function()
+                {
+                    $('.add').el[0].setAttribute('one', 'test');
+                    $('.add').el[0].setAttribute('two', true);
+                    $('.add').el[0].setAttribute('three', false);
+                    $('.add').el[0].setAttribute('four', '');
+                    $('.add').el[0].setAttribute('five', 5);
 
-                $('.remove').el[0].removeAttribute('remove');
-                
-                $('.replace').el[0].setAttribute('replace', 'replaced!');
+                    $('.remove').el[0].removeAttribute('remove');
+                    
+                    $('.replace').el[0].setAttribute('replace', 'replaced!');
 
-                console.log($('.get').el[0].getAttribute('title'));
-                console.log($('.get').el[0].getAttribute('example'));
-                console.log($('.get').el[0].getAttribute('numeric'));
+                    console.log($('.get').el[0].getAttribute('title'));
+                    console.log($('.get').el[0].getAttribute('example'));
+                    console.log($('.get').el[0].getAttribute('numeric'));
+                });
+
+                $('.trigger-inputs').on('click', function()
+                {
+                    $('.check').el[0].setAttribute('checked', '');
+                    $('.uncheck').el[0].removeAttribute('checked');
+                    $('.radio').el[1].setAttribute('checked', '');
+                    $('select option').el[2].setAttribute('selected', '');
+                });
             });
         </script>
     </head>
@@ -34,5 +45,23 @@
         <div class="remove" remove="me"></div>
         <div class="replace" replace="me"></div>
         <div class="get" title="Neato!" example="true" numeric="1"></div>
+
+        <input class="check" type="checkbox">
+        <input class="uncheck" type="checkbox" checked>
+
+        <input class="radio" type="radio" name="radio" checked>
+        <input class="radio" type="radio" name="radio">
+        <input class="radio" type="radio" name="radio">
+
+        <select>
+            <option>One</option>
+            <option>Two</option>
+            <option>Three</option>
+        </select>
+
+        <div>
+            <input class="trigger-attrs" type="button" value="Change Attributes">
+            <input class="trigger-inputs" type="button" value="Change Inputs">
+        </div>
     </body>
 </html>
