@@ -1,0 +1,9 @@
+{
+  "name": "learning-stuff",
+  "version": "0.0.0",
+  "description": "A little project to teach people how to code!",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.7.1"
+  }
+}

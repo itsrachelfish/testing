@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Touch events?</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; font-size: 8pt; background-color: #44085e; }
+            .star { color: white; }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            function randomInt(min, max)
+            {
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+            
+            function generateStar()
+            {
+                var star = document.createElement('div');
+                $(star).text('*');
+                $(star).addClass('star');
+
+                var randomTop = randomInt(0, $(window).height().inner);
+                var randomLeft = randomInt(0, $(window).width().inner);
+                
+                $(star).style({position: 'absolute', top: randomTop + 'px', left: randomLeft + 'px'});                
+                $('.sky').el[0].appendChild(star);
+            }
+
+            function generateStars(number)
+            {
+                while(number > 0)
+                {
+                    generateStar();
+                    number = number - 1;
+                }
+            }
+            
+            $(document).ready(function()
+            {
+                generateStars(100);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="sky"></div>
+    </body>
+</html>
