@@ -1,0 +1,9 @@
+{
+  "name": "canvas-timeline",
+  "version": "0.0.0",
+  "description": "A little timeline made in canvas",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.7.5"
+  }
+}

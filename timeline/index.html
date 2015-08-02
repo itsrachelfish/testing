@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Canvas Timeline</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            .timeline {
+                border: 1px solid #ccc;
+            }
+            
+            .timeline, canvas {
+                width: 300px;
+                height: 50px;
+            }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            function drawLine(context, start, length)
+            {
+                context.beginPath();
+                context.moveTo(start[0], start[1]);
+                context.lineTo(start[0], start[1] + length);
+                context.stroke();
+            }
+            
+            function generateTimeline()
+            {
+                var scale = $('.scale').value();
+                var canvas = $('canvas').el[0];
+                var context = canvas.getContext('2d');
+
+                // Make sure the canvas is cleared
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                for(var i = 0, l = scale + 1; i < l; i++)
+                {
+                    var offset = (canvas.width / scale) * i;
+                    
+                    if(i % 10)
+                    {
+                        drawLine(context, [offset, canvas.height], -10);
+                    }
+                    else
+                    {
+                        drawLine(context, [offset, canvas.height], -25);
+                    }
+                }
+            }
+            
+            $(document).ready(function()
+            {
+                generateTimeline();
+
+                $('.scale').on('input', function()
+                {
+                    generateTimeline();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="timeline">
+            <canvas></canvas>
+        </div>
+
+        Scale <input class="scale" type="range" min="1" max="300" value="60" step="1">
+    </body>
+</html>
