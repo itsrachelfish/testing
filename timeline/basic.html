@@ -11,16 +11,11 @@
         <style>
             .timeline {
                 border: 1px solid #ccc;
-                background-image: url(skulls.png); /* from subtlepatterns.com */
             }
             
             .timeline, canvas {
                 width: 300px;
                 height: 50px;
-            }
-
-            canvas {
-                position: absolute;
             }
         </style>
 
@@ -38,7 +33,7 @@
             function generateTimeline()
             {
                 var scale = $('.scale').value();
-                var canvas = $('canvas.lines').el[0];
+                var canvas = $('canvas').el[0];
                 var context = canvas.getContext('2d');
 
                 // Make sure the canvas is cleared
@@ -58,32 +53,6 @@
                     }
                 }
             }
-
-            var hover =
-            {
-                clear: function()
-                {
-                    var canvas = $('canvas.hover').el[0];
-                    var context = canvas.getContext('2d');
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                },
-
-                draw: function(position)
-                {
-                    var canvas = $('canvas.hover').el[0];
-                    var context = canvas.getContext('2d');
-
-                    hover.clear();
-
-                    context.beginPath();
-                    context.moveTo(position, 0);
-                    context.lineTo(position, canvas.height);
-                    context.lineWidth = 3;
-                    
-                    context.strokeStyle = "rgb(255, 175, 100)";
-                    context.stroke();
-                }
-            }
             
             $(document).ready(function()
             {
@@ -93,24 +62,12 @@
                 {
                     generateTimeline();
                 });
-
-                
-                $('.timeline').on('mouseenter mousemove', function(event)
-                {
-                    hover.draw(event.layerX);
-                });
-
-                $('.timeline').on('mouseleave', function(event)
-                {
-                    hover.clear();
-                });
             });
         </script>
     </head>
     <body>
         <div class="timeline">
-            <canvas class="hover"></canvas>
-            <canvas class="lines"></canvas>
+            <canvas></canvas>
         </div>
 
         Scale <input class="scale" type="range" min="1" max="300" value="60" step="1">
