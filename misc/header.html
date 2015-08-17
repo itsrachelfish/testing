@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Sticky header</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+
+        <style>
+            body {
+                background-image: url(skulls.png); /* from subtlepatterns.com */
+                margin: 0;
+            }
+
+            .header {
+                background-color:rgba(0, 0, 0, 0.5);
+                width: 100%;
+                position: fixed;
+                height: 4em;
+            }
+
+            .background {
+                position: fixed;
+                background-color:rgba(0, 0, 0, 0.5);
+                top: 5em;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                overflow-y: scroll;
+            }
+
+            .content {
+                height: 2000px;
+            }
+        </style>
+
+        <script>
+            $(document).ready(function()
+            {
+                $('.background').on('scroll', function()
+                {
+                    var scroll = $(this).scroll();
+                    scroll.top *= -1;
+                    
+                    $('body').style({'background-position': '0 ' + scroll.top + 'px'});
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <section class="header">
+            Hello world!
+        </section>
+
+        <div class="background">
+            <section class="content">
+                This is the content!
+            </section>
+        </div>
+    </body>
+</html>
