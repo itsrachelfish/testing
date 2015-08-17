@@ -30,7 +30,7 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                overflow-y: scroll;
+                overflow: hidden;
             }
 
             .content {
@@ -39,14 +39,25 @@
         </style>
 
         <script>
+            function resize()
+            {
+                var height = $('.content').height();
+                $('body').style({height: height + 'px'});
+            }
+            
             $(document).ready(function()
             {
-                $('.background').on('scroll', function()
+                var timeout = {'window' : false, 'background': false};
+                
+                $(window).on('resize load', function()
+                {
+                    resize();
+                });
+
+                $(window).on('scroll', function(event)
                 {
                     var scroll = $(this).scroll();
-                    scroll.top *= -1;
-                    
-                    $('body').style({'background-position': '0 ' + scroll.top + 'px'});
+                    $('.background').el[0].scrollTop = scroll.top;
                 });
             });
         </script>
