@@ -1,0 +1,9 @@
+{
+  "name": "cloud-paths",
+  "version": "0.0.0",
+  "description": "Some clouds that follow paths",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.7.6"
+  }
+}
