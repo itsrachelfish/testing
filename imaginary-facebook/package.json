@@ -5,7 +5,11 @@
   "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^11.2.0"
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.4.0"
   },
   "dependencies": {
     "backbone": "^1.2.3",
