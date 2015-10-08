@@ -1,0 +1,18 @@
+{
+  "name": "imaginary-facebook",
+  "version": "0.0.0",
+  "description": "A little demo app using React, Flux, and Backbone",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^11.2.0"
+  },
+  "dependencies": {
+    "backbone": "^1.2.3",
+    "bootstrap": "^3.3.5",
+    "express": "^4.13.3",
+    "flux": "^2.1.1",
+    "jquery": "^2.1.4",
+    "react": "^0.14.0"
+  }
+}
