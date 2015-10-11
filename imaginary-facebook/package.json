@@ -12,11 +12,12 @@
     "watchify": "^3.4.0"
   },
   "dependencies": {
-    "backbone": "^1.2.3",
     "bootstrap": "^3.3.5",
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "jquery": "^2.1.4",
-    "react": "^0.14.0"
+    "react": "^0.14.0",
+    "react-router": "^1.0.0-rc3",
+    "reactify": "^1.1.1"
   }
 }

@@ -4,9 +4,10 @@ var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var watchify = require('watchify');
 var browserify = require('browserify');
+var reactify = require('reactify');
 
 // Initialize watchify
-var bundler = watchify(browserify({debug: true}));
+var bundler = watchify(browserify({debug: true}).transform(reactify));
 
 // Object to handle bundling / compilation tasks
 var bundle =
