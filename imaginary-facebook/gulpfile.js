@@ -7,26 +7,42 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 
 // Initialize watchify
-var bundler = watchify(browserify({debug: true}).transform(reactify));
+var vendorBundler = watchify(browserify());
+var jsBundler = watchify(browserify({debug: true, transform: 'reactify'}));
 
 // Object to handle bundling / compilation tasks
 var bundle =
 {
-    js: function()
+    vendor: function()
     {
-        bundler.bundle()
+        vendorBundler.bundle()
         // Log errors if they happen
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-        .pipe(source('bundle.js'))
+        .pipe(source('vendor-bundle.js'))
+        .pipe(gulp.dest('./static/js'));
+    },
+    
+    main: function()
+    {
+        jsBundler.bundle()
+        // Log errors if they happen
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .pipe(source('main-bundle.js'))
         .pipe(gulp.dest('./static/js'));
     }
 };
 
-// Add main script file to the bundle
-bundler.add('./static/js/main.js');
-bundler.on('update', bundle.js);
-bundler.on('log', gutil.log);
+// Add vendor scripts to the bundle
+vendorBundler.add('./static/js/vendor.js');
+vendorBundler.on('update', bundle.vendor);
+vendorBundler.on('log', gutil.log);
 
-// Bundle js
-gulp.task('default', ['js']);
-gulp.task('js', bundle.js);
+// Add main script file to the bundle
+jsBundler.add('./static/js/main.js');
+jsBundler.on('update', bundle.main);
+jsBundler.on('log', gutil.log);
+
+// Bundle scripts
+gulp.task('default', ['vendor', 'main']);
+gulp.task('vendor', bundle.vendor);
+gulp.task('main', bundle.main);

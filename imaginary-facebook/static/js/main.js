@@ -1,5 +1,3 @@
-var $ = jQuery = require('jquery');
-var React = require('react');
 var Home = require('./pages/home');
 
 $(document).ready(function()
