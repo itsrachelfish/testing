@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    background-color: #E9EAED;
+    font-family: helvetica,arial,sans-serif;
+}
+
+header {
+    background-color: #3A5795;
+    box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.52);
+    border-bottom: 1px solid #000;
+    height: 42px;
+    color: #fff;
+}
+
+header .inside {
+    width: 75%;
+    margin: 0 auto;
+}
+
+header .logo {
+    border-radius: 2px;
+    background-color: #fff;
+    color: #3A5795;
+    display: inline-block;
+    padding: 0.25em 0.1em 0em 0.5em;
+    transform: translateY(0.25em);
+    line-height: 18pt;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+header .search {
+    line-height: 1.7em;
+}
+
+header .avatar {
+    height: 27px;
+    transform: translateY(0.5em);
+}
+
+header .name {
+    font-size: 12px;
+    font-weight: bold;
+    transform: translateY(-0.1em);
+    display: inline-block;
+}
+
+header .messages {
+    font-size: 12px;
+    transform: translateY(-0.1em);
+    display: inline-block;
+    margin-left: 2em;
+}
+
+.left { float: left }
+.right { float: right }
