@@ -72,13 +72,25 @@ header .messages {
     right: 0;
     top: 0;
     padding-top: 3.5em;
-    padding-left: 10px;
     box-sizing: border-box;
+}
+
+.buddy-list .friend {
+    cursor: pointer;
+    border-top: 1px solid #e9eaed;
+    border-bottom: 1px solid #e9eaed;
+    padding-left: 10px;
+}
+
+.buddy-list .friend:hover {
+    background-color: #e5e5e5;
+    border-color: #d5d6d9;
 }
 
 .buddy-list .avatar {
     width: 32px;
     height: 32px;
+    transform: translateY(0.15em);
 }
 
 .buddy-list .name {
@@ -104,6 +116,8 @@ header .messages {
     background-color: #fff;
     width: 24%;
     font-size: 9pt;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .sponsored .title {
@@ -111,6 +125,28 @@ header .messages {
     font-weight: bold;
 }
 
+.ad {
+    text-decoration: none;
+}
+
+.ad img {
+    max-width: 100%;
+}
+
+.ad .title {
+    color: #3B5998;
+    margin-bottom: 0;
+}
+
+.ad .text {
+    color: #9197A3;
+    font-size:10pt;
+}
+
+hr {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
 
 .left { float: left }
 .right { float: right }
