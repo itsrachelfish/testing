@@ -5,16 +5,21 @@ body {
 }
 
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     background-color: #3A5795;
     box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.52);
     border-bottom: 1px solid #000;
     height: 42px;
     color: #fff;
+    z-index: 100;
 }
 
 header .inside {
     width: 75%;
     margin: 0 auto;
+    padding-right: 10em;
 }
 
 header .logo {
@@ -31,6 +36,12 @@ header .logo {
 
 header .search {
     line-height: 1.7em;
+    width: 25em;
+}
+
+header .user:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 header .avatar {
@@ -51,6 +62,55 @@ header .messages {
     display: inline-block;
     margin-left: 2em;
 }
+
+.buddy-list {
+    position: fixed;
+    width: 15%;
+    height: 100%;
+    color: #141823;
+    border-left: 1px solid #ccc;
+    right: 0;
+    top: 0;
+    padding-top: 3.5em;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.buddy-list .avatar {
+    width: 32px;
+    height: 32px;
+}
+
+.buddy-list .name {
+    display: inline-block;
+    transform: translateY(-0.5em);
+}
+
+.content {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 3.5em;
+    padding-right: 10em;
+}
+
+.content div, .content article {
+    background-color: #fff;
+    width: 75%;
+    margin-bottom: 1em;
+    font-size: 11pt;
+}
+
+.sponsored {
+    background-color: #fff;
+    width: 24%;
+    font-size: 9pt;
+}
+
+.sponsored .title {
+    color: #9197A3;
+    font-weight: bold;
+}
+
 
 .left { float: left }
 .right { float: right }
