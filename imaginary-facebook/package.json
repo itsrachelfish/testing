@@ -1,23 +1,20 @@
 {
   "name": "imaginary-facebook",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A little demo app using React, Flux, and Backbone",
   "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^11.2.0",
     "gulp": "^3.9.0",
-    "gulp-util": "^3.0.6",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.4.0"
+    "gulp-webpack": "^1.5.0",
+    "jsx-loader": "^0.13.2",
   },
   "dependencies": {
-    "bootstrap": "^3.3.5",
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "jquery": "^2.1.4",
     "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3",
-    "reactify": "^1.1.1"
   }
 }
