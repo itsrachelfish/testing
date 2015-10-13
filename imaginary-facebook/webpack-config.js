@@ -1,3 +1,5 @@
+//var path = require('path');
+
 module.exports =
 {
     watch: true,
@@ -10,9 +12,14 @@ module.exports =
             { test: /\.js$/, loader: 'jsx-loader?harmony' }
         ],
     },
-    
+
+    entry:
+    {
+        main: './static/js/main.js',
+    },
+
     output:
     {
-        filename: 'bundle.js'
+        filename: './bundle.js'
     }
 };

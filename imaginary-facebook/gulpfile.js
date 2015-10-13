@@ -1,12 +1,12 @@
-var gulp = require('gulp');
-var webpack = require('gulp-webpack');
+var gulp = require("gulp");
+var webpack = require("gulp-webpack");
 
 // Object to handle bundling / compilation tasks
 var bundle =
 {
     scripts: function()
     {
-        return gulp.src('./static/js/main.js')
+        return gulp.src('./static/js/main')
           .pipe(webpack(require('./webpack-config')))
           .pipe(gulp.dest('./static/js/'));
     }
