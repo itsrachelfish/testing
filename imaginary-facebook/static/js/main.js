@@ -1,9 +1,6 @@
-var $ = jQuery = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var HomePage = require('./views/home/homePage');
+var Router = require('react-router');
+var Routes = require('./routes');
 
-$(document).ready(function()
-{
-    ReactDOM.render(<HomePage/>, $('#app')[0]);
-});
+//ReactDOM.render(<Router>{Routes}</Router>, document.getElementById('app'));
