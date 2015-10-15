@@ -1,7 +1,9 @@
 var React = require('react');
 
-var FourOhFour = React.createClass({
-    render: function() {
+var NotFound = React.createClass(
+{
+    render: function()
+    {
         return (
             <div className="cool">
                 <h1>Page Not Found</h1>
@@ -11,4 +13,4 @@ var FourOhFour = React.createClass({
     }
 });
 
-module.exports = FourOhFour;
+module.exports = NotFound;
