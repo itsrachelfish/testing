@@ -35,8 +35,9 @@ header .logo {
 }
 
 header .search {
-    line-height: 1.7em;
+    line-height: 18pt;
     width: 25em;
+    margin-left: 0.3em;
 }
 
 header .user:hover {
@@ -96,6 +97,7 @@ header .messages {
 .buddy-list .name {
     display: inline-block;
     transform: translateY(-0.5em);
+    margin-left: 0.3em;
 }
 
 .content {

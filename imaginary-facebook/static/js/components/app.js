@@ -1,5 +1,7 @@
 var React = require('react');
 var Header = require('./common/header');
+var BuddyList = require('./common/buddyList');
+var Ads = require('./common/ads');
 
 var App = React.createClass(
 {
@@ -8,7 +10,12 @@ var App = React.createClass(
         return (
             <div>
                 <Header />
-                {this.props.children}
+                <BuddyList />
+
+                <section className="content">
+                    <Ads />
+                    {this.props.children}
+                </section>
             </div>
         );
     }
