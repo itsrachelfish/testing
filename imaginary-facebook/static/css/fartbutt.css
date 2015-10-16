@@ -81,6 +81,7 @@ header .messages {
     border-top: 1px solid #e9eaed;
     border-bottom: 1px solid #e9eaed;
     padding-left: 10px;
+    position: relative;
 }
 
 .buddy-list .friend:hover {
@@ -98,6 +99,24 @@ header .messages {
     display: inline-block;
     transform: translateY(-0.5em);
     margin-left: 0.3em;
+}
+
+.buddy-list .status {
+    position: absolute;
+    right: 0.5em;
+    top: 0.9em;
+    width: 0.5em;
+    height: 0.5em;
+    display: inline-block;
+    border-radius: 1em;
+}
+
+.buddy-list .online {
+    background-color: #01ad01;
+}
+
+.buddy-list .offline {
+    background-color: #808080;
 }
 
 .content {
