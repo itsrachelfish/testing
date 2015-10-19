@@ -1,40 +1,45 @@
 var React = require('react');
+var BuddyStore = require('../../stores/buddyStore');
 
 var BuddyList = React.createClass(
 {
+    getInitialState: function()
+    {
+        return { buddies: BuddyStore.listBuddies() };
+    },
+
+    componentWillMount: function()
+    {
+        BuddyStore.addChangeListener(this.onChange);
+    },
+
+    componentWillUnmount: function()
+    {
+        BuddyStore.removeChangeListener(this.onChange);
+    },
+
+    onChange: function()
+    {
+        this.setState({ buddies: BuddyStore.listBuddies() });
+    },
+    
     render: function()
     {
+        function createBuddy(buddy)
+        {
+            console.log(buddy);
+            return (
+                <div className="friend" key={ buddy.name }>
+                    <img className="avatar" src={"/img/" + buddy.avatar } />
+                    <span className="name">{ buddy.name }</span>
+                    <span className={"status " + buddy.status }></span>
+                </div>
+            );
+        }
+        
         return (
             <aside className="buddy-list">
-                <div className="friend">
-                    <img className="avatar" src="/img/friend-1.png" />
-                    <span className="name">Fox McCloud</span>
-                    <span className="status online"></span>
-                </div>
-
-                <div className="friend">
-                    <img className="avatar" src="/img/friend-2.png" />
-                    <span className="name">Rachel Fish</span>
-                    <span className="status online"></span>
-                </div>
-
-                <div className="friend">
-                    <img className="avatar" src="/img/friend-3.jpg" />
-                    <span className="name">River God</span>
-                    <span className="status offline"></span>
-                </div>
-
-                <div className="friend">
-                    <img className="avatar" src="/img/friend-4.png" />
-                    <span className="name">Phantom Fish</span>
-                    <span className="status offline"></span>
-                </div>
-
-                <div className="friend">
-                    <img className="avatar" src="/img/friend-5.jpg" />
-                    <span className="name">Washing Girl</span>
-                    <span className="status offline"></span>
-                </div>
+                {this.state.buddies.map(createBuddy, this)}                
             </aside>
         );
     }
