@@ -5,30 +5,22 @@ var app = express();
 var http = require('http').createServer(app);
 http.listen(1337);
 
+
+// Initialize friend data
+var friends = require('./friends');
+friends.init();
+
+// Randomly change friend statuses every 30 seconds
+setInterval(friends.update, 30 * 1000);
+
+
 // Serve static files
 app.use(express.static("../static/"));
 
 // API requests
-app.get('/api/buddies', function(req, res)
+app.get('/api/friends', function(req, res)
 {
-    // Loop through buddies and generate random data
-    var buddies = require('./buddies');
-
-    buddies.forEach(function(buddy, index)
-    {
-        if(Math.round(Math.random()))
-        {
-            buddy.status = 'online';
-        }
-        else
-        {
-            buddy.status = 'offline';
-        }
-        
-        buddies[index] = buddy;
-    });
-
-    res.send(buddies);
+    res.send(friends.list);
 });
 
 // Catchall to handle browser history URLs
@@ -36,5 +28,6 @@ app.get('/*', function (req, res)
 {
     res.sendFile(path.resolve(__dirname + "/../static/index.html"));
 });
+
 
 console.log("Imaginary Facebook Server Started.");

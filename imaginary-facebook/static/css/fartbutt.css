@@ -64,7 +64,7 @@ header .messages {
     margin-left: 2em;
 }
 
-.buddy-list {
+.friend-list {
     position: fixed;
     width: 15%;
     height: 100%;
@@ -76,7 +76,7 @@ header .messages {
     box-sizing: border-box;
 }
 
-.buddy-list .friend {
+.friend-list .friend {
     cursor: pointer;
     border-top: 1px solid #e9eaed;
     border-bottom: 1px solid #e9eaed;
@@ -84,24 +84,24 @@ header .messages {
     position: relative;
 }
 
-.buddy-list .friend:hover {
+.friend-list .friend:hover {
     background-color: #e5e5e5;
     border-color: #d5d6d9;
 }
 
-.buddy-list .avatar {
+.friend-list .avatar {
     width: 32px;
     height: 32px;
     transform: translateY(0.15em);
 }
 
-.buddy-list .name {
+.friend-list .name {
     display: inline-block;
     transform: translateY(-0.5em);
     margin-left: 0.3em;
 }
 
-.buddy-list .status {
+.friend-list .status {
     position: absolute;
     right: 0.5em;
     top: 0.9em;
@@ -111,11 +111,11 @@ header .messages {
     border-radius: 1em;
 }
 
-.buddy-list .online {
+.friend-list .online {
     background-color: #01ad01;
 }
 
-.buddy-list .offline {
+.friend-list .offline {
     background-color: #808080;
 }
 

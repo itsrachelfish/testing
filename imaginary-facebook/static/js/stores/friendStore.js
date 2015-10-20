@@ -2,9 +2,9 @@ var Dispatcher = require('../dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
-var _buddies = [];
+var friends = [];
 
-var BuddyStore = assign({}, EventEmitter.prototype,
+var FriendStore = assign({}, EventEmitter.prototype,
 {
     addChangeListener: function(callback)
     {
@@ -16,9 +16,9 @@ var BuddyStore = assign({}, EventEmitter.prototype,
         this.removeListener('change', callback);
     },
 
-    listBuddies: function()
+    listFriends: function()
     {
-        return _buddies;
+        return friends;
     }
 });
 
@@ -26,11 +26,11 @@ Dispatcher.register(function(action)
 {
     switch(action.actionType)
     {
-        case 'getBuddies':
-            _buddies = action.buddies;
-            BuddyStore.emit('change');
+        case 'getFriends':
+            friends = action.friends;
+            FriendStore.emit('change');
         break;
     }
 });
 
-module.exports = BuddyStore;
+module.exports = FriendStore;

@@ -1,16 +1,16 @@
 var $ = require('jquery');
 var Dispatcher = require('../dispatcher');
 
-var BuddyActions =
+var FriendActions =
 {
-    fetchBuddies: function()
+    getFriends: function()
     {
-        $.getJSON('/api/buddies', function(list)
+        $.getJSON('/api/friends', function(list)
         {
             var action =
             {
-                actionType: 'getBuddies',
-                buddies: list
+                actionType: 'getFriends',
+                friends: list
             };
             
             Dispatcher.dispatch(action);
@@ -18,4 +18,4 @@ var BuddyActions =
     }
 };
 
-module.exports = BuddyActions;
+module.exports = FriendActions;

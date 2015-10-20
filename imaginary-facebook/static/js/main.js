@@ -1,10 +1,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes');
-var BuddyActions = require('./actions/buddyActions');
+var FriendActions = require('./actions/friendActions');
 
 // Initialize app data
-BuddyActions.fetchBuddies();
+FriendActions.getFriends();
 
 // Render page
 ReactDOM.render(<Routes />, document.getElementById('app'));
