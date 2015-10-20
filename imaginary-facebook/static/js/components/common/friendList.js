@@ -1,8 +1,11 @@
 var React = require('react');
 var FriendStore = require('../../stores/friendStore');
+var FriendActions = require('../../actions/friendActions');
 
 var FriendsList = React.createClass(
 {
+    updateInterval: false,
+
     getInitialState: function()
     {
         return { friends: FriendStore.listFriends() };
@@ -11,11 +14,15 @@ var FriendsList = React.createClass(
     componentWillMount: function()
     {
         FriendStore.addChangeListener(this.onChange);
+
+        // Update friend data every 15 seconds
+        this.updateInterval = setInterval(FriendActions.getFriends, 15 * 1000);
     },
 
     componentWillUnmount: function()
     {
         FriendStore.removeChangeListener(this.onChange);
+        clearInterval(this.updateInterval);
     },
 
     onChange: function()

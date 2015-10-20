@@ -3,7 +3,6 @@ function randomInt(min, max)
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-
 // Functions for generating friend data
 var friends =
 {
