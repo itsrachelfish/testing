@@ -62,6 +62,12 @@ header .messages {
     transform: translateY(-0.1em);
     display: inline-block;
     margin-left: 2em;
+    padding: 0 4px;
+}
+
+header .messages.active {
+    background-image: linear-gradient(#FA3C45, #DC0D17);
+    background-color: #fff;
 }
 
 .friend-list {
@@ -111,11 +117,11 @@ header .messages {
     border-radius: 1em;
 }
 
-.friend-list .online {
+.status.online {
     background-color: #01ad01;
 }
 
-.friend-list .offline {
+.status.offline {
     background-color: #808080;
 }
 
@@ -170,7 +176,7 @@ header .messages {
     height: 40px;
 }
 
-.new-post .message {
+.new-post .text {
     width: 90%;
     padding: 0.5em;
     border: 0;
@@ -230,6 +236,115 @@ header .messages {
 
 .post .img {
     margin-top: 0.5em;
+}
+
+.message-wrap {
+    position: fixed;
+    right: 15%;
+    bottom: 0;
+}
+
+.message {
+    position: relative;
+    float: right;
+    margin-right: 1em;
+    background-color: #E9EAED;
+    height: 325px;
+    width: 260px;
+    box-sizing: border-box;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.message .title {
+    background-color: #4E69A2;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #fff;
+    padding: 0.5em 1em;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #2E4588;
+    box-sizing: border-box;
+    height: 28px;
+}
+
+.message .status {
+    position: absolute;
+    top: 1em;
+    width: 0.5em;
+    height: 0.5em;
+    display: inline-block;
+    border-radius: 1em;
+}
+
+.message .name {
+    margin-left: 1.2em;
+}
+
+.message .close {
+    color: #ccc;
+}
+
+.message .conversation {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    top: 28px;
+    bottom: 1.6em;
+    overflow-y: scroll;
+}
+
+.message .avatar {
+    height: 34px;
+    width: 34px;
+}
+
+.message .text {
+    font-size: 9pt;
+}
+
+.message .them, .message .you {
+    margin: 0.5em;
+}
+
+.message .text {
+    display: inline-block;
+    max-width: 80%;
+    box-sizing: border-box;
+    padding: 0.5em;
+    margin-left: 0.5em;
+    margin-top: 0.3em;
+    border-radius: 4px;
+}
+
+.message .them .text {
+    background-color: #FFF;
+}
+
+.message .you {
+    text-align: right;
+}
+
+.message .you .text {
+    background-color: #C7DEFE;
+}
+
+.message .input {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    height: 1.6em;
+}
+
+.message input {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 hr {
