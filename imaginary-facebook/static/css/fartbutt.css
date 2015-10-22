@@ -133,7 +133,7 @@ header .messages.active {
     padding-right: 10em;
 }
 
-.content > div, .content > article {
+.post-wrap > div, .post-wrap > article {
     background-color: #fff;
     width: 75%;
     margin-bottom: 1em;

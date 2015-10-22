@@ -14,7 +14,7 @@ var App = React.createClass(
 
                 <section className="content">
                     <Ads />
-                    {this.props.children}
+                    { this.props.children }
                 </section>
             </div>
         );

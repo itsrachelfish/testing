@@ -11,13 +11,13 @@ var posts =
     init: function()
     {
         var hour = 1000 * 60 * 60;
-        posts.update(friends.list[helper.random(0, friends.list.length - 1)], new Date().getTime() - helper.random(hour * 6, hour * 12));
-        posts.update(friends.list[helper.random(0, friends.list.length - 1)], new Date().getTime() - helper.random(hour * 3, hour * 6));
-        posts.update(friends.list[helper.random(0, friends.list.length - 1)], new Date().getTime() - helper.random(hour * 0, hour * 3));
+        posts.update(friends.list[helper.random(0, friends.list.length)], new Date().getTime() - helper.random(hour * 6, hour * 12));
+        posts.update(friends.list[helper.random(0, friends.list.length)], new Date().getTime() - helper.random(hour * 3, hour * 6));
+        posts.update(friends.list[helper.random(0, friends.list.length)], new Date().getTime() - helper.random(hour * 0, hour * 3));
     },
 
     // Randomly create a post
-    update: function(friend, date)
+    update: function(friend, time)
     {
         // Don't do anything if we've run out of sample data
         if(!posts.sample.length) return;
@@ -28,22 +28,22 @@ var posts =
             // Don't update if nobody is online
             var online = friends.online();
             if(!online.length) return;
-            
-            var randomFriend = helper.random(0, online.length - 1);
+
+            var randomFriend = helper.random(0, online.length);
             friend = online[randomFriend];
         }
 
-        // If no date is specified, use the current time
-        if(!date)
+        // If no time is specified, use the current time
+        if(!time)
         {
-            date = new Date().getTime();
+            time = new Date().getTime();
         }
 
         // Generate random post
-        var randomPost = helper.random(0, posts.sample.length - 1)
+        var randomPost = helper.random(0, posts.sample.length)
         var post = posts.sample[randomPost];
         post.friend = {name: friend.name, avatar: friend.avatar};
-        post.date = date;
+        post.time = time;
 
         // Remove from sample data
         posts.sample.splice(randomPost, 1);

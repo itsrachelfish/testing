@@ -34,19 +34,18 @@ var FriendsList = React.createClass(
     {
         function createFriends(friend)
         {
-            console.log(friend);
             return (
                 <div className="friend" key={ friend.name }>
-                    <img className="avatar" src={"/img/" + friend.avatar } />
+                    <img className="avatar" src={ "/img/" + friend.avatar } />
                     <span className="name">{ friend.name }</span>
-                    <span className={"status " + friend.status }></span>
+                    <span className={ "status " + friend.status }></span>
                 </div>
             );
         }
         
         return (
             <aside className="friend-list">
-                {this.state.friends.map(createFriends, this)}                
+                { this.state.friends.map(createFriends, this) }
             </aside>
         );
     }

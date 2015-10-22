@@ -8,6 +8,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 
 var App = require('./components/app');
 var Home = require('./components/home/homePage');
+var Search = require('./components/search/searchPage');
 var NotFound = require('./components/notFound');
 
 var Routes = React.createClass(
@@ -18,6 +19,7 @@ var Routes = React.createClass(
             <Router history={ createHistory() }>
                 <Route path="/" component={ App }>
                     <IndexRoute component={ Home } />
+                    <Route path="search" component={ Search } />
                     <Route path="*" component={ NotFound } />
                 </Route>
             </Router>

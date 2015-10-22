@@ -24,7 +24,7 @@ var friends =
     // Randomly sign friends on and off
     update: function()
     {
-        var randomFriend = helper.random(0, friends.list.length - 1);
+        var randomFriend = helper.random(0, friends.list.length);
 
         if(Math.round(Math.random()))
         {

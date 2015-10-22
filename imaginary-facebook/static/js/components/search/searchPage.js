@@ -4,8 +4,8 @@ var SearchPage = React.createClass({
     render: function() {
         return (
             <div className="cool">
-                <h1>Search for something?</h1>
-                <p>Thanks :)</p>
+                <h1>HAHA YOU THOUGHT THERE'D BE A SEARCH PAGE!</h1>
+                <p>Nope.</p>
             </div>
         );
     }
