@@ -24,7 +24,7 @@ var friends =
     // Randomly sign friends on and off
     update: function()
     {
-        var randomFriend = helper.random(0, friends.list.length);
+        var randomFriend = helper.random(0, friends.list.length - 1);
 
         if(Math.round(Math.random()))
         {
@@ -34,6 +34,22 @@ var friends =
         {
             friends.list[randomFriend].status = 'offline';
         }
+    },
+
+    // Return a list of currently online friends
+    online: function()
+    {
+        var online = [];
+
+        friends.list.forEach(function(friend)
+        {
+            if(friend.status == 'online')
+            {
+                online.push(friend);
+            }
+        });
+
+        return online;
     },
 
     // Sample data for friends

@@ -32,6 +32,21 @@ app.get('/api/friends', function(req, res)
     res.send(friends.list);
 });
 
+app.get('/api/posts', function(req, res)
+{
+    res.send(posts.list);
+});
+
+app.get('/api/messages', function(req, res)
+{
+    res.send(messages.list);
+});
+
+app.get('/api/messages/new', function(req, res)
+{
+    res.send(messages.flush);
+});
+
 // Catchall to handle browser history URLs
 app.get('/*', function (req, res)
 {
