@@ -6,12 +6,21 @@ var http = require('http').createServer(app);
 http.listen(1337);
 
 
-// Initialize friend data
+// Initialize server-side data
 var friends = require('./friends');
+var posts = require('./posts');
+var messages = require('./messages');
 friends.init();
+posts.init();
 
 // Randomly change friend statuses every 30 seconds
 setInterval(friends.update, 30 * 1000);
+
+// Randomly post a message every minute
+setInterval(posts.update, 60 * 1000);
+
+// Randomly send a message every 10 seconds
+setInterval(messages.update, 10 * 1000);
 
 
 // Serve static files

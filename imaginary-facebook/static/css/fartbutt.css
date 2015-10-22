@@ -55,6 +55,7 @@ header .name {
     font-weight: bold;
     transform: translateY(-0.1em);
     display: inline-block;
+    margin-left: 0.25em;
 }
 
 header .messages {
@@ -284,6 +285,7 @@ header .messages.active {
 
 .message .close {
     color: #ccc;
+    cursor: pointer;
 }
 
 .message .conversation {

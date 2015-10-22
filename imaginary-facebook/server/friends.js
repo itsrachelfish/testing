@@ -1,7 +1,4 @@
-function randomInt(min, max)
-{
-    return Math.floor(Math.random() * (max - min)) + min;
-}
+var helper = require('./helper');
 
 // Functions for generating friend data
 var friends =
@@ -27,7 +24,7 @@ var friends =
     // Randomly sign friends on and off
     update: function()
     {
-        var randomFriend = randomInt(0, friends.list.length);
+        var randomFriend = helper.random(0, friends.list.length);
 
         if(Math.round(Math.random()))
         {
