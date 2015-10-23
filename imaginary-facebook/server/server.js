@@ -44,7 +44,7 @@ app.get('/api/messages', function(req, res)
 
 app.get('/api/messages/new', function(req, res)
 {
-    res.send(messages.flush);
+    res.send(messages.flush());
 });
 
 // Catchall to handle browser history URLs

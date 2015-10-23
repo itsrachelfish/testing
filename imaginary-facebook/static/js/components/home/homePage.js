@@ -16,7 +16,7 @@ var HomePage = React.createClass(
         PostStore.addChangeListener(this.onChange);
 
         // Update post data every 30 seconds
-        this.updateInterval = setInterval(PostActions.getPosts, 3 * 1000);
+        this.updateInterval = setInterval(PostActions.getPosts, 30 * 1000);
     },
 
     componentWillUnmount: function()
@@ -35,7 +35,8 @@ var HomePage = React.createClass(
         function displayTime(time)
         {
             var difference = new Date().getTime() - time;
-            var minutes = Math.floor(difference / 1000 / 60);
+            var seconds = Math.floor(difference / 1000);
+            var minutes = Math.floor(seconds / 60);
             var hours = Math.floor(minutes / 60);
             var days = Math.floor(hours / 24);
             var text = "";

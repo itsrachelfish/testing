@@ -8,6 +8,7 @@ var MessageActions = require('./actions/messageActions');
 // Initialize app data
 FriendActions.getFriends();
 PostActions.getPosts();
+MessageActions.getMessages();
 
 // Render page
 ReactDOM.render(<Routes />, document.getElementById('app'));
