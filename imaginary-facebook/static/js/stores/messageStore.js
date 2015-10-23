@@ -39,14 +39,14 @@ Dispatcher.register(function(action)
             {
                 if(messages[friend])
                 {
-                    messages[friend].concat(action.messages[friend]);
+                    messages[friend] = messages[friend].concat(action.messages[friend]);
                 }
                 else
                 {
                     messages[friend] = action.messages[friend];
                 }
             });
-            
+
             MessageStore.emit('change');
         break;
     }

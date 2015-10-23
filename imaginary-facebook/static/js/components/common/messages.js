@@ -90,7 +90,6 @@ var Messages = React.createClass(
                 var friend = FriendStore.getFriend(friendName);
                 var conversation = messages[friendName];
 
-console.log(friend);
                 output.push(displayMessage(friend, conversation));
             });
 
