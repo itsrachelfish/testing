@@ -19,6 +19,21 @@ var FriendStore = assign({}, EventEmitter.prototype,
     listFriends: function()
     {
         return friends;
+    },
+
+    getFriend: function(name)
+    {
+        for(var i = 0, l = friends.length; i < l; i++)
+        {
+            var friend = friends[i];
+
+            if(friend.name == name)
+            {
+                return friend;
+            }
+        }
+
+        return {};
     }
 });
 

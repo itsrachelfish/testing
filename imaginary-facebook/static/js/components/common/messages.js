@@ -1,6 +1,7 @@
 var React = require('react');
 var MessageStore = require('../../stores/messageStore');
 var MessageActions = require('../../actions/messageActions');
+var FriendStore = require('../../stores/friendStore');
 
 var Messages = React.createClass(
 {
@@ -46,7 +47,7 @@ var Messages = React.createClass(
             {
                 return (
                     <div className="them">
-                        <img className="avatar left" src={ "/img/ " + friend.avatar } />
+                        <img className="avatar left" src={ "/img/" + friend.avatar } />
                         <span className="text">{ line.text }</span>
                     </div>
                 );
@@ -86,9 +87,10 @@ var Messages = React.createClass(
             var friendNames = Object.keys(messages);
             friendNames.forEach(function(friendName)
             {
-                var friend = {name: friendName};
+                var friend = FriendStore.getFriend(friendName);
                 var conversation = messages[friendName];
 
+console.log(friend);
                 output.push(displayMessage(friend, conversation));
             });
 
