@@ -39,13 +39,26 @@ Dispatcher.register(function(action)
             {
                 if(messages[friend])
                 {
-                    messages[friend] = messages[friend].concat(action.messages[friend]);
+                    messages[friend].conversation = messages[friend].conversation.concat(action.messages[friend].conversation);
+                    messages[friend].status = 'unread';
                 }
                 else
                 {
                     messages[friend] = action.messages[friend];
                 }
             });
+
+            MessageStore.emit('change');
+        break;
+
+        // Mark a message as closed
+        case 'closeMessage':
+            var friend = action.friend;
+
+            if(messages[friend])
+            {
+                messages[friend].status = 'closed';
+            }
 
             MessageStore.emit('change');
         break;

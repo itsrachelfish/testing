@@ -22,17 +22,22 @@ var messages =
         // Initialize an empty array of messages if none is defined for this friend
         if(!messages.list[friend.name])
         {
-            messages.list[friend.name] = [];
+            messages.list[friend.name] = {conversation: []};
         }
 
         if(!messages.recent[friend.name])
         {
-            messages.recent[friend.name] = [];
+            messages.recent[friend.name] = {conversation: []};
         }
 
+        // Add random message to the list of messages
         var randomMessage = helper.random(0, messages.sample.length);
-        messages.list[friend.name].push({source: 'them', text: messages.sample[randomMessage]});
-        messages.recent[friend.name].push({source: 'them', text: messages.sample[randomMessage]});
+        messages.list[friend.name].conversation.push({source: 'them', text: messages.sample[randomMessage]});
+        messages.recent[friend.name].conversation.push({source: 'them', text: messages.sample[randomMessage]});
+
+        // Set the message status to unread
+        messages.list[friend.name].status = 'unread';
+        messages.recent[friend.name].status = 'unread';
     },
 
     // Function to flush currently queued messages to a client

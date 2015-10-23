@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var React = require('react');
 var MessageStore = require('../../stores/messageStore');
 var MessageActions = require('../../actions/messageActions');
@@ -14,14 +15,24 @@ var Messages = React.createClass(
 
     componentWillMount: function()
     {
+        FriendStore.addChangeListener(this.onChange);
         MessageStore.addChangeListener(this.onChange);
 
         // Get new messages every 5 seconds
         this.updateInterval = setInterval(MessageActions.newMessages, 5 * 1000);
     },
 
+    componentDidUpdate: function(prevProps)
+    {
+        $('.conversation').each(function()
+        {
+            $(this).scrollTop($(this).find('.inner').height());
+        });
+    },
+
     componentWillUnmount: function()
     {
+        FriendStore.removeChangeListener(this.onChange);
         MessageStore.removeChangeListener(this.onChange);
         clearInterval(this.updateInterval);
     },
@@ -29,6 +40,18 @@ var Messages = React.createClass(
     onChange: function()
     {
         this.setState({ messages: MessageStore.listMessages() });
+    },
+
+    closeMessage: function(event)
+    {
+        var message = $(event.target).parents('.message');
+        var friend = message.find('.name').text();
+
+
+console.log('close it!');;
+console.log(friend);
+
+        MessageActions.closeMessage(friend);
     },
     
     render: function()
@@ -57,21 +80,25 @@ var Messages = React.createClass(
         function displayMessage(friend, messages)
         {
             var conversation = [];
+            var scope = this;
+            
             messages.forEach(function(line)
             {
-                conversation.push(displayLine(friend, line));
+                conversation.push(displayLine.call(scope, friend, line));
             });
-            
+
             return (
                 <div className="message">
                     <div className="title">
                         <span className={"status " + friend.status }></span>
                         <span className="name">{ friend.name }</span>
-                        <span className="close right">X</span>
+                        <span className="close right" onClick={ this.closeMessage }>X</span>
                     </div>
 
                     <div className="conversation">
-                        { conversation }
+                        <div className="inner">
+                            { conversation }
+                        </div>
                     </div>
 
                     <div className="input">
@@ -84,13 +111,20 @@ var Messages = React.createClass(
         function displayMessages(messages)
         {
             var output = [];
-            var friendNames = Object.keys(messages);
+            var scope = this;
+
+            // Reverse array so the people who message you first stay first
+            var friendNames = Object.keys(messages).reverse();
             friendNames.forEach(function(friendName)
             {
                 var friend = FriendStore.getFriend(friendName);
-                var conversation = messages[friendName];
+                var conversation = messages[friendName].conversation;
 
-                output.push(displayMessage(friend, conversation));
+                // Skip closed messages
+                if(messages[friendName].status != 'closed')
+                {
+                    output.push(displayMessage.call(scope, friend, conversation));
+                }
             });
 
             return output;
@@ -98,7 +132,7 @@ var Messages = React.createClass(
 
         return (
             <div className="message-wrap">
-                { displayMessages(this.state.messages) }
+                { displayMessages.call(this, this.state.messages) }
             </div>
         );
     }

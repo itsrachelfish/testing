@@ -30,6 +30,17 @@ var MessageActions =
             Dispatcher.dispatch(action);
         });
     },
+
+    closeMessage: function(friend)
+    {
+        var action =
+        {
+            actionType: 'closeMessage',
+            friend: friend
+        };
+        
+        Dispatcher.dispatch(action);
+    }
 };
 
 module.exports = MessageActions;
