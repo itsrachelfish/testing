@@ -5,9 +5,11 @@ var NotFound = React.createClass(
     render: function()
     {
         return (
-            <div className="cool">
-                <h1>Page Not Found</h1>
-                <p>Get out!</p>
+            <div className="post-wrap">
+                <div>
+                    <h1>Page Not Found</h1>
+                    <p>Get out!</p>
+                </div>
             </div>
         );
     }

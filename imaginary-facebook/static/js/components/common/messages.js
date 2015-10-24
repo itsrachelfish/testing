@@ -47,10 +47,6 @@ var Messages = React.createClass(
         var message = $(event.target).parents('.message');
         var friend = message.find('.name').text();
 
-
-console.log('close it!');;
-console.log(friend);
-
         MessageActions.closeMessage(friend);
     },
     

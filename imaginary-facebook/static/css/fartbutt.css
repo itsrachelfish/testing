@@ -4,6 +4,10 @@ body {
     font-family: helvetica,arial,sans-serif;
 }
 
+a {
+    color: #fff;
+}
+
 header {
     position: fixed;
     top: 0;
