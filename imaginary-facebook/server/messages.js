@@ -9,6 +9,20 @@ var messages =
 
     // List of recent messages
     recent: {},
+
+    // Initialize an empty array of messages if none is defined for this friend
+    init: function(friend)
+    {
+        if(!messages.list[friend.name])
+        {
+            messages.list[friend.name] = {conversation: []};
+        }
+
+        if(!messages.recent[friend.name])
+        {
+            messages.recent[friend.name] = {conversation: []};
+        }
+    },
     
     // Function to create a random message from an online friend
     update: function()
@@ -19,16 +33,7 @@ var messages =
         var randomFriend = helper.random(0, online.length);
         friend = online[randomFriend];
 
-        // Initialize an empty array of messages if none is defined for this friend
-        if(!messages.list[friend.name])
-        {
-            messages.list[friend.name] = {conversation: []};
-        }
-
-        if(!messages.recent[friend.name])
-        {
-            messages.recent[friend.name] = {conversation: []};
-        }
+        messages.init(friend);
 
         // Add random message to the list of messages
         var randomMessage = helper.random(0, messages.sample.length);
@@ -47,6 +52,14 @@ var messages =
         messages.recent = {};
         
         return recent;
+    },
+
+    // Function to update the status of a conversation
+    status: function(friend, status)
+    {
+        messages.init({name: friend});
+        messages.list[friend].status = status;
+        messages.recent[friend].status = status;
     },
 
     sample:

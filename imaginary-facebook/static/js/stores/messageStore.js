@@ -40,7 +40,7 @@ Dispatcher.register(function(action)
                 if(messages[friend])
                 {
                     messages[friend].conversation = messages[friend].conversation.concat(action.messages[friend].conversation);
-                    messages[friend].status = 'unread';
+                    messages[friend].status = actions.messages[friend].status;
                 }
                 else
                 {

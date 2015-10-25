@@ -32,7 +32,9 @@ var MessageActions =
     },
 
     closeMessage: function(friend)
-    {
+    {        
+        $.post('/api/messages/status', {friend: friend, status: 'closed'});
+        
         var action =
         {
             actionType: 'closeMessage',

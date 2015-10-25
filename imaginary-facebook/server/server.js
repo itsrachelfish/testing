@@ -1,6 +1,7 @@
 // Start the server
 var path = require('path');
 var express = require('express');
+var bodyParser = require('body-parser')
 var app = express();
 var http = require('http').createServer(app);
 http.listen(1337);
@@ -22,6 +23,9 @@ setInterval(posts.update, 60 * 1000);
 // Randomly send a message every 10 seconds
 setInterval(messages.update, 10 * 1000);
 
+
+// Use the body parser to handle post requests
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // Serve static files
 app.use(express.static("../static/"));
@@ -45,6 +49,12 @@ app.get('/api/messages', function(req, res)
 app.get('/api/messages/new', function(req, res)
 {
     res.send(messages.flush());
+});
+
+app.post('/api/messages/status', function(req, res)
+{
+    messages.status(req.body.friend, req.body.status);
+    res.end();
 });
 
 // Catchall to handle browser history URLs
