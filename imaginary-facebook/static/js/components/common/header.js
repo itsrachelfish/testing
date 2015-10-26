@@ -1,17 +1,30 @@
 var $ = require('jquery');
 var React = require('react');
 var ReactRouter = require('react-router');
+var MessageStore = require('../../stores/messageStore');
 var Link = ReactRouter.Link;
 
 var Header = React.createClass(
 {
+    getInitialState: function()
+    {
+        return { unread: 0 };
+    },
+    
+    componentWillMount: function()
+    {
+        MessageStore.addChangeListener(this.onChange);
+    },
+    
     componentDidMount: function()
     {
         $('body').on('keydown', '.search', this.keyPressed);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount: function()
+    {
         $('body').off('keydown', '.search', this.keyPressed);
+        MessageStore.removeChangeListener(this.onChange);
     },
 
     keyPressed: function(event)
@@ -23,9 +36,43 @@ var Header = React.createClass(
             window.globalHistory.pushState(null, '/search/' + query);
         }
     },
+
+    onChange: function()
+    {
+        this.setState({ unread: MessageStore.getUnread() });
+    },
     
     render: function()
     {
+        function displayUnread(unread)
+        {
+            if(unread > 0)
+            {
+                var messageText = "Messages";
+
+                if(unread == 1)
+                {
+                    messageText = "Message";
+                }
+                
+                return (
+                    <span className="messages active">
+                        <span className="count">{ unread }</span>
+                        <span className="text">{ messageText }</span>
+                    </span>
+                );
+            }
+            else
+            {
+                return (
+                    <span className="messages">
+                        <span className="count">0</span>
+                        <span className="text">Messages</span>
+                    </span>
+                );
+            }
+        }
+        
         return (
             <header>
                 <div className="inside">
@@ -45,7 +92,7 @@ var Header = React.createClass(
                             </span>
                         </Link>
                         
-                        <span className="messages">0 Messages</span>
+                        { displayUnread(this.state.unread) }
                     </div>
                 </div>
             </header>

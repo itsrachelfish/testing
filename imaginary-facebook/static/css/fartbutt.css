@@ -75,6 +75,10 @@ header .messages.active {
     background-color: #fff;
 }
 
+header .messages .count {
+    margin-right: 0.3em;
+}
+
 .friend-list {
     position: fixed;
     width: 15%;

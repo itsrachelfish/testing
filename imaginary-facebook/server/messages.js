@@ -40,6 +40,10 @@ var messages =
         messages.list[friend.name].conversation.push({source: 'them', text: messages.sample[randomMessage]});
         messages.recent[friend.name].conversation.push({source: 'them', text: messages.sample[randomMessage]});
 
+        // Limit conversation to most recent 50 lines
+        messages.list[friend.name].conversation = messages.list[friend.name].conversation.slice(-50);
+        messages.recent[friend.name].conversation = messages.recent[friend.name].conversation.slice(-50);
+
         // Set the message status to unread
         messages.list[friend.name].status = 'unread';
         messages.recent[friend.name].status = 'unread';
