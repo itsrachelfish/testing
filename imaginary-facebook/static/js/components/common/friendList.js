@@ -1,6 +1,8 @@
+var $ = require('jquery');
 var React = require('react');
 var FriendStore = require('../../stores/friendStore');
 var FriendActions = require('../../actions/friendActions');
+var MessageActions = require('../../actions/messageActions');
 
 var FriendsList = React.createClass(
 {
@@ -29,13 +31,27 @@ var FriendsList = React.createClass(
     {
         this.setState({ friends: FriendStore.listFriends() });
     },
+
+    readMessage: function(event)
+    {
+        if($(event.target).hasClass('friend'))
+        {
+            var friend = $(event.target).find('.name').text();
+        }
+        else
+        {
+            var friend = $(event.target).parents('.friend').find('.name').text();
+        }
+
+        MessageActions.updateMessage(friend, 'focus');
+    },
     
     render: function()
     {
         function createFriends(friend)
         {
             return (
-                <div className="friend" key={ friend.name }>
+                <div className="friend" onClick={ this.readMessage } key={ friend.name }>
                     <img className="avatar" src={ "/img/" + friend.avatar } />
                     <span className="name">{ friend.name }</span>
                     <span className={ "status " + friend.status }></span>

@@ -31,27 +31,16 @@ var MessageActions =
         });
     },
 
-    closeMessage: function(friend)
+    // General action for updating the status of a message
+    updateMessage: function(friend, status)
     {
-        $.post('/api/messages/status', {friend: friend, status: 'closed'});
+        $.post('/api/messages/status', {friend: friend, status: status});
         
         var action =
         {
-            actionType: 'closeMessage',
-            friend: friend
-        };
-        
-        Dispatcher.dispatch(action);
-    },
-
-    readMessage: function(friend)
-    {
-        $.post('/api/messages/status', {friend: friend, status: 'read'});
-        
-        var action =
-        {
-            actionType: 'readMessage',
-            friend: friend
+            actionType: 'updateMessage',
+            friend: friend,
+            status: status
         };
         
         Dispatcher.dispatch(action);

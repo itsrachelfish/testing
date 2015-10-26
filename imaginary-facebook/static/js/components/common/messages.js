@@ -28,12 +28,16 @@ var Messages = React.createClass(
         $('body').on('keydown', '.message input', this.sendMessage);
     },
 
-    componentDidUpdate: function(prevProps)
+    componentDidUpdate: function()
     {
         $('.conversation').each(function()
         {
             $(this).scrollTop($(this).find('.inner').height());
         });
+
+        // Check if a message needs focus
+        $('.message.focus').find('input').trigger('focus');
+        $('.message.focus').find('input').trigger('click');
     },
 
     componentWillUnmount: function()
@@ -56,7 +60,7 @@ var Messages = React.createClass(
         var message = $(event.target).parents('.message');
         var friend = message.find('.name').text();
 
-        MessageActions.closeMessage(friend);
+        MessageActions.updateMessage(friend, 'closed');
     },
 
     readMessage: function(event)
@@ -64,7 +68,7 @@ var Messages = React.createClass(
         var message = $(event.target).parents('.message');
         var friend = message.find('.name').text();
 
-        MessageActions.readMessage(friend);
+        MessageActions.updateMessage(friend, 'read');
     },  
 
     sendMessage: function(event)
@@ -74,10 +78,13 @@ var Messages = React.createClass(
             // Get event data
             var message = $(event.target).parents('.message');
             var friend = message.find('.name').text();
-            var text = $(event.target).val();
+            var text = $.trim($(event.target).val());
 
             // Clear text box
             $(event.target).val('');
+
+            // If there is no message, abort
+            if(!text) return;
 
             // Trigger action
             MessageActions.sendMessage(friend, text);
@@ -107,7 +114,7 @@ var Messages = React.createClass(
             }
         }
 
-        function displayMessage(friend, messages)
+        function displayMessage(friend, messages, status)
         {
             var conversation = [];
             var scope = this;
@@ -118,7 +125,7 @@ var Messages = React.createClass(
             });
 
             return (
-                <div className="message">
+                <div className={ "message " + status }>
                     <div className="title">
                         <span className={"status " + friend.status }></span>
                         <span className="name">{ friend.name }</span>
@@ -149,11 +156,12 @@ var Messages = React.createClass(
             {
                 var friend = FriendStore.getFriend(friendName);
                 var conversation = messages[friendName].conversation;
+                var status = messages[friendName].status;
 
                 // Skip closed messages
-                if(messages[friendName].status != 'closed')
+                if(status != 'closed')
                 {
-                    output.push(displayMessage.call(scope, friend, conversation));
+                    output.push(displayMessage.call(scope, friend, conversation, status));
                 }
             });
 

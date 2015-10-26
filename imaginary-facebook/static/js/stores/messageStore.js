@@ -78,28 +78,17 @@ Dispatcher.register(function(action)
             MessageStore.emit('change');
         break;
 
-        // Mark a message as closed
-        case 'closeMessage':
+        // Change the status of a message
+        case 'updateMessage':
             var friend = action.friend;
+            var status = action.status;
 
-            if(messages[friend])
+            if(!messages[friend])
             {
-                messages[friend].status = 'closed';
+                messages[friend] = {conversation: []};
             }
 
-            MessageStore.checkUnread();
-            MessageStore.emit('change');
-        break;
-
-        // Mark a message as read
-        case 'readMessage':
-            var friend = action.friend;
-
-            if(messages[friend])
-            {
-                messages[friend].status = 'read';
-            }
-
+            messages[friend].status = status;
             MessageStore.checkUnread();
             MessageStore.emit('change');
         break;
