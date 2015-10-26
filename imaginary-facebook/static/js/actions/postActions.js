@@ -15,7 +15,22 @@ var PostActions =
             
             Dispatcher.dispatch(action);
         });
-    }
+    },
+
+    newPost: function(text)
+    {
+        $.post('/api/posts', {text: text});
+
+        var action =
+        {
+            actionType: 'newPost',
+            friend: {name: 'Buttmaster', avatar: 'avatar.png'},
+            text: text,
+            date: new Date().getTime()
+        };
+        
+        Dispatcher.dispatch(action);
+    },
 };
 
 module.exports = PostActions;

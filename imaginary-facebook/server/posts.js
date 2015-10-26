@@ -52,6 +52,19 @@ var posts =
         posts.list.unshift(post);
     },
 
+    // Function to create a new post
+    create: function(text)
+    {
+        var post =
+        {
+            friend: {name: 'Buttmaster', avatar: 'avatar.png'},
+            text: text,
+            date: new Date().getTime()
+        }
+
+        posts.list.unshift(post);
+    },
+
     // List of possible sample data that can be posted
     sample:
     [

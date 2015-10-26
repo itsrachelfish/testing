@@ -30,6 +30,18 @@ Dispatcher.register(function(action)
             posts = action.posts;
             PostStore.emit('change');
         break;
+
+        case 'newPost':
+            var post =
+            {
+                friend: action.friend,
+                text: action.text,
+                date: action.date
+            }
+
+            posts.unshift(post);
+            PostStore.emit('change');
+        break;
     }
 });
 

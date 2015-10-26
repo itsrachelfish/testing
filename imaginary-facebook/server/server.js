@@ -41,6 +41,15 @@ app.get('/api/posts', function(req, res)
     res.send(posts.list);
 });
 
+app.post('/api/posts', function(req, res)
+{
+    if(req.body.text)
+    {
+        posts.create(req.body.text);
+        res.send({});
+    }
+});
+
 app.get('/api/messages', function(req, res)
 {
     res.send(messages.list);

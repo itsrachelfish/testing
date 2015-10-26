@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var React = require('react');
 var PostStore = require('../../stores/postStore');
 var PostActions = require('../../actions/postActions');
@@ -28,6 +29,21 @@ var HomePage = React.createClass(
     onChange: function()
     {
         this.setState({ posts: PostStore.listPosts() });
+    },
+
+    newPost: function()
+    {
+        // Get the new post
+        var text = $.trim($('.new-post .text').val());
+
+        // Clear the current value
+        $('.new-post .text').val('');
+
+        // If there is no text, abort
+        if(!text) return;
+
+        // Trigger new post action
+        PostActions.newPost(text);
     },
     
     render: function()
@@ -123,7 +139,7 @@ var HomePage = React.createClass(
                     <hr />
 
                     <div className="buttons">
-                        <span className="submit">Post</span>
+                        <span className="submit" onClick={ this.newPost }>Post</span>
                     </div>
                 </div>
 
