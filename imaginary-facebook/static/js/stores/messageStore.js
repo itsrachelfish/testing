@@ -90,6 +90,19 @@ Dispatcher.register(function(action)
             MessageStore.checkUnread();
             MessageStore.emit('change');
         break;
+
+        // Mark a message as read
+        case 'readMessage':
+            var friend = action.friend;
+
+            if(messages[friend])
+            {
+                messages[friend].status = 'read';
+            }
+
+            MessageStore.checkUnread();
+            MessageStore.emit('change');
+        break;
     }
 });
 

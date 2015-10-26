@@ -32,12 +32,25 @@ var MessageActions =
     },
 
     closeMessage: function(friend)
-    {        
+    {
         $.post('/api/messages/status', {friend: friend, status: 'closed'});
         
         var action =
         {
             actionType: 'closeMessage',
+            friend: friend
+        };
+        
+        Dispatcher.dispatch(action);
+    },
+
+    readMessage: function(friend)
+    {
+        $.post('/api/messages/status', {friend: friend, status: 'read'});
+        
+        var action =
+        {
+            actionType: 'readMessage',
             friend: friend
         };
         

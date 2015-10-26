@@ -20,6 +20,9 @@ var Messages = React.createClass(
 
         // Get new messages every 5 seconds
         this.updateInterval = setInterval(MessageActions.newMessages, 5 * 1000);
+
+        // Mark message as read when you click on it
+        $('body').on('click keydown', '.message', this.readMessage);
     },
 
     componentDidUpdate: function(prevProps)
@@ -35,6 +38,8 @@ var Messages = React.createClass(
         FriendStore.removeChangeListener(this.onChange);
         MessageStore.removeChangeListener(this.onChange);
         clearInterval(this.updateInterval);
+
+        $('body').off('click keydown', '.message', this.readMessage);
     },
 
     onChange: function()
@@ -49,6 +54,14 @@ var Messages = React.createClass(
 
         MessageActions.closeMessage(friend);
     },
+
+    readMessage: function(event)
+    {
+        var message = $(event.target).parents('.message');
+        var friend = message.find('.name').text();
+
+        MessageActions.readMessage(friend);
+    },  
     
     render: function()
     {
