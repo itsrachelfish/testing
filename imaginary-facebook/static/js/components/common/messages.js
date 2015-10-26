@@ -20,12 +20,6 @@ var Messages = React.createClass(
 
         // Get new messages every 5 seconds
         this.updateInterval = setInterval(MessageActions.newMessages, 5 * 1000);
-
-        // Mark message as read when you click on it
-        $('body').on('click keydown', '.message', this.readMessage);
-
-        // Send a message when you type into the message input
-        $('body').on('keydown', '.message input', this.sendMessage);
     },
 
     componentDidUpdate: function()
@@ -45,9 +39,6 @@ var Messages = React.createClass(
         FriendStore.removeChangeListener(this.onChange);
         MessageStore.removeChangeListener(this.onChange);
         clearInterval(this.updateInterval);
-
-        $('body').off('click keydown', '.message', this.readMessage);
-        $('body').off('keydown', '.message input', this.sendMessage);
     },
 
     onChange: function()
@@ -57,6 +48,7 @@ var Messages = React.createClass(
 
     closeMessage: function(event)
     {
+        event.stopPropagation();
         var message = $(event.target).parents('.message');
         var friend = message.find('.name').text();
 
@@ -125,7 +117,7 @@ var Messages = React.createClass(
             });
 
             return (
-                <div className={ "message " + status }>
+                <div className={ "message " + status } onClick={ this.readMessage } onKeyDown={ this.readMessage }>
                     <div className="title">
                         <span className={"status " + friend.status }></span>
                         <span className="name">{ friend.name }</span>
@@ -139,7 +131,7 @@ var Messages = React.createClass(
                     </div>
 
                     <div className="input">
-                        <input type="text" />
+                        <input type="text" onKeyDown={ this.sendMessage } />
                     </div>
                 </div>
             );

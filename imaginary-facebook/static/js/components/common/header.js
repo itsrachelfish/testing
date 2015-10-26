@@ -15,15 +15,9 @@ var Header = React.createClass(
     {
         MessageStore.addChangeListener(this.onChange);
     },
-    
-    componentDidMount: function()
-    {
-        $('body').on('keydown', '.search', this.keyPressed);
-    },
 
     componentWillUnmount: function()
     {
-        $('body').off('keydown', '.search', this.keyPressed);
         MessageStore.removeChangeListener(this.onChange);
     },
 
@@ -81,7 +75,7 @@ var Header = React.createClass(
                             <span className="logo">f</span>
                         </Link>
 
-                        <input className="search" placeholder="Search Fartbook" />
+                        <input className="search" placeholder="Search Fartbook" onKeyDown={ this.keyPressed } />
                     </div>
 
                     <div className="right">
