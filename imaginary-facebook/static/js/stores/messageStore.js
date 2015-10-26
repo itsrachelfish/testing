@@ -103,6 +103,20 @@ Dispatcher.register(function(action)
             MessageStore.checkUnread();
             MessageStore.emit('change');
         break;
+
+        // Add a new sent message to the store
+        case 'sendMessage':
+            var friend = action.friend;
+            var text = {source: 'you', text: action.text};
+        
+            if(!messages[friend])
+            {
+                messages[friend] = {status: 'read', conversation: []};
+            }
+
+            messages[friend].conversation.push(text);
+            MessageStore.emit('change');
+        break;
     }
 });
 

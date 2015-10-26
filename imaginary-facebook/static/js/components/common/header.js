@@ -30,7 +30,7 @@ var Header = React.createClass(
     keyPressed: function(event)
     {
         // When the user presses enter
-        if(event.which == '13')
+        if(event.which == 13)
         {
             var query = $(event.target).val();
             window.globalHistory.pushState(null, '/search/' + query);

@@ -23,6 +23,9 @@ var Messages = React.createClass(
 
         // Mark message as read when you click on it
         $('body').on('click keydown', '.message', this.readMessage);
+
+        // Send a message when you type into the message input
+        $('body').on('keydown', '.message input', this.sendMessage);
     },
 
     componentDidUpdate: function(prevProps)
@@ -40,6 +43,7 @@ var Messages = React.createClass(
         clearInterval(this.updateInterval);
 
         $('body').off('click keydown', '.message', this.readMessage);
+        $('body').off('keydown', '.message input', this.sendMessage);
     },
 
     onChange: function()
@@ -62,6 +66,23 @@ var Messages = React.createClass(
 
         MessageActions.readMessage(friend);
     },  
+
+    sendMessage: function(event)
+    {
+        if(event.which == 13)
+        {
+            // Get event data
+            var message = $(event.target).parents('.message');
+            var friend = message.find('.name').text();
+            var text = $(event.target).val();
+
+            // Clear text box
+            $(event.target).val('');
+
+            // Trigger action
+            MessageActions.sendMessage(friend, text);
+        }
+    },
     
     render: function()
     {

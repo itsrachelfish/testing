@@ -55,6 +55,20 @@ var MessageActions =
         };
         
         Dispatcher.dispatch(action);
+    },
+
+    sendMessage: function(friend, text)
+    {
+        $.post('/api/messages/new', {friend: friend, text: text});
+        
+        var action =
+        {
+            actionType: 'sendMessage',
+            friend: friend,
+            text: text
+        };
+        
+        Dispatcher.dispatch(action);
     }
 };
 

@@ -54,7 +54,18 @@ app.get('/api/messages/new', function(req, res)
 app.post('/api/messages/status', function(req, res)
 {
     messages.status(req.body.friend, req.body.status);
-    res.end();
+    res.send({});
+});
+
+app.post('/api/messages/new', function(req, res)
+{
+    if(req.body.friend && req.body.text)
+    {
+        var message = {source: 'you', text: req.body.text};
+        messages.list[req.body.friend].conversation.push(message);
+    }
+    
+    res.send({});
 });
 
 // Catchall to handle browser history URLs
