@@ -3,6 +3,7 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var MessageStore = require('../../stores/messageStore');
 var Link = ReactRouter.Link;
+var history = require('../../history');
 
 var Header = React.createClass(
 {
@@ -27,7 +28,7 @@ var Header = React.createClass(
         if(event.which == 13)
         {
             var query = $(event.target).val();
-            window.globalHistory.pushState(null, '/search/' + query);
+            history.pushState(null, '/search/' + query);
         }
     },
 
