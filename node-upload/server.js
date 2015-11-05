@@ -23,6 +23,12 @@ function log()
     console.log.apply(this, input);
 }
 
+function end(res, message)
+{
+    log(message);
+    res.end(message);
+}
+
 app.get('/', function (req, res)
 {
     log('User visited:', req.ip);
@@ -58,26 +64,32 @@ app.post('/', function(req, res)
         log("Uploading:" , filename); 
         log("Uploaded by:", req.ip, '-', req.headers['user-agent']);
 
+        if(!filename)
+        {
+            end(res, 'No file uploaded.');
+            return;
+        }
+
         fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
         file.pipe(fstream);
         fstream.on('close', function()
         {
-            log('File uploaded!');
-            res.end('File uploaded!');
+            end(res, 'File uploaded!');
         });
 
         fstream.on('error', function()
         {
             log('There was an error!', arguments);
+            res.end('There was an error uploading! :(');
         });
     });
 });
 
 var server = app.listen(1337, function()
 {
-    var host = server.address().address
-    var port = server.address().port
+    var host = server.address().address;
+    var port = server.address().port;
 
-    log('Example app listening at http://%s:%s', host, port)
+    log('Uploader listening at http://' + host + ':' + port)
 })
 
