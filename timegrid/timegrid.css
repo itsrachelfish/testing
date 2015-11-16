@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrap {
+    position: relative;
+    box-sizing: border-box;
+    padding: 1em;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.rows {
+    width: 15%;
+    float: left;
+    margin-top: 2em;
+    pointer-events: none;
+}
+
+.row {
+    border-top: 1px solid #000;
+    padding: 0.5em;
+    width: 1000%;
+}
+
+.row .title {
+    display: inline-block;
+}
+
+.column:hover {
+    background-color: #eee;
+}
+
+.sub-row {
+    border-top: 1px solid #ccc;
+    height: 1em;
+    padding: 0.5em;
+    width: 1000%;
+}
+
+.columns {
+    display: table;
+    width: 85%;
+    height: 100%;
+}
+
+.column {
+    font-size: 75%;
+    display: table-cell;
+    border-left: 1px solid #000;
+    padding-left: 0.25em;
+    height: 100%;
+}
