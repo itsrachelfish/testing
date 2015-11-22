@@ -9,6 +9,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="timegrid.css" rel="stylesheet" type="text/css">
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        <script src="timegrid.js"></script>
     </head>
     <body>
         <div class="departments">
@@ -18,16 +21,16 @@
                 Department Name
 
                 <ul class="shifts">
-                    <li>
-                        <span class="shift">Shift Lead</span>
+                    <li class="shift">
+                        <span class="title">Shift Lead</span>
                         <span class="slot"></span>
-                        <span class="slot"></span>
+                        <span class="slot taken">Rachel</span>
                         <span class="slot"></span>
                         <span class="slot"></span>
                     </li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Other Shift</li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
 
@@ -35,10 +38,10 @@
                 Another Department
 
                 <ul class="shifts">
-                    <li>Shift Lead</li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Shift Lead</li>
+                    <li class="shift">Other Shift</li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
 
@@ -46,10 +49,17 @@
                 Cool Department
 
                 <ul class="shifts">
-                    <li>Shift Lead</li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Shift Lead</li>
+                    <li class="shift">
+                        <span class="title">Other Shift</span>
+                        <span class="slot"></span>
+                        <span class="slot"></span>
+                        <span class="slot"></span>
+                        <span class="slot taken">Rachel</span>
+                        <span class="slot"></span>
+                    </li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
 
@@ -59,10 +69,10 @@
                 Department Name
 
                 <ul class="shifts">
-                    <li>Shift Lead</li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Shift Lead</li>
+                    <li class="shift">Other Shift</li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
 
@@ -70,10 +80,10 @@
                 Another Department
 
                 <ul class="shifts">
-                    <li>Shift Lead</li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Shift Lead</li>
+                    <li class="shift">Other Shift</li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
 
@@ -81,12 +91,39 @@
                 Cool Department
 
                 <ul class="shifts">
-                    <li>Shift Lead</li>
-                    <li>Other Shift</li>
-                    <li>Dead Weight</li>
-                    <li>Slacker</li>
+                    <li class="shift">Shift Lead</li>
+                    <li class="shift">Other Shift</li>
+                    <li class="shift">Dead Weight</li>
+                    <li class="shift">Slacker</li>
                 </ul>
             </div>
+        </div>
+
+        <div class="grid">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
         </div>
         
         <div class="times">

@@ -1,0 +1,9 @@
+{
+  "name": "timegrid",
+  "version": "0.0.0",
+  "description": "A timegrid, testing for laravel-voldb",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.7.7"
+  }
+}
