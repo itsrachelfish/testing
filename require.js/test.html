@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Basic.js - Examples</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body {
+                background-color: #000;
+                min-height: 400px;
+                min-width: 600px;
+            }
+            
+            p {
+                color: #fff;
+            }
+            
+            .white {
+                color: #fff;
+            }
+            
+            .black {
+                color: #000;
+            }
+
+            .italic {
+                font-style: italic;
+            }
+
+            .tests {
+                color: #444;
+                position: absolute;
+                bottom: 1em;
+                left: 1em;
+            }
+
+            .content {
+                width: 200px;
+                height: 100px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -50px;
+                margin-left: -100px;
+                text-align: center;
+            }
+        </style>
+
+        <script data-main="scripts/main" src="scripts/require.js"></script>
+    </head>
+    <body>
+        <div class="dots">
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+        </div>
+
+        <div class="tests">
+            <div class="html"></div>
+            <div class="text"></div>
+            <div class="example">
+                <div>This is some example content</div>
+            </div>
+            <div class="replace"></div>
+            <div class="remove"></div>
+
+            <div class="attr" remove="me"></div>
+            <input class="check" type="checkbox">
+            <input class="uncheck" type="checkbox" checked>
+            <div class="data" data-test="this is some data!"></div>
+
+            <input class="get" value="This is a value!">
+            <input class="set" value="">
+
+            <div class="transform">I'm transforming!!!</div>
+            <div class="transform2">Meee tooo!!</div>
+        </div>
+
+        <div class="content">
+            <p class="hello">Hello world!</p>
+            <p class="world">*blink*</p>
+            <input class="trigger" type="button" value="Make it grow">
+        </div>
+
+        <div class="parent">
+            <div class="wrap">
+                <div class="child"></div>
+            </div>
+        </div>
+    </body>
+</html>
