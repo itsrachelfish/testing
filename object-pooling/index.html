@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Object Pooling</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; font-size: 8pt; background-color: #44085e; }
+            .preload { visibility: hidden; }
+            .workspace { float: left; }
+            .workspace audio { display: block; }
+            .pool { float: right; }
+            .pool audio { display: block; }
+            .clear { clear: both; }
+        </style>
+
+        <script src="node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                $('.no-pool').on('click', function()
+                {
+                    var audio = $('.preload .airhorn').clone();
+                    $('.workspace').el[0].appendChild(audio);
+
+                    audio.pause();
+                    audio.currentTime = 0;
+                    audio.play();
+
+                    // Always remove audio after it's finished playing
+                    setTimeout(function()
+                    {
+                        $(audio).remove();
+                    }, 1750)
+                });
+
+                $('.yes-pool').on('click', function()
+                {
+
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <button class="no-pool">Play Without Pooling</button>
+        <button class="yes-pool">Play With Pooling</button>
+
+        <div class="clear"></div>
+        <div class="workspace"></div>
+
+        <div class="preload">
+            <audio class="airhorn" preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+        </div>
+        
+        <div class="pool">
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+        </div>
+    </body>
+</html>

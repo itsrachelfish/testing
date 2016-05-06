@@ -1,0 +1,9 @@
+{
+  "name": "object-pooling",
+  "version": "0.0.0",
+  "description": "Trying to fix repeated audio playback in linux using object pools",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "wetfish-basic": "^0.7.11"
+  }
+}
