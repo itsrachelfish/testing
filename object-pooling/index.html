@@ -41,7 +41,20 @@
 
                 $('.yes-pool').on('click', function()
                 {
+                    var started = false;
+                    
+                    $('.pool audio').each(function()
+                    {
+                        // Only play audio clips that aren't already playing
+                        // Also, only start one audio clip per loop by checking the started variable
+                        if(this.duration > 0 && this.paused && !started)
+                        {
+                            started = true;
 
+                            this.currentTime = 0;
+                            this.play();
+                        }
+                    });
                 });
             });
         </script>
@@ -60,6 +73,22 @@
         </div>
         
         <div class="pool">
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
+            <audio preload="auto" controls>
+                <source src="airhorn.webm">
+            </audio>
+
             <audio preload="auto" controls>
                 <source src="airhorn.webm">
             </audio>
