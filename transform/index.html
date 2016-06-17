@@ -34,6 +34,10 @@
             .transform-wrap {
                 position: relative;
                 border: 1px dashed #ccc;
+                user-select: none;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
             }
 
             .handle {
@@ -41,6 +45,11 @@
                 height: 0.5em;
                 width: 0.5em;
                 background-color: #eee;
+                z-index: 1;
+            }
+
+            .handle.active {
+                background-color: yellow;
             }
 
             .top {
