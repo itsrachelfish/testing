@@ -1,20 +1,6 @@
-function angleFromCenter(center, point)
-{
-    return Math.atan2(point.y - center.y, point.x - center.x);
-}
-
 function degrees(radians)
 {
     return radians * (180 / Math.PI);
-}
-
-function getAngle(center, first, second)
-{
-    var angle1 = angleFromCenter(center, first);
-    var angle2 = angleFromCenter(center, second);
-    var angle = degrees(angle2 - angle1);
-
-    return angle;
 }
 
 var transform =
@@ -39,10 +25,10 @@ var transform =
     {
         transform.active = true;
         transform.element = event.target;
-        transform.handle = $(transform.element).position();
 
-        var objectPosition = $(transform.template).position();
-        transform.center = {x: objectPosition.left, y: objectPosition.top};
+        var position = $(transform.template).position();
+        transform.center = {x: position.left, y: position.top};
+        transform.offset = $(this).data('rotate');
 
         $(this).addClass('active');
     },
@@ -51,14 +37,14 @@ var transform =
     {
         if(transform.active)
         {
-         //   var angle = getAngle({x: transform.handle.left, y: transform.handle.top}, {x: event.clientX, y: event.clientY});
-          //  
-//            var angle = angleFromCenter(transform.center, {x: event.clientX, y: event.clientY}) * ;
+            var difference =
+            {
+                x: event.clientX - transform.center.x,
+                y: event.clientY - transform.center.y
+            };
 
-            var angle = getAngle(transform.center, {x: transform.handle.left, y: transform.handle.top}, {x: event.clientX, y: event.clientY});
-            $(transform.template).transform('rotate', angle + 'deg');
-
-//            console.log();
+            var angle = degrees(Math.atan2(difference.y, difference.x)) + transform.offset;
+            $(transform.template).transform('rotate', Math.atan2(difference.y, difference.x) + 'rad');
         }
     },
 
