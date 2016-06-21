@@ -110,13 +110,27 @@ $(document).ready(function()
 
     $('canvas').on('mousedown', function(event)
     {
-        // Right click to slow down
+        // Right click to spin clockwise
         if(event.button == 2)
         {
             box.speed += 0.1;
         }
-        // Left click to speed up!
+        // Left click to go backwards
         else
+        {
+            box.speed -= 0.1;
+        }
+    });
+
+    $('body').on('keydown', function(event)
+    {
+        // Up!
+        if(event.which == 38)
+        {
+            box.speed += 0.1;
+        }
+        // Down...
+        else if(event.which == 40)
         {
             box.speed -= 0.1;
         }
