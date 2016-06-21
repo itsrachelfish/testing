@@ -24,7 +24,6 @@ var line =
 
         line.context = line.canvas.getContext("2d");
         line.context.strokeStyle = 'red';
-
     },
 
     draw: function(x, y)
