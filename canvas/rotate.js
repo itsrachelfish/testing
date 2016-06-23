@@ -86,7 +86,7 @@ var box =
         var deltaY = clientY - box.center.y;
         var deltaX = clientX - box.center.x;
 
-        box.angle = degrees(Math.atan2(deltaY, deltaX));
+        box.angle = degrees(Math.atan2(deltaY, deltaX)) + 45;
 
         box.context.strokeStyle = 'white';
         box.context.save();
