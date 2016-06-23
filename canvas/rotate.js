@@ -3,10 +3,55 @@ function radians(degrees)
     return  degrees * Math.PI / 180;
 }
 
+var line =
+{
+    init: function()
+    {
+        line.canvas = $('canvas').el[0];
+
+        var size = $(line.canvas).size();
+        var position = $(line.canvas).position();
+
+        line.center =
+        {
+            x: size.width / 2,
+            y: size.height / 2
+        };
+
+        line.offset =
+        {
+            x: position.left,
+            y: position.top
+        };
+
+        line.canvas.width = size.width;
+        line.canvas.height = size.height;
+
+        line.context = line.canvas.getContext("2d");
+    },
+
+    draw: function(x, y)
+    {
+        x -= line.offset.x;
+        y -= line.offset.y;
+
+        line.context.strokeStyle = 'red';
+        line.context.beginPath();
+        line.context.moveTo(line.center.x, line.center.y);
+        line.context.lineTo(x, y);
+        line.context.closePath();
+        line.context.stroke();
+    },
+
+    refresh: function()
+    {
+        line.context.clearRect(0, 0, line.canvas.width, line.canvas.height);
+    },
+}
+
 var box =
 {
     size: 200,
-    speed: 0,
     angle: 0,
 
     init: function()
@@ -16,31 +61,15 @@ var box =
 
         // Get the initial size of the canvas
         box.resize();
-
-        // Start spinning the box
-        box.spin();
-
-        window.requestAnimationFrame(box.refresh);
     },
 
-    draw: function(x, y)
+    draw: function()
     {
-        if(x === undefined || y === undefined)
-        {
-            x = box.x;
-            y = box.y;
-        }
-        else
-        {
-            box.x = x;
-            box.y = y;
-        }
+        // Center the box in the middle of the screen
+        x = box.center.x;
+        y = box.center.y;
 
-        // Remove the offset from the margin around the page
-        x -= box.offset.x;
-        y -= box.offset.y;
-
-        // Center the box
+        // Center the box based on its size
         x -= box.size / 2;
         y -= box.size / 2;
 
@@ -52,8 +81,6 @@ var box =
         box.context.translate(-(x+box.size/2),-(y+box.size/2));
 
         box.context.strokeRect(x, y, box.size, box.size);
-
-        box.context.stroke();
         box.context.restore();
     },
 
@@ -99,39 +126,14 @@ var box =
 
 $(document).ready(function()
 {
+    line.init();
     box.init();
 
     $('canvas').on('mousemove', function(event)
     {
-        box.draw(event.clientX, event.clientY);
-    });
-
-    $('canvas').on('mousedown', function(event)
-    {
-        // Right click to spin clockwise
-        if(event.button == 2)
-        {
-            box.speed += 0.1;
-        }
-        // Left click to go backwards
-        else
-        {
-            box.speed -= 0.1;
-        }
-    });
-
-    $('body').on('keydown', function(event)
-    {
-        // Up!
-        if(event.which == 38)
-        {
-            box.speed += 0.1;
-        }
-        // Down...
-        else if(event.which == 40)
-        {
-            box.speed -= 0.1;
-        }
+        line.refresh();
+        line.draw(event.clientX, event.clientY);
+        box.draw();
     });
 
     $('canvas').on('contextmenu', function(event)
@@ -142,5 +144,6 @@ $(document).ready(function()
 
 $(window).on('resize', function()
 {
+    line.init();
     box.resize();
 });
