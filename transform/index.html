@@ -77,6 +77,19 @@
                 left: 50%;
                 margin-left: -0.25em;
             }
+
+            .canvas-wrap {
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                position: absolute;
+            }
+
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
         </style>
 
         <script src="node_modules/wetfish-basic/dist/basic.js"></script>
@@ -90,19 +103,23 @@
         </script>
     </head>
     <body>
+        <div class="canvas-wrap">
+            <canvas></canvas>
+        </div>
+
         <div class="flex">
             <img class="transform-me" src="kawaii-weed.gif">
         </div>
 
         <div class="transform-wrap template">
-            <div class="handle top left"></div>
+            <div class="handle top left" data-events="scale rotate" data-rotate="-225"></div>
             <div class="handle top vertical" data-events="scale"></div>
-            <div class="handle top right" data-events="scale rotate" data-rotate="120"></div>
-            <div class="handle right horizontal"></div>
-            <div class="handle bottom right"></div>
-            <div class="handle bottom vertical"></div>
-            <div class="handle bottom left"></div>
-            <div class="handle left horizontal"></div>
+            <div class="handle top right" data-events="scale rotate" data-rotate="45"></div>
+            <div class="handle right horizontal" data-events="scale"></div>
+            <div class="handle bottom right" data-events="scale rotate" data-rotate="-45"></div>
+            <div class="handle bottom vertical" data-events="scale"></div>
+            <div class="handle bottom left" data-events="scale rotate" data-rotate="225"></div>
+            <div class="handle left horizontal" data-events="scale"></div>
             <div class="object"></div>
         </div>
     </body>
