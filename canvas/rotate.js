@@ -3,6 +3,11 @@ function radians(degrees)
     return  degrees * Math.PI / 180;
 }
 
+function degrees(radians)
+{
+    return radians * 180 / Math.PI;
+}
+
 var line =
 {
     init: function()
@@ -63,7 +68,7 @@ var box =
         box.resize();
     },
 
-    draw: function()
+    draw: function(clientX, clientY)
     {
         // Center the box in the middle of the screen
         x = box.center.x;
@@ -72,6 +77,16 @@ var box =
         // Center the box based on its size
         x -= box.size / 2;
         y -= box.size / 2;
+
+        // Offset the client cursor position
+        clientX -= box.offset.x;
+        clientY -= box.offset.y;
+
+        // Get the angle of the line relative to the origin
+        var deltaY = clientY - box.center.y;
+        var deltaX = clientX - box.center.x;
+
+        box.angle = degrees(Math.atan2(deltaY, deltaX));
 
         box.context.strokeStyle = 'white';
         box.context.save();
@@ -82,15 +97,6 @@ var box =
 
         box.context.strokeRect(x, y, box.size, box.size);
         box.context.restore();
-    },
-
-    spin: function()
-    {
-        setTimeout(function()
-        {
-            box.angle += box.speed;
-            box.spin();
-        }, 10);
     },
 
     resize: function()
@@ -118,9 +124,6 @@ var box =
     {
         box.context.clearRect(0, 0, box.canvas.width, box.canvas.height);
         box.draw();
-
-        // forever and ever
-        window.requestAnimationFrame(box.refresh);
     },
 }
 
@@ -133,7 +136,7 @@ $(document).ready(function()
     {
         line.refresh();
         line.draw(event.clientX, event.clientY);
-        box.draw();
+        box.draw(event.clientX, event.clientY);
     });
 
     $('canvas').on('contextmenu', function(event)
