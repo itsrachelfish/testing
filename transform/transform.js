@@ -117,6 +117,15 @@ var transform =
 
             if(transform.watch.indexOf('scale') > -1)
             {
+                // Determine which axis we're scaling along
+                var axis = $(transform.element).hasClass('horizontal') ? 'x' : 'y';
+
+                // Determine the differece from the center point to the current axis
+
+                // Get the original size of the object
+
+                // Calculate the new size of the object, preserving aspect ratio
+                
                 console.log('do scaling!');
             }
         }
