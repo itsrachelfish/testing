@@ -85,15 +85,14 @@ var transform =
             y: size.height / 2
         };
 
-console.log(size, position);
-
         transform.offset =
         {
             x: position.left,
             y: position.top
         };
 
-        transform.rotateOffset = parseInt($(this).data('rotate'));
+        transform.watch = $(this).data('watch').split(' ');
+        transform.rotate = parseInt($(this).data('rotate'));
         $(this).addClass('active');
     },
 
@@ -101,29 +100,25 @@ console.log(size, position);
     {
         if(transform.active)
         {
-            console.log(transform.center, transform.offset);
+            line.draw(event.clientX, event.clientY);
 
-    line.draw(event.clientX, event.clientY);
-/*
-        // Center the box in the middle of the screen
-        x = box.center.x;
-        y = box.center.y;
+            if(transform.watch.indexOf('rotate') > -1)
+            {
+                // Get the angle of the line relative to the origin
+                var difference =
+                {
+                    x: event.clientX - transform.offset.x - transform.center.x,
+                    y: event.clientY - transform.offset.y - transform.center.y
+                };
 
-        // Center the box based on its size
-        x -= box.size / 2;
-        y -= box.size / 2;
-*/
-        // Get the angle of the line relative to the origin
-        var difference =
-        {
-            x: event.clientX - transform.offset.x - transform.center.x,
-            y: event.clientY - transform.offset.y - transform.center.y
-        };
+                var angle = degrees(Math.atan2(difference.y, difference.x)) + transform.rotate;
+                $(transform.template).transform('rotate', angle + 'deg');
+            }
 
-console.log( degrees(Math.atan2(difference.y, difference.x)), transform.rotateOffset);
-
-            var angle = degrees(Math.atan2(difference.y, difference.x)) + transform.rotateOffset;
-            $(transform.template).transform('rotate', angle + 'deg');
+            if(transform.watch.indexOf('scale') > -1)
+            {
+                console.log('do scaling!');
+            }
         }
     },
 
