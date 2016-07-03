@@ -66,9 +66,14 @@ var transform =
         $('.flex').el[0].appendChild(template);
         transform.template = template;
 
+        var size = $(template).size();
+
         $(template).find('.handle').on('mousedown', transform.start);
         $('body').on('mousemove', transform.watch);
         $('body').on('mouseup', transform.end);
+
+        $(template).data('width', size.width);
+        $(template).data('height', size.height);
     },
 
     start: function(event)
@@ -102,15 +107,15 @@ var transform =
         {
             line.draw(event.clientX, event.clientY);
 
+            // Get the angle of the line relative to the origin
+            var difference =
+            {
+                x: event.clientX - transform.offset.x - transform.center.x,
+                y: event.clientY - transform.offset.y - transform.center.y
+            };
+
             if(transform.watch.indexOf('rotate') > -1)
             {
-                // Get the angle of the line relative to the origin
-                var difference =
-                {
-                    x: event.clientX - transform.offset.x - transform.center.x,
-                    y: event.clientY - transform.offset.y - transform.center.y
-                };
-
                 var angle = degrees(Math.atan2(difference.y, difference.x)) + transform.rotate;
                 $(transform.template).transform('rotate', angle + 'deg');
             }
@@ -119,14 +124,31 @@ var transform =
             {
                 // Determine which axis we're scaling along
                 var axis = $(transform.element).hasClass('horizontal') ? 'x' : 'y';
-
-                // Determine the differece from the center point to the current axis
+                var opposite = axis == 'x' ? 'y' : 'x';
 
                 // Get the original size of the object
+                var originalSize =
+                {
+                    width: $(transform.template).data('width'),
+                    height: $(transform.template).data('height'),
+                };
 
                 // Calculate the new size of the object, preserving aspect ratio
-                
-                console.log('do scaling!');
+                var newSize = {};
+
+                if(axis == 'x')
+                {
+                    newSize.width = difference.x * 2;
+                    newSize.height = originalSize.height * newSize.width / originalSize.width;
+                }
+                else
+                {
+                    newSize.height = difference.y * 2;
+                    newSize.width = originalSize.width * newSize.height / originalSize.height;
+                }
+
+                // Update the object on the DOM
+                $(transform.template).find('.object img').style({'width': newSize.width + 'px', 'height': newSize.height + 'px'});
             }
         }
     },
