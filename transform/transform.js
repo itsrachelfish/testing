@@ -1,6 +1,11 @@
+function radians(degrees)
+{
+    return  degrees * Math.PI / 180;
+}
+
 function degrees(radians)
 {
-    return radians * (180 / Math.PI);
+    return radians * 180 / Math.PI;
 }
 
 var line =
@@ -54,6 +59,7 @@ var line =
 var transform =
 {
     active: false,
+    angle: 0,
 
     init: function(selector)
     {
@@ -107,21 +113,41 @@ var transform =
         {
             line.draw(event.clientX, event.clientY);
 
-            // Get the angle of the line relative to the origin
-            var difference =
-            {
-                x: event.clientX - transform.offset.x - transform.center.x,
-                y: event.clientY - transform.offset.y - transform.center.y
-            };
-
             if(transform.watch.indexOf('rotate') > -1)
             {
+                // Get the angle of the line relative to the origin
+                var difference =
+                {
+                    x: event.clientX - transform.offset.x - transform.center.x,
+                    y: event.clientY - transform.offset.y - transform.center.y
+                };
+
                 var angle = degrees(Math.atan2(difference.y, difference.x)) + transform.rotate;
                 $(transform.template).transform('rotate', angle + 'deg');
+
+                transform.angle = angle;
             }
 
             if(transform.watch.indexOf('scale') > -1)
             {
+                // Adjust the cursor position based on the current rotation of the object
+
+                var angle = radians(transform.angle);
+                var center =
+                {
+                    x: transform.offset.x + transform.center.x,
+                    y: transform.offset.y + transform.center.y
+                };
+
+                var rotatedX = Math.cos(angle) * (event.clientX - center.x) - Math.sin(angle) * (event.clientY - center.y) + center.x;
+                var rotatedY = Math.sin(angle) * (event.clientX - center.x) + Math.cos(angle) * (event.clientY - center.y) + center.y;
+
+                var difference =
+                {
+                    x: rotatedX - center.x,
+                    y: rotatedY - center.y
+                };
+
                 // Determine which axis we're scaling along
                 var axis = $(transform.element).hasClass('horizontal') ? 'x' : 'y';
                 var opposite = axis == 'x' ? 'y' : 'x';
