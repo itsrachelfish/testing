@@ -138,12 +138,12 @@ var transform =
 
                 if(axis == 'x')
                 {
-                    newSize.width = difference.x * 2;
+                    newSize.width = Math.abs(difference.x) * 2;
                     newSize.height = originalSize.height * newSize.width / originalSize.width;
                 }
                 else
                 {
-                    newSize.height = difference.y * 2;
+                    newSize.height = Math.abs(difference.y) * 2;
                     newSize.width = originalSize.width * newSize.height / originalSize.height;
                 }
 
