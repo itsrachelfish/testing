@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Aspect Ratio Test</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            html, body {
+                min-height: 100%;
+            }
+            
+            body {
+                overflow: hidden;
+                background: linear-gradient(45deg, #f06, #0cf);
+                background-position: fixed;
+            }
+
+            .flex {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                height: 100vh;
+            }
+
+            .buttons {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+            }
+
+            .img-wrap {
+                border: 1px solid #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
+
+        <script src="../node_modules/wetfish-basic/dist/basic.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                $('.slider').on('mousemove change', function()
+                {
+                    var size = $(this).value() + 'px';
+                    $('.img-wrap').style({'height': size, 'width': size});
+                });
+
+                $('select').on('change', function()
+                {
+                    $('img').attr('src', $(this).value());
+                });
+            });
+        </script>
+   </head>
+    <body>
+        <div class="flex">
+            <div class="img-wrap">
+                <img src="kawaii-weed.gif">
+            </div>
+
+            <div class="buttons">
+                <input class="slider" type="range" value="500" min="1" max="1200" step="1"><br>
+                <select>
+                    <option>kawaii-weed.gif</option>
+                    <option>longcat.gif</option>
+                    <option>cloud.png</option>
+                </select>
+            </div>
+        </div>
+    </body>
+</html>
