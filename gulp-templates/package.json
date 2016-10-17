@@ -1,0 +1,11 @@
+{
+  "name": "gulp-templates",
+  "version": "0.0.0",
+  "description": "Basic templating system using gulp to generate static files",
+  "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-watch": "^4.3.10"
+  }
+}
