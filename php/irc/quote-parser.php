@@ -1,6 +1,6 @@
 <?php
 
-$quotes = file_get_contents("./quotes.txt");
+$quotes = file_get_contents("./logs/quotes.txt");
 $quotes = explode("\n", $quotes);
 
 foreach($quotes as $quote)
