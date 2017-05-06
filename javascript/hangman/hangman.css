@@ -1,0 +1,60 @@
+body {
+    text-align: center;
+    font-size: 24pt;
+}
+
+.hangman {
+    position: relative;
+    height: 600px;
+}
+
+.hangman img {
+    position: absolute;
+    left: 50%;
+}
+
+.head {
+    margin-left: -50px;
+    top: 162px;
+}
+
+.ded {
+    top: 190px;
+    margin-left: -34px;
+}
+
+.murder {
+    margin-left: -250px;
+}
+
+.torso {
+    top: 250px;
+}
+
+.left-arm {
+    top: 265px;
+    margin-left: -85px;
+}
+
+.right-arm {
+    top: 265px;
+    margin-left: 12px;
+}
+
+.left-leg {
+    top: 415px;
+    margin-left: -80px;
+}
+
+.right-leg {
+    top: 410px;
+    margin-left: 10px;
+}
+
+.letters span {
+    background-color: #ccc;
+    display: inline-block;
+    height: 3em;
+    width: 2em;
+    margin: 1em;
+}

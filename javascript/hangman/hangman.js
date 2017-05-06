@@ -1,4 +1,4 @@
 $(document).ready(function()
 {
-    alert('cool');
+//    alert('cool');
 });
