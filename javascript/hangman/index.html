@@ -9,17 +9,47 @@
     </head>
 
     <body>
-        <h1>Welcome to Hangban</h1>
+        <h1 class="title">
+            <div class="play">
+                Welcome to Hangban!
+
+                <button>Play Game</button>
+            </div>
+
+            <div class="guess hidden">
+                What's your guess?
+
+                <input type="text" maxlength="1">
+            </div>
+
+            <div class="wrong hidden">
+                Oh no! You're wrong :(
+            </div>
+
+            <div class="right hidden">
+                Good job!! You're right!!!
+            </div>
+        </h1>
+
+        <div class="guesses hidden">
+            <label>Bad Guesses</label>
+            <span>a</span>
+            <span>b</span>
+            <span>c</span>
+            <span>d</span>
+            <span>e</span>
+            <span>f</span>
+        </div>
 
         <div class="hangman">
             <img class="murder" src="img/murder.png">
-            <img class="head" src="img/head.png">
-            <img class="ded" src="img/ded.png">
-            <img class="torso" src="img/torso.png">
-            <img class="left-arm" src="img/left-arm.png">
-            <img class="right-arm" src="img/right-arm.png">
-            <img class="left-leg" src="img/left-leg.png">
-            <img class="right-leg" src="img/right-leg.png">
+            <img class="head hidden" src="img/head.png">
+            <img class="ded hidden" src="img/ded.png">
+            <img class="torso hidden" src="img/torso.png">
+            <img class="left-arm hidden" src="img/left-arm.png">
+            <img class="right-arm hidden" src="img/right-arm.png">
+            <img class="left-leg hidden" src="img/left-leg.png">
+            <img class="right-leg hidden" src="img/right-leg.png">
         </div>
 
         <div class="letters">

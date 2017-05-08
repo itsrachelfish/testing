@@ -1,6 +1,29 @@
 body {
     text-align: center;
     font-size: 24pt;
+    padding-top: 1em;
+}
+
+.title button {
+    margin-left: 2em;
+    padding: 2em;
+    vertical-align: middle;
+}
+
+.title input {
+    font-size: 1em;
+    width: 1.5em;
+    padding-left: 0.4em;
+}
+
+.guesses {
+    float: left;
+    color: #E62020;
+    width: 420px;
+}
+
+.guesses label {
+    display: block;
 }
 
 .hangman {
@@ -51,10 +74,15 @@ body {
     margin-left: 10px;
 }
 
-.letters span {
+.guesses span, .letters span {
     background-color: #ccc;
     display: inline-block;
     height: 3em;
     width: 2em;
     margin: 1em;
+    line-height: 3em;
+}
+
+.hidden {
+    display: none;
 }
