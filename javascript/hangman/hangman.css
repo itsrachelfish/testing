@@ -87,6 +87,10 @@ body {
     line-height: 3em;
 }
 
+.lose .word {
+    font-size: 0.5em;
+}
+
 .hidden {
     display: none;
 }

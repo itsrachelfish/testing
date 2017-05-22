@@ -116,8 +116,8 @@ var game =
 
     show: function(title)
     {
-        $('.title div').addClass('hidden');
-        $('.title .' + title).removeClass('hidden');
+        $('.title > div').addClass('hidden');
+        $('.title > .' + title).removeClass('hidden');
     },
 
     right: function(answer)
@@ -150,6 +150,19 @@ var game =
     {
         game.show('wrong');
         game.answers.wrong.push(answer);
+
+        $('.hangman .hidden').eq(0).removeClass('hidden');
+
+        if(!$('.hangman .hidden').el.length)
+        {
+            clearTimeout(game.timeout);
+
+            game.timeout = setTimeout(function()
+            {
+                game.show('lose');
+                $('.lose .word span').text(game.word);
+            }, 1000);
+        }
     }
 };
 
