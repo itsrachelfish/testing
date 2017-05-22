@@ -97,10 +97,7 @@
                 return;
             }
 
-            game.timeout = setTimeout(function()
-            {
-                game.show('guess');
-            }, 1000);
+            game.show('guess', 1000);
 
             if(game.word.indexOf(letter) > -1)
             {
@@ -115,15 +112,23 @@
         already: function()
         {
             game.show('already');
-
-            game.timeout = setTimeout(function()
-            {
-                game.show('guess');
-            }, 1000);
+            game.show('guess', 1000);
         },
 
-        show: function(title)
+        show: function(title, delay)
         {
+            if(delay)
+            {
+                if(game.timeout)
+                {
+                    clearTimeout(game.timeout);
+                }
+
+                game.timeout = setTimeout(function()
+                {
+                    game.show(title);
+                }, delay);
+            }
             $('.title > div').addClass('hidden');
             $('.title > .' + title).removeClass('hidden');
         },
@@ -145,12 +150,7 @@
 
             if(game.answers.right.length === game.word.length)
             {
-                clearTimeout(game.timeout);
-
-                game.timeout = setTimeout(function()
-                {
-                    game.show('win');
-                }, 1000);
+                game.show('win', 1000);
             }
         },
 
@@ -166,13 +166,8 @@
 
             if(!$('.hangman .hidden').el.length)
             {
-                clearTimeout(game.timeout);
-
-                game.timeout = setTimeout(function()
-                {
-                    game.show('lose');
-                    $('.lose .word span').text(game.word);
-                }, 1000);
+                $('.lose .word span').text(game.word);
+                game.show('lose', 1000);
             }
         }
     };
