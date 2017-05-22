@@ -25,6 +25,32 @@ const words =
     'lamp',
     'squid',
     'vorhaut',
+    'carbon',
+    'laser',
+    'sprint',
+    'focus',
+    'slime',
+    'aardvark',
+    'avacado',
+    'orange',
+    'green',
+    'grapes',
+    'floor',
+    'broom',
+    'mop',
+    'car',
+    'honk',
+    'forum',
+    'wiki',
+    'internet',
+    'flower',
+    'friendship',
+    'glove',
+    'water',
+    'picture',
+    'bird',
+    'computer',
+    'poppy',
 ];
 
 var game =
@@ -36,6 +62,7 @@ var game =
     play: function()
     {
         game.state = 'playing';
+        game.show('guess');
 
         // Pick a random word
         var index = Math.floor(Math.random() * words.length);
@@ -64,24 +91,25 @@ var game =
 
     already: function()
     {
-        $('.title .guess').addClass('hidden');
-        $('.title .already').removeClass('hidden');
+        game.show('already');
 
         setTimeout(function()
         {
-            $('.title .guess').removeClass('hidden');
-            $('.title .already').addClass('hidden');
+            game.show('guess');
         }, 1000);
     },
+
+    show: function(title)
+    {
+        $('.title div').addClass('hidden');
+        $('.title .' + title).removeClass('hidden');
+    }
 };
 
 $(document).ready(function()
 {
     $('.play button').on('click', function()
     {
-        $('.title .play').addClass('hidden');
-        $('.title .guess').removeClass('hidden');
-
         game.play();
     });
 
