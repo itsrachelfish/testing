@@ -86,7 +86,21 @@ var game =
             return;
         }
 
-        alert('you guessed ' + letter);
+        if(game.word.indexOf(letter) > -1)
+        {
+            game.show('right');
+            game.right.push(letter);
+        }
+        else
+        {
+            game.show('wrong');
+            game.wrong.push(letter);
+        }
+
+        setTimeout(function()
+        {
+            game.show('guess');
+        }, 1000);
     },
 
     already: function()

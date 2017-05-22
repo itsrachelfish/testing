@@ -4,6 +4,10 @@ body {
     padding-top: 1em;
 }
 
+.title {
+    height: 90px;
+}
+
 .title button {
     margin-left: 2em;
     padding: 2em;
