@@ -58,6 +58,7 @@ var game =
     play: function()
     {
         game.show('guess');
+        $('.guess input').el[0].focus();
 
         // Reset saved answers
         game.answers =
