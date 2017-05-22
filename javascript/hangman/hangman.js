@@ -56,8 +56,11 @@ const words =
 var game =
 {
     state: 'waiting', // Possible states: waiting, playing, win, lose
-    right: [],
-    wrong: [],
+    answers:
+    {
+        right: [],
+        wrong: [],
+    },
 
     play: function()
     {
@@ -74,40 +77,38 @@ var game =
 
         letters.forEach(function(letter)
         {
-            $('.letters').append('<span></span>');
+            $('.letters').append('<span>&nbsp;</span>');
         });
     },
 
     guess: function(letter)
     {
-        if(game.right.indexOf(letter) > -1 || game.wrong.indexOf(letter) > -1)
+        if(game.answers.right.indexOf(letter) > -1 || game.answers.wrong.indexOf(letter) > -1)
         {
             game.already();
             return;
         }
 
-        if(game.word.indexOf(letter) > -1)
-        {
-            game.show('right');
-            game.right.push(letter);
-        }
-        else
-        {
-            game.show('wrong');
-            game.wrong.push(letter);
-        }
-
-        setTimeout(function()
+        game.timeout = setTimeout(function()
         {
             game.show('guess');
         }, 1000);
+
+        if(game.word.indexOf(letter) > -1)
+        {
+            game.right(letter);
+        }
+        else
+        {
+            game.wrong(letter);
+        }
     },
 
     already: function()
     {
         game.show('already');
 
-        setTimeout(function()
+        game.timeout = setTimeout(function()
         {
             game.show('guess');
         }, 1000);
@@ -117,6 +118,38 @@ var game =
     {
         $('.title div').addClass('hidden');
         $('.title .' + title).removeClass('hidden');
+    },
+
+    right: function(answer)
+    {
+        game.show('right');
+
+        var letters = game.word.split('');
+
+        letters.forEach(function(letter, index)
+        {
+            if(letter === answer)
+            {
+                game.answers.right.push(answer);
+                $('.letters span').eq(index).text(letter);
+            }
+        });
+
+        if(game.answers.right.length === game.word.length)
+        {
+            clearTimeout(game.timeout);
+
+            game.timeout = setTimeout(function()
+            {
+                game.show('win');
+            }, 1000);
+        }
+    },
+
+    wrong: function(answer)
+    {
+        game.show('wrong');
+        game.answers.wrong.push(answer);
     }
 };
 
