@@ -69,12 +69,14 @@ var game =
         // Make sure the man is hidden when the game starts
         $('.hangman img').addClass('hidden');
         $('.hangman .murder').removeClass('hidden');
+        $('.guesses').addClass('hidden');
 
         // Pick a random word
         var index = Math.floor(Math.random() * words.length);
         game.word = words[index];
 
         $('.letters span').remove();
+        $('.guesses span').remove();
 
         var letters = game.word.split('');
 
@@ -153,6 +155,9 @@ var game =
     {
         game.show('wrong');
         game.answers.wrong.push(answer);
+
+        $('.guesses').removeClass('hidden');
+        $('.guesses').append("<span>" + answer + "</span>");
 
         $('.hangman .hidden').eq(0).removeClass('hidden');
 
