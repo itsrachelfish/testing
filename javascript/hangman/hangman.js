@@ -55,17 +55,20 @@ const words =
 
 var game =
 {
-    state: 'waiting', // Possible states: waiting, playing, win, lose
-    answers:
-    {
-        right: [],
-        wrong: [],
-    },
-
     play: function()
     {
-        game.state = 'playing';
         game.show('guess');
+
+        // Reset saved answers
+        game.answers =
+        {
+            right: [],
+            wrong: [],
+        };
+
+        // Make sure the man is hidden when the game starts
+        $('.hangman img').addClass('hidden');
+        $('.hangman .murder').removeClass('hidden');
 
         // Pick a random word
         var index = Math.floor(Math.random() * words.length);
@@ -168,7 +171,7 @@ var game =
 
 $(document).ready(function()
 {
-    $('.play button').on('click', function()
+    $('.play button, .win button, .lose button').on('click', function()
     {
         game.play();
     });
