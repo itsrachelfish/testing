@@ -186,7 +186,7 @@
 
         $('.guess input').on('input', function()
         {
-            game.guess($(this).value());
+            game.guess($(this).value().toLowerCase());
             $(this).value('');
         });
     });
