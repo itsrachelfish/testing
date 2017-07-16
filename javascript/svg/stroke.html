@@ -40,16 +40,58 @@
                 fill: yellowgreen;
                 stroke: #655;
                 stroke-width: 30;
-                stroke-dasharray: 30 20;
+                stroke-dasharray: 30 30;
             }
         </style>
 
         <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
         
-        <script>            
+        <script>
+            var state =
+            {
+                ball:
+                {
+                    radius: 5
+                },
+                stroke:
+                {
+                    width: 30,
+                    length: 30,
+                    gap: 30
+                }
+            };
+
             $(document).ready(function()
             {
+                $('.ball.size').on('change input', function()
+                {
+                    state.ball.radius = $(this).value();
+                    update();
+                });
 
+                $('.stroke.width').on('change input', function()
+                {
+                    state.stroke.width = $(this).value();
+                    update();
+                });
+
+                $('.stroke.length').on('change input', function()
+                {
+                    state.stroke.length = $(this).value();
+                    update();
+                });
+
+                $('.stroke.gap').on('change input', function()
+                {
+                    state.stroke.gap = $(this).value();
+                    update();
+                });
+
+                function update()
+                {
+                    $('svg circle').attr('r', state.ball.radius + '%');
+                    $('svg circle').style({'stroke-width': state.stroke.width, 'stroke-dasharray': state.stroke.length + " " + state.stroke.gap});
+                }
             });
         </script>
     </head>
@@ -59,7 +101,7 @@
                 <label>Ball</label>
 
                 <p>
-                    <b>Size:</b> <input type="range" class="size" value="5" min="1" max="100" step="1">
+                    <b>Size:</b> <input type="range" class="ball size" value="5" min="1" max="100" step="1">
                 </p>
             </div>
 
@@ -67,22 +109,22 @@
                 <label>Stroke</label>
 
                 <p>
-                    <b>Width:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                    <b>Width:</b> <input type="range" class="stroke width" value="30" min="1" max="420" step="1">
                 </p>
 
                 <p>
-                    <b>Length:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                    <b>Length:</b> <input type="range" class="stroke length" value="30" min="1" max="420" step="1">
                 </p>
 
                 <p>
-                    <b>Gap:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                    <b>Gap:</b> <input type="range" class="stroke gap" value="30" min="1" max="420" step="1">
                 </p>
             </div>
         </div>
 
         <div class="content">
-            <svg width="420" height="420">
-                <circle r="160" cx="210" cy="210" />
+            <svg width="100%" height="100%">
+                <circle r="5%" cx="50%" cy="50%" />
             </svg>
         </div>
     </body>
