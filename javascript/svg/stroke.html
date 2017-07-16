@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Stroking a circle</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; }
+            
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+            }
+
+            .controls input {
+                display: block;
+            }
+
+            .group {
+                background-color: #ccc;
+                padding: 1em;
+                margin-bottom: 1em;
+            }
+
+            circle {
+                fill: yellowgreen;
+                stroke: #655;
+                stroke-width: 30;
+                stroke-dasharray: 30 20;
+            }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>            
+            $(document).ready(function()
+            {
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="controls">
+            <div class="group">
+                <label>Ball</label>
+
+                <p>
+                    <b>Size:</b> <input type="range" class="size" value="5" min="1" max="100" step="1">
+                </p>
+            </div>
+
+            <div class="group">
+                <label>Stroke</label>
+
+                <p>
+                    <b>Width:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                </p>
+
+                <p>
+                    <b>Length:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                </p>
+
+                <p>
+                    <b>Gap:</b> <input type="range" class="size" value="50" min="1" max="200" step="5">
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <svg width="420" height="420">
+                <circle r="160" cx="210" cy="210" />
+            </svg>
+        </div>
+    </body>
+</html>
