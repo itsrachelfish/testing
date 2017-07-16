@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Yummy pie!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; text-align: center; }
+            
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+            }
+
+            .controls input {
+                display: block;
+            }
+
+            .group {
+                background-color: #ccc;
+                padding: 1em;
+                margin-bottom: 1em;
+            }
+
+            svg {
+              transform: rotate(-90deg);
+              background: yellowgreen;
+              border-radius: 50%;
+              max-width: 100%;
+              max-height: 100%;
+            }
+
+            circle {
+              fill: yellowgreen;
+              stroke: #655;
+              stroke-width: 32;
+              stroke-dasharray: 44 100;
+            }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                $('.pie.slice').on('change input', function()
+                {
+                    $('svg circle').style({'stroke-dasharray': $(this).value() + " 100"});
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="controls">
+            <div class="group">
+                <label>Pie!!</label>
+
+                <p>
+                    <b>Slice:</b> <input type="range" class="pie slice" value="44" min="0" max="101" step="0.5">
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <svg viewBox="0 0 32 32">
+              <circle r="16" cx="16" cy="16" />
+            </svg>
+        </div>
+    </body>
+</html>
