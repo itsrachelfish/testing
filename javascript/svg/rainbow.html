@@ -107,11 +107,18 @@
                     // Remove "filled" class from old circles
                     $('svg circle.filled').each(function()
                     {
-                        this.className.baseVal = this.className.baseVal.replace(' filled', '');
+                        var scope = this;
+
+                        // Wait a second before removing this color
+                        setTimeout(function()
+                        {
+                            scope.className.baseVal = scope.className.baseVal.replace(' filled', '');
+                        }, 1000);
                     });
 
                     // Add "filled" class to the current color
                     $('svg circle.' + color).el[0].className.baseVal = color + ' filled';
+                    $('svg').el[0].insertBefore($('svg circle.' + color).el[0], $('svg').el[0].firstChild);
                 }, 1000);
             });
         </script>
