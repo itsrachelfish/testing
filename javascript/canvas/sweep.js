@@ -1,11 +1,22 @@
+function radians(degrees)
+{
+    return  degrees * Math.PI / 180;
+}
+
+function degrees(radians)
+{
+    return radians * 180 / Math.PI;
+}
+
 var sweep =
 {
+    angle: 0,
+    radius: 250,
+
     init: function()
     {
         sweep.canvas = $('canvas').el[0];
-
         var size = $(sweep.canvas).size();
-        var position = $(sweep.canvas).position();
 
         sweep.center =
         {
@@ -13,24 +24,17 @@ var sweep =
             y: size.height / 2
         };
 
-        sweep.offset =
-        {
-            x: position.left,
-            y: position.top
-        };
-
         sweep.canvas.width = size.width;
         sweep.canvas.height = size.height;
 
         sweep.context = sweep.canvas.getContext("2d");
         sweep.context.strokeStyle = 'red';
+
+        window.requestAnimationFrame(sweep.animate);
     },
 
     draw: function(x, y)
     {
-        x -= sweep.offset.x;
-        y -= sweep.offset.y;
-
         sweep.context.beginPath();
         sweep.context.moveTo(sweep.center.x, sweep.center.y);
         sweep.context.lineTo(x, y);
@@ -40,20 +44,28 @@ var sweep =
 
     refresh: function()
     {
-        sweep.context.clearRect(0, 0, sweep.canvas.width, sweep.canvas.height);
+        sweep.context.globalAlpha = 0.075;
+        sweep.context.fillRect(0, 0, sweep.canvas.width, sweep.canvas.height);
+        sweep.context.globalAlpha = 1;
     },
+
+    animate: function()
+    {
+        sweep.refresh();
+
+        var sweepX = sweep.center.x + (sweep.radius * Math.cos(radians(sweep.angle)));
+        var sweepY = sweep.center.y + (sweep.radius * Math.sin(radians(sweep.angle)));
+
+        sweep.draw(sweepX, sweepY);
+        sweep.angle++;
+
+        window.requestAnimationFrame(sweep.animate);
+    }
 }
 
 $(document).ready(function()
 {
     sweep.init();
-
-    $('canvas').on('mousemove', function(event)
-    {
-        // comment out sweep.refresh() if you want to relive 90s screensavers
-        sweep.refresh();
-        sweep.draw(event.clientX, event.clientY);
-    });
 });
 
 $(window).on('resize', function()
