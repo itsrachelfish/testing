@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>A rainbow circle</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; text-align: center; }
+
+            label {
+                font-weight: bold;
+            }
+
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+                width: 20%;
+            }
+
+            .controls input {
+                display: block;
+                width: 100%;
+            }
+
+            .group {
+                background-color: #ccc;
+                padding: 1em;
+                margin-bottom: 1em;
+            }
+
+            svg {
+                transform: rotate(-90deg);
+                background: #655;
+                border-radius: 50%;
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            circle {
+                fill: none;
+                stroke-width: 32;
+                stroke-dasharray: 101 101;
+                stroke-dashoffset: 101;
+                transform-origin: center center;
+                transition: all 1s linear;
+            }
+
+            circle.red {
+                stroke: red;
+            }
+
+            circle.orange {
+                stroke: orange;
+            }
+
+            circle.yellow {
+                stroke: yellow;
+            }
+
+            circle.green {
+                stroke: green;
+            }
+
+            circle.blue {
+                stroke: blue;
+            }
+
+            circle.indigo {
+                stroke: indigo;
+            }
+
+            circle.violet {
+                stroke: violet;
+            }
+
+            .filled {
+                stroke-dashoffset: 0;
+            }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+
+            $(document).ready(function()
+            {
+                setInterval(function()
+                {
+                    var color = colors.shift();
+                    colors.push(color);
+
+                    // Remove "filled" class from old circles
+                    $('svg circle.filled').each(function()
+                    {
+                        this.className.baseVal = this.className.baseVal.replace(' filled', '');
+                    });
+
+                    // Add "filled" class to the current color
+                    $('svg circle.' + color).el[0].className.baseVal = color + ' filled';
+                }, 1000);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="content">
+            <svg viewBox="0 0 32 32">
+                <circle class="red" r="16" cx="16" cy="16" />
+                <circle class="orange" r="16" cx="16" cy="16" />
+                <circle class="yellow" r="16" cx="16" cy="16" />
+                <circle class="green" r="16" cx="16" cy="16" />
+                <circle class="blue" r="16" cx="16" cy="16" />
+                <circle class="indigo" r="16" cx="16" cy="16" />
+                <circle class="violet" r="16" cx="16" cy="16" />
+            </svg>
+        </div>
+    </body>
+</html>
