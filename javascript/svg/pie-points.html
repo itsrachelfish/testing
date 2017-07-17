@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>PIE POINTS!!!!!!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { overflow: hidden; text-align: center; }
+
+            label {
+                font-weight: bold;
+            }
+
+            .content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            
+            .controls {
+                z-index: 1;
+                position: absolute;
+                right: 0;
+                text-align: center;
+                width: 20%;
+            }
+
+            .controls input {
+                display: block;
+                width: 100%;
+            }
+
+            .group {
+                background-color: #ccc;
+                padding: 1em;
+                margin-bottom: 1em;
+            }
+
+            svg {
+                transform: rotate(-90deg);
+                background: #655;
+                border-radius: 50%;
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            circle {
+                fill: none;
+                stroke-width: 32;
+                stroke-dasharray: 0 99;
+                transform-origin: center center;
+            }
+
+            circle.orange {
+                stroke: orange;
+            }
+
+            circle.green {
+                stroke: yellowgreen;
+            }
+
+            circle.blue {
+                stroke: blue;
+            }
+
+            circle.purple {
+                stroke: purple;
+                z-index: 1
+            }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            var colors = ['orange', 'green', 'blue', 'purple'];
+
+            var points =
+            {
+                total: 100,
+                orange: 0,
+                green: 0,
+                blue: 0,
+                purple: 0,
+
+                update: function()
+                {
+                    console.log('UPDATE START');
+
+                    // Variable to store how much has already been filled in by other colors
+                    var totalFilled = 0;
+
+                    for(var index = 0; index < colors.length; index++)
+                    {
+                        var color = colors[index];
+                        var currentlyFilled = points[color];
+                        var rotate = (totalFilled / 100) * 360;
+
+                        $('.controls .slice[data-color="'+color+'"]').parents('.wrap').find('.count').text('(' + points[color] + ')');
+                        $('.controls .total').text(points.total.toString());
+
+                        // Magic number to account for 100% not being completely covered?
+                        $('svg circle.' + color).style({'stroke-dasharray': (currentlyFilled * 1.006) + " 100"}).transform({'rotate': rotate + 'deg'});
+
+                        totalFilled += currentlyFilled;
+                    }
+                },
+            };
+
+            $(document).ready(function()
+            {
+                $('.pie.slice').on('input', function()
+                {
+                    var color = $(this).data('color');
+                    var diff = $(this).value() - points[color];
+
+                    // Not enough points left!
+                    if(points.total - diff < 0)
+                    {
+                        $(this).value(points[color]);
+                        return;
+                    }
+
+                    points.total -= diff;
+                    points[color] += diff;
+
+                    points.update();
+                });
+
+                // Trigger input on page load (firefox preserves values when refreshing)
+                $('.pie.slice').trigger('input');
+            });
+        </script>
+    </head>
+    <body>
+        <div class="controls">
+            <div class="group">
+                <label>A Pie (with points)</label>
+
+                <p>
+                    <span class="wrap">
+                        <b>Orange <span class="count">(0)</span>:</b>
+                        <input type="range" class="pie slice" data-color="orange" value="0" min="0" max="100" step="1">
+                    </span>
+
+                    <span class="wrap">
+                        <b>Green <span class="count">(0)</span>:</b>
+                        <input type="range" class="pie slice" data-color="green" value="0" min="0" max="100" step="1">
+                    </span>
+
+                    <span class="wrap">
+                        <b>Blue <span class="count">(0)</span>:</b>
+                        <input type="range" class="pie slice" data-color="blue" value="0" min="0" max="100" step="1">
+                    </span>
+
+                    <span class="wrap">
+                        <b>Purple <span class="count">(0)</span>:</b>
+                        <input type="range" class="pie slice" data-color="purple" value="0" min="0" max="100" step="1">
+                    </span>
+                </p>
+            </div>
+
+            <div class="group">
+                <label>Points remaining:</label>
+                <span class="total">100</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <svg viewBox="0 0 32 32">
+              <circle class="purple" r="16" cx="16" cy="16" />
+              <circle class="blue" r="16" cx="16" cy="16" />
+              <circle class="green" r="16" cx="16" cy="16" />
+              <circle class="orange" r="16" cx="16" cy="16" />
+            </svg>
+        </div>
+    </body>
+</html>
