@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Another rainbow, except a SVG</title>
+        <title>Another rainbow, except IT SPINS!</title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,8 +27,30 @@
 
             svg circle {
                 fill: none;
+                transform-origin: center;
+            }
+
+            .r { animation: spin 2628000s linear infinite; }
+            .o { animation: spin 604800s linear infinite; }
+            .y { animation: spin 86400s linear infinite; }
+            .g { animation: spin 3600s linear infinite; }
+            .b { animation: spin 60s linear infinite; }
+            .v { animation: spin 1s linear infinite; }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
             }
         </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                console.log("howdy");
+            });
+        </script>
     </head>
 
     <body>
