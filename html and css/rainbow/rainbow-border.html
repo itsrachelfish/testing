@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>CSS Rainbow</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body {
+                overflow: hidden;
+            }
+
+            .rainbow-mask {
+                height: 50vh;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .rainbow {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .arc {
+                border-radius: 100%;
+                border: 2.75vh solid #000;
+                position: absolute;
+            }
+
+            .r {
+                border-color: #E31D28;
+                width: 35vh;
+                height: 35vh;
+            }
+
+            .o {
+                border-color: #ED8C3D;
+                width: 30vh;
+                height: 30vh;
+            }
+
+            .y {
+                border-color: #FCD234;
+                width: 25vh;
+                height: 25vh;
+            }
+
+            .g {
+                border-color: #3E9965;
+                width: 20vh;
+                height: 20vh;
+            }
+
+            .b {
+                border-color: #295167;
+                width: 15vh;
+                height: 15vh;
+            }
+
+            .v {
+                border-color: #492245;
+                width: 10vh;
+                height: 10vh;
+            }
+        </style>
+
+        <script src="./node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                console.log("howdy");
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="rainbow-mask">
+            <div class="rainbow">
+                <div class="r arc"></div>
+                <div class="o arc"></div>
+                <div class="y arc"></div>
+                <div class="g arc"></div>
+                <div class="b arc"></div>
+                <div class="v arc"></div>
+            </div>
+        </div>
+    </body>
+</html>
