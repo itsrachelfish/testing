@@ -30,12 +30,17 @@
                 transform-origin: center;
             }
 
-            .r { transform: rotate(88deg); }
-            .o { transform: rotate(77deg); }
-            .y { transform: rotate(66deg); }
-            .g { transform: rotate(55deg); }
-            .b { transform: rotate(44deg); }
-            .v { transform: rotate(33deg); }
+            .r { animation: spin 2628000s linear infinite; }
+            .o { animation: spin 604800s linear infinite; }
+            .y { animation: spin 86400s linear infinite; }
+            .g { animation: spin 3600s linear infinite; }
+            .b { animation: spin 60s linear infinite; }
+            .v { animation: spin 1s linear infinite; }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
         </style>
 
         <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
