@@ -4,6 +4,7 @@
   "description": "Miscelaneous things for learning stuff...",
   "author": "Rachel Fish <rachel@wetfish.net> (https://wetfish.net)",
   "dependencies": {
+    "vue": "^2.4.3",
     "wetfish-basic": "^0.7.11"
   }
 }
