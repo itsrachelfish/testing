@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>A list of components</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../../node_modules/bulma/css/bulma.css">
+
+        <style>
+            body {
+                margin: 1em;
+            }
+
+            .app {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                align-content: center;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .button, input {
+                border: 1px solid #000;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1em;
+                margin: 0.5em;
+                padding: 1em;
+                height: auto;
+                line-height: normal;
+            }
+
+            .button:hover {
+                background: #000;
+                color: #fff;
+            }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        <script src="../../node_modules/vue/dist/vue.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                Vue.component('task',
+                {
+                    template:
+                    `
+                        <article class="message">
+                            <div class="message-header">
+                                <p>Hello World</p>
+                                <button class="delete" aria-label="delete"></button>
+                            </div>
+                            <div class="message-body">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+                            </div>
+                        </article>
+                    `
+                });
+
+                var app = new Vue
+                ({
+                    el: '.app',
+                    data:
+                    {
+                        tasks: [],
+                    },
+
+                    methods:
+                    {
+                        addTask()
+                        {
+                            
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="app">
+            <div clss="row">
+                <task-list>
+                    <task title="Hello World" todo="['List', 'Of', 'Stuff?']">
+                </task-list>
+            </div>
+
+            <div class="row">
+                <input placeholder="Task description">
+
+                <div class="button" v-on:click="addTask">
+                    Add a task
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
