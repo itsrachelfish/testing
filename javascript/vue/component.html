@@ -39,6 +39,15 @@
                 background: #000;
                 color: #fff;
             }
+
+            .row {
+                width: 100%;
+                text-align: center;
+            }
+
+            .message {
+                width: 50vw;
+            }
         </style>
 
         <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
@@ -47,17 +56,37 @@
         <script>
             $(document).ready(function()
             {
+                var tasks =
+                [
+                    {title: 'Hello world!', todo: ['One', 'Two', 'Three']},
+                    {title: "I'm poppy", todo: ["Let's go!", "I'm ready", "Don't make me look too typical"]},
+                ];
+
+                Vue.component('task-list',
+                {
+                    template: '<div><task v-for="task in tasks" v-bind:title="task.title" v-bind:todo="task.todo"></task></div>',
+
+                    data()
+                    {
+                        return { tasks: tasks };
+                    }
+                });
+
                 Vue.component('task',
                 {
+                    props: ['title', 'todo'],
+
                     template:
                     `
                         <article class="message">
                             <div class="message-header">
-                                <p>Hello World</p>
+                                <p>{{ title }}</p>
                                 <button class="delete" aria-label="delete"></button>
                             </div>
                             <div class="message-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Aenean ac <em>eleifend lacus</em>, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.
+                                <ul>
+                                    <li v-for="value in todo">{{ value }}</li>
+                                </ul>
                             </div>
                         </article>
                     `
@@ -66,10 +95,6 @@
                 var app = new Vue
                 ({
                     el: '.app',
-                    data:
-                    {
-                        tasks: [],
-                    },
 
                     methods:
                     {
@@ -86,13 +111,11 @@
     <body>
         <div class="app">
             <div clss="row">
-                <task-list>
-                    <task title="Hello World" todo="['List', 'Of', 'Stuff?']">
-                </task-list>
+                <task-list></task-list>
             </div>
 
             <div class="row">
-                <input placeholder="Task description">
+                <input placeholder="Task title">
 
                 <div class="button" v-on:click="addTask">
                     Add a task
