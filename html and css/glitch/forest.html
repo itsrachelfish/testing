@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Glitch Forest</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            /* Lookin' good */
+
+            body {
+                background: #74e3ec; /* Old Browsers */
+                background: linear-gradient(to bottom, #74e3ec, #c7ffe2);
+                height: 100vh;
+                margin: 0;
+            }
+
+            .world {
+                background-image: url('glitch-ground.svg');
+                background-repeat: no-repeat;
+                background-size: 101%;
+                background-position: top center;
+                height: 30vh;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .tree {
+                height: 60vh;
+                background-repeat: no-repeat;
+                position: absolute;
+                width: 25%;
+            }
+
+            .tree.one {
+                background-image: url('glitch-tree-1.svg');
+                bottom: 20vh;
+                left: 50%;
+            }
+
+            .tree.two {
+                background-image: url('glitch-tree-2.svg');
+                bottom: 15vh;
+                left: 3%;
+            }
+        </style>
+
+        <script src="./node_modules/wetfish-basic/dist/basic.js"></script>
+        
+        <script>
+            $(document).ready(function()
+            {
+                console.log("howdy");
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="world"></div>
+
+        <div class="tree one"></div>
+        <div class="tree two"></div>
+    </body>
+</html>
+
+
