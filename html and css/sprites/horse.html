@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Horse Sprite</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            .horse-border {
+                position: absolute;
+                border: 1px solid #000;
+                height: 122px;
+                width: 183px;
+            }
+            
+            .horse {
+                background-image: url('horse.gif');
+                background-repeat: no-repeat;
+                height: 122px;
+                width: 183px;
+                animation: walk-x 1s infinite steps(4),
+                            walk-y 4s infinite steps(4);
+            }
+
+            @keyframes walk-x {
+                100% { background-position-x: -733px; }
+            }
+
+            @keyframes walk-y {
+                100% { background-position-y: -489px; }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="horse-border"></div>
+        <div class="horse"></div>
+    </body>
+</html>
+
+
