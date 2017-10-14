@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Chicken Walk</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body {
+                width: 100%;
+                margin: 0;
+                overflow: hidden;
+            }
+
+            .chicken {
+                background-image: url('chicken_walking.png');
+                background-repeat: no-repeat;
+                height: 110px;
+                width: 148px;
+                animation: sprite-x 0.25s infinite steps(6),
+                            sprite-y 1s infinite steps(4),
+                            walk 100s infinite linear;
+                position: absolute;
+                bottom: 0;
+            }
+
+            @keyframes sprite-x {
+                100% { background-position-x: -888px; }
+            }
+
+            @keyframes sprite-y {
+                100% { background-position-y: -440px; }
+            }
+
+            @keyframes walk {
+                0% { transform: translateX(-148px); }
+                100% { transform: translateX(100vw); }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="chicken"></div>
+    </body>
+</html>
+
+
