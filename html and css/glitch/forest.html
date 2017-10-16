@@ -16,48 +16,47 @@
                 background: linear-gradient(to bottom, #74e3ec, #c7ffe2);
                 height: 100vh;
                 margin: 0;
+                padding: 0;
+                border: 0;
+                overflow: hidden;
             }
 
             .world {
-                background-image: url('glitch-ground.svg');
-                background-repeat: no-repeat;
-                background-size: 101%;
-                background-position: top center;
-                height: 30vh;
+                background-image: url('assets/ground-stitched.svg');
+                background-repeat: repeat-x;
+                background-size: cover;
+
                 position: absolute;
                 bottom: 0;
-                left: 0;
-                right: 0;
+
+                height: 25vh;
+                max-height: 30vh;
+                width: 100vw;
+                min-width: 1900px;
+
+                user-select: none;
+                -moz-user-select: none;
             }
 
             .tree {
-                height: 60vh;
+                height: 40vh;
                 background-repeat: no-repeat;
+                background-position: bottom;
                 position: absolute;
+                bottom: 21.5vh;
                 width: 25%;
             }
 
             .tree.one {
-                background-image: url('glitch-tree-1.svg');
-                bottom: 20vh;
-                left: 50%;
+                background-image: url('assets/tree-1.svg');
+                left: 49%;
             }
 
             .tree.two {
-                background-image: url('glitch-tree-2.svg');
-                bottom: 15vh;
-                left: 3%;
+                background-image: url('assets/tree-2.svg');
+                left: 6%;
             }
         </style>
-
-        <script src="./node_modules/wetfish-basic/dist/basic.js"></script>
-        
-        <script>
-            $(document).ready(function()
-            {
-                console.log("howdy");
-            });
-        </script>
     </head>
 
     <body>
