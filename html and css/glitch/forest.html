@@ -21,7 +21,7 @@
                 overflow: hidden;
             }
 
-            .world {
+            .ground {
                 background-image: url('assets/ground-stitched.svg');
                 background-repeat: repeat-x;
                 background-size: cover;
@@ -45,6 +45,7 @@
                 position: absolute;
                 bottom: 21.5vh;
                 width: 25%;
+                z-index: 1;
             }
 
             .tree.one {
@@ -56,14 +57,65 @@
                 background-image: url('assets/tree-2.svg');
                 left: 6%;
             }
+
+            .chicken {
+                background-image: url('assets/chicken-walk.png');
+                background-repeat: no-repeat;
+                height: 110px;
+                width: 148px;
+                animation: sprite-x 0.25s infinite steps(6),
+                            sprite-y 1s infinite steps(4),
+                            walk 80s infinite linear;
+                position: absolute;
+                bottom: 0;
+            }
+
+            @media (min-height: 150px) {
+                .chicken {
+                    bottom: 8vh;
+                }
+            }
+
+            @media (min-height: 200px) {
+                .chicken {
+                    bottom: 15vh;
+                }
+            }
+
+            @media (min-height: 400px) {
+                .chicken {
+                    bottom: 20vh;
+                }
+            }
+
+            @media (min-height: 800px) {
+                .chicken {
+                    bottom: 22vh;
+                }
+            }
+
+            @keyframes sprite-x {
+                100% { background-position-x: -888px; }
+            }
+
+            @keyframes sprite-y {
+                100% { background-position-y: -440px; }
+            }
+
+            @keyframes walk {
+                0% { transform: translateX(-148px); }
+                100% { transform: translateX(100vw); }
+            }
         </style>
     </head>
 
     <body>
-        <div class="world"></div>
+        <div class="ground"></div>
 
         <div class="tree one"></div>
         <div class="tree two"></div>
+
+        <div class="chicken"></div>
     </body>
 </html>
 
