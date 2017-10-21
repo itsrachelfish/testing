@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Glitch Forest</title>
+        <title>Chicken Clicker</title>
 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,16 +102,74 @@
                 0% { transform: translateX(-148px); }
                 100% { transform: translateX(100vw); }
             }
+
+            .menu {
+                margin: 1em;
+            }
+
+            .hidden {
+                display: none;
+            }
         </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+        <script src="../../node_modules/vue/dist/vue.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                var app = new Vue
+                ({
+                    el: '#app',
+                    data:
+                    {
+                        chickens: 0
+                    },
+
+                    computed:
+                    {
+                        isPlural: function()
+                        {
+                            if(this.chickens == 1)
+                            {
+                                return false;
+                            }
+
+                            return true;
+                        }
+                    },
+
+                    methods:
+                    {
+                        more: function()
+                        {
+                            this.chickens++;
+                        }
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body>
-        <div class="ground"></div>
+        <div id="app">
+            <div class="menu">
+                <h1>
+                    <span class="counter">{{ chickens }}</span> Chicken<span v-bind:class="{ hidden: !isPlural }">s</span>
+                </h1>
 
-        <div class="tree one"></div>
-        <div class="tree two"></div>
+                <button v-on:click="more">Make a chicken</button>
+            </div>
 
-        <div class="chicken"></div>
+            <div class="ground"></div>
+
+            <div class="tree one"></div>
+            <div class="tree two"></div>
+
+            <div class="chickens" v-for="chicken in chickens">
+                <div class="chicken" data-count="{{ chicken }}"></div>
+            </div>
+        </div>
     </body>
 </html>
 
