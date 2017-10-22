@@ -61,7 +61,8 @@
                 width: 148px;
                 animation: sprite-x 0.25s infinite steps(6),
                             sprite-y 1s infinite steps(4),
-                            walk 80s infinite linear;
+                            walk 8s linear;
+                animation-fill-mode: forwards;
                 position: absolute;
                 bottom: 0;
             }
@@ -144,6 +145,11 @@
                         more: function()
                         {
                             this.chickens++;
+                        },
+
+                        less: function()
+                        {
+                            this.chickens--;
                         }
                     }
                 });
@@ -167,7 +173,7 @@
             <div class="tree two"></div>
 
             <div class="chickens" v-for="chicken in chickens">
-                <div class="chicken" data-count="{{ chicken }}"></div>
+                <div class="chicken" v-on:animationend="less"></div>
             </div>
         </div>
     </body>
