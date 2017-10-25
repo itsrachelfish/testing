@@ -38,22 +38,7 @@
             }
         </style>
 
-        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
         <script src="../../node_modules/vue/dist/vue.js"></script>
-        
-        <script>
-            $(document).ready(function()
-            {
-                var app = new Vue
-                ({
-                    el: '.rainbow',
-                    data:
-                    {
-                        rotation: 0
-                    }
-                });
-            });
-        </script>
     </head>
 
     <body>
@@ -75,5 +60,16 @@
                 <circle class="v" cx="50" cy="50" r="17" stroke="#492245" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + rotation + 'deg)' }" />
             </svg>
         </div>
+
+        <script>
+            var app = new Vue
+            ({
+                el: '.rainbow',
+                data:
+                {
+                    rotation: 0
+                }
+            });
+        </script>
     </body>
 </html>

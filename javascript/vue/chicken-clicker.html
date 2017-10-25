@@ -113,49 +113,7 @@
             }
         </style>
 
-        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
         <script src="../../node_modules/vue/dist/vue.js"></script>
-
-        <script>
-            $(document).ready(function()
-            {
-                var app = new Vue
-                ({
-                    el: '#app',
-                    data:
-                    {
-                        chickens: []
-                    },
-
-                    computed:
-                    {
-                        isPlural: function()
-                        {
-                            if(this.chickens.length == 1)
-                            {
-                                return false;
-                            }
-
-                            return true;
-                        }
-                    },
-
-                    methods:
-                    {
-                        more: function()
-                        {
-                            // Generate a unique number for each chicken
-                            this.chickens.push(Math.random());
-                        },
-
-                        less: function()
-                        {
-                            this.chickens.shift();
-                        }
-                    }
-                });
-            });
-        </script>
     </head>
 
     <body>
@@ -177,6 +135,44 @@
                 <div class="chicken" v-for="chicken in chickens" v-bind:key="chicken" v-on:animationend="less"></div>
             </div>
         </div>
+
+        <script>
+            var app = new Vue
+            ({
+                el: '#app',
+                data:
+                {
+                    chickens: []
+                },
+
+                computed:
+                {
+                    isPlural: function()
+                    {
+                        if(this.chickens.length == 1)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    }
+                },
+
+                methods:
+                {
+                    more: function()
+                    {
+                        // Generate a unique number for each chicken
+                        this.chickens.push(Math.random());
+                    },
+
+                    less: function()
+                    {
+                        this.chickens.shift();
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
 
