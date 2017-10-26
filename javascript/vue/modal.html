@@ -30,6 +30,7 @@
                 position: fixed;
                 width: 100%;
                 height: 100vh;
+                opacity: 1;
             }
 
             .button {
@@ -48,6 +49,14 @@
                 background: #000;
                 color: #fff;
             }
+
+            .fade-enter-active, .fade-leave-active {
+              transition: opacity 0.4s;
+            }
+
+            .fade-enter, .fade-leave-to {
+                opacity: 0;
+            }
         </style>
 
         <script src="../../node_modules/vue/dist/vue.js"></script>
@@ -55,17 +64,19 @@
 
     <body>
         <div class="app">
-            <div class="modal" v-if="modalOpen">
-                <h1>Hi!</h1>
+            <transition name="fade">
+                <div class="modal" v-if="modalOpen">
+                    <h1>Hi!</h1>
 
-                <p>
-                    This is a modal.
-                </p>
+                    <p>
+                        This is a modal.
+                    </p>
 
-                <div class="button" v-on:click="modalOpen = false">
-                    Hey... close it
+                    <div class="button" v-on:click="modalOpen = false">
+                        Hey... close it
+                    </div>
                 </div>
-            </div>
+            </transition>
 
             <div class="button" v-on:click="modalOpen = true">
                 Open that modal
