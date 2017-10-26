@@ -22,20 +22,14 @@
             }
 
             .modal {
-                display: none;
-                opacity: 0;
-                position: fixed;
-                width: 100%;
-                height: 100vh;
-            }
-
-            .modal.open {
                 color: #fff;
                 background: #000;
                 display: flex;
                 align-items: center;
                 justify-content: space-evenly;
-                opacity: 1;
+                position: fixed;
+                width: 100%;
+                height: 100vh;
             }
 
             .button {
@@ -61,7 +55,7 @@
 
     <body>
         <div class="app">
-            <div class="modal" v-bind:class="{ open: modalOpen }">
+            <div class="modal" v-if="modalOpen">
                 <h1>Hi!</h1>
 
                 <p>
