@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>A little modal</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../../node_modules/bulma/css/bulma.css" rel="stylesheet">
+        <script src="../../node_modules/vue/dist/vue.js"></script>
+
+        <style>
+            .app {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .content {
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="app">
+            <div class="content">
+                <p>
+                    Hey there. This is my internet website.
+                </p>
+
+                <modal v-if="modalOpen" v-on:close="modalOpen = false"></modal>
+                <button class="button is-primary" v-on:click="modalOpen = true">Cool</button>
+            </div>
+        </div>
+
+        <script type="text/x-template" id="modal">
+            <div class="modal is-active">
+                <div class="modal-background"></div>
+                <div class="modal-content box">
+                    Check it out! This is some content.
+                </div>
+                <button class="modal-close is-large" aria-label="close" v-on:click="$emit('close')"></button>
+            </div>
+        </script>
+
+        <script>
+            Vue.component('modal',
+            {
+                template: '#modal',
+            });
+
+            var app = new Vue
+            ({
+                el: '.app',
+                data:
+                {
+                    modalOpen: false,
+                }
+            });
+        </script>
+    </body>
+</html>
