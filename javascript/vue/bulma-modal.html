@@ -33,7 +33,9 @@
                     Hey there. This is my internet website.
                 </p>
 
-                <modal v-if="modalOpen" v-on:close="modalOpen = false"></modal>
+                <modal v-if="modalOpen" v-on:close="modalOpen = false">
+                    Check it out! This is some content. :D
+                </modal>
                 <button class="button is-primary" v-on:click="modalOpen = true">Cool</button>
             </div>
         </div>
@@ -42,7 +44,7 @@
             <div class="modal is-active">
                 <div class="modal-background"></div>
                 <div class="modal-content box">
-                    Check it out! This is some content.
+                    <slot></slot>
                 </div>
                 <button class="modal-close is-large" aria-label="close" v-on:click="$emit('close')"></button>
             </div>
