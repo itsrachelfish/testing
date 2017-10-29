@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Some tabs!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../../node_modules/bulma/css/bulma.css" rel="stylesheet">
+        <script src="../../node_modules/vue/dist/vue.js"></script>
+
+        <style>
+            .app {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .page {
+                width: 50vw;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="app">
+            <div class="page">
+                <tabs>
+                    <tab name="Home" selected="true">
+                        Welcome to the home page of Wetfish. (not really, it's just a prank bro)
+                    </tab>
+
+                    <tab name="About">
+                        Wetfish is a small tech company with big dreams. Our mission is to fundamentally change the way people do business by promoting radical transparency, free culture, and community.
+                        We are a multidisciplinary team of programmers, artists, mathematicians, and engineers who work together to bring these ideals to life.
+                    </tab>
+
+                    <tab name="Projects">
+                        We've made lots of projects.
+
+                        <ul>
+                            <li>Butts</li>
+                            <li>Farts</li>
+                            <li>Etc.</li>
+                        </ul>
+                    </tab>
+
+                    <tab name="Contact">
+                        Contact us by sending an email to FARTS@BUTT.INFO.
+                    </tab>
+                </tabs>
+            </div>
+        </div>
+
+        <script type="text/x-template" id="tabs">
+            <div>
+                <div class="tabs">
+                    <ul>
+                        <li v-for="tab in tabs" v-on:click="selectTab(tab)" v-bind:class="{ 'is-active': tab.isActive }">
+                            <a>{{ tab.name }}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <slot></slot>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/x-template" id="tab">
+            <div v-show="isActive">
+                <h1 class="title is-1">{{ name }}</h1>
+                <slot></slot>
+            </div>
+        </script>
+
+        <script>
+            Vue.component('tabs',
+            {
+                template: '#tabs',
+                data()
+                {
+                    return { tabs: [] }
+                },
+
+                created()
+                {
+                    this.tabs = this.$children;
+                },
+
+                methods:
+                {
+                    selectTab(selectedTab)
+                    {
+                        this.tabs.forEach(function(tab)
+                        {
+                            tab.isActive = (tab.name == selectedTab.name);
+                        })
+                    }
+                }
+            });
+
+            Vue.component('tab',
+            {
+                template: '#tab',
+                props:
+                {
+                    name: { required: true },
+                    selected: { required: false }
+                },
+
+                data()
+                {
+                    return { isActive: false }
+                },
+
+                mounted()
+                {
+                    this.isActive = this.selected;
+                }
+            });
+
+            var app = new Vue
+            ({
+                el: '.app',
+                data:
+                {
+                    modalOpen: false,
+                }
+            });
+        </script>
+    </body>
+</html>
