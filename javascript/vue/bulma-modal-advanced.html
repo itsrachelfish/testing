@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>A more advanced modal</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../../node_modules/bulma/css/bulma.css" rel="stylesheet">
+        <script src="../../node_modules/vue/dist/vue.js"></script>
+
+        <style>
+            .app {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .page {
+                text-align: center;
+            }
+
+            .page > * {
+                text-align: left;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="app">
+            <div class="page">
+                <p>
+                    Hey there. This is my internet website.
+                </p>
+
+                <modal v-if="modalOpen" v-on:close="modalOpen = false">
+                    <template slot="title">Ayyy lmao</template>
+
+                    Check it out! This is some content. :D
+
+                    <template slot="footer">
+                        <button class="button is-success" v-on:click="alert('ayyyyyyy lmao')">Save changes</button>
+                        <button class="button" v-on:click="modalOpen = false">Cancel</button>
+                    </template>
+                </modal>
+                <button class="button is-primary" v-on:click="modalOpen = true">Cool</button>
+            </div>
+        </div>
+
+        <script type="text/x-template" id="modal">
+            <div class="modal is-active">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">
+                            <slot name="title">
+                                You forgot the title!
+                            </slot>
+                        </p>
+                        <button class="delete" aria-label="close" v-on:click="$emit('close')"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <slot>
+                            Where's the content?
+                        </slot>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <slot name="footer">
+                            <button class="button is-success">Cool</button>
+                        </slot>
+                    </footer>
+                </div>
+            </div>
+        </script>
+
+        <script>
+            Vue.component('modal',
+            {
+                template: '#modal',
+            });
+
+            var app = new Vue
+            ({
+                el: '.app',
+                data:
+                {
+                    modalOpen: false,
+                },
+
+                methods:
+                {
+                    alert(data)
+                    {
+                        alert(data)
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
