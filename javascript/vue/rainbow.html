@@ -43,7 +43,7 @@
 
     <body>
         <div class="rainbow">
-            <input type="range" min="0" max="7200" step="1" v-model="rotation">
+            <input type="range" min="0" max="11520" step="1" v-model="rotation">
 
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -52,10 +52,10 @@
                     </clipPath>
                 </defs>
 
-                <circle class="r" cx="50" cy="50" r="47" stroke="#E31D28" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 6) + 'deg)' }" />
-                <circle class="o" cx="50" cy="50" r="41" stroke="#ED8C3D" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 5) + 'deg)' }" />
-                <circle class="y" cx="50" cy="50" r="35" stroke="#FCD234" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 4) + 'deg)' }" />
-                <circle class="g" cx="50" cy="50" r="29" stroke="#3E9965" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 3) + 'deg)' }" />
+                <circle class="r" cx="50" cy="50" r="47" stroke="#E31D28" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 32) + 'deg)' }" />
+                <circle class="o" cx="50" cy="50" r="41" stroke="#ED8C3D" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 16) + 'deg)' }" />
+                <circle class="y" cx="50" cy="50" r="35" stroke="#FCD234" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 8) + 'deg)' }" />
+                <circle class="g" cx="50" cy="50" r="29" stroke="#3E9965" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 4) + 'deg)' }" />
                 <circle class="b" cx="50" cy="50" r="23" stroke="#295167" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + (rotation / 2) + 'deg)' }" />
                 <circle class="v" cx="50" cy="50" r="17" stroke="#492245" stroke-width="6.2" clip-path="url(#cut-off-bottom)" v-bind:style="{ transform: 'rotate(' + rotation + 'deg)' }" />
             </svg>
