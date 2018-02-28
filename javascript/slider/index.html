@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>[Project Name Here]</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            /* Lookin' good */
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+
+        <script>
+            var steps = [];
+            var stepValue = 0;
+
+            for(var i = 0; i <= 97; i++)
+            {
+                stepValue = parseFloat(stepValue);
+
+                if(i < 20)
+                {
+                    stepValue += 0.1;
+                }
+                else if(i < 93)
+                {
+                    stepValue += 1;
+                }
+                else
+                {
+                    stepValue += 5;
+                }
+
+                stepValue = parseFloat(stepValue).toFixed(1);
+                steps.push(stepValue);
+            }
+
+            $(document).ready(function()
+            {
+                $('.dynamic input').on('input change', function()
+                {
+                    var value = parseFloat($(this).value());
+
+                    if(value > 5)
+                    {
+                        $(this).attr('step', '1');
+                    }
+                    else
+                    {
+                        $(this).attr('step', '0.1');
+                    }
+
+                    $(this).parents('.slider').find('.value').text($(this).value());
+                });
+
+                $('.lie input').on('input change', function()
+                {
+                    var value = steps[$(this).value()];
+                    $(this).parents('.slider').find('.value').text(value);
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <!-- Stuff goes here! -->
+        <div class="slider dynamic">
+            <h1>Dynamically changing step</h1>
+            <input type="range" min="0" max="100" step="0.1" value="1">
+            <span class="value"></span>
+        </div>
+
+        <div class="slider lie">
+            <h1>Lie to the user</h1>
+            <input type="range" min="0" max="97" step="1" value="1">
+            <span class="value"></span>
+        </div>
+    </body>
+</html>
