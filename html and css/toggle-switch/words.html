@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Basic Toggle switch... WITH WORDS!</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+           .switch {
+             position: relative;
+             display: inline-block;
+             width: 400px;
+             height: 50px;
+           }
+
+           /* Hide default HTML checkbox */
+           .switch input {
+             opacity: 0;
+             width: 0;
+             height: 0;
+           }
+
+           .slider {
+             position: absolute;
+             cursor: pointer;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background-color: LightGray;
+             transition: 0.5s;
+           }
+
+           .slider:before {
+             position: absolute;
+             content: "";
+             height: 100%;
+             width: 50%;
+             left: 0;
+             top: -1px;
+             background-color: white;
+             transition: 0.5s;
+             border: 1px solid gray;
+           }
+
+           input:checked + .slider:before {
+             transform: translateX(100%);
+           }
+
+           .slider.round {
+             border-radius: 6%/50%;
+           }
+
+           .slider.round:before {
+             border-radius: 12%/50%;
+           }
+
+           .options {
+               display: flex;
+           }
+
+           .option {
+               position: relative;
+               z-index: 1;
+               top: -0.44em;
+               transition: 0.5s;
+               transition-property: font-weight;
+               width: 50%;
+               text-align: center;
+           }
+
+           .option.two {
+               padding-left: 1em;
+           }
+
+           .option.active {
+               transition-delay: 0.5s;
+               font-weight: bold;
+           }
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                $('.switch input').on('change', function()
+                {
+                    $('.option').removeClass('active');
+
+                    if($(this).prop('checked'))
+                    {
+                        $('.option.two').addClass('active');
+                    }
+                    else
+                    {
+                        $('.option.one').addClass('active');
+                    }
+                });
+
+                $('.switch input').trigger('change');
+            });
+        </script>
+    </head>
+
+    <body>
+       <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+
+            <div class="options">
+                <div class="option one">Very Cool</div>
+                <div class="option two">Nice Demo</div>
+            </div>
+       </label>
+    </body>
+</html>
