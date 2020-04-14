@@ -15,6 +15,8 @@ Example input files can be found in the `examples` directory
   - Elements that unnecessarily require a closing tag
     - `<input>`
     - `<source>` (HTML5 audio / video)
+- Self-closing tags are unsupported and will result in the `string` error
+  - For example `<img>` works but `<img />` does not
 - Input HTML must be wrapped in a single container element
   - In certain cases only the first element in a document will be converted to miso
     - When this happens, all other elements are silently ignored
@@ -27,13 +29,16 @@ Example input files can be found in the `examples` directory
 - Miso does not support all HTML attributes, but miso-from-html will happily turn any HTML you give it into miso syntax
   - The output from miso-from-html is not guaranteed to actually run
 - Examples of unsupported elements & attributes with resulting error messages:
-### `<label for="demo">`
+
+### `<a data-toggle="dropdown">`
+
+Data attributes are converted into miso, but it does not appear that miso actually supports hyphenated element names
+
 ```
-• Variable not in scope: for_ :: [Char] -> Attribute Action
-• Perhaps you meant one of these:
-    ‘forM_’ (imported from Web.Prelude),
-    ‘for’ (imported from Web.Prelude),
-    ‘forM’ (imported from Web.Prelude)
+    parse error on input ‘data’
+    |
+    |   , data-toggle_ "dropdown"
+    |     ^^^^
 ```
 
 ### `<input></input>`
