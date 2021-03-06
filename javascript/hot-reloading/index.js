@@ -1,5 +1,5 @@
 const readline = require('readline');
-var fs = require('fs');
+const fs = require('fs');
 
 const interface = readline.createInterface({
   input: process.stdin,
@@ -15,6 +15,8 @@ const moduleExists = function(path) {
   }
 }
 
+const modules = {};
+
 interface.on('line', (text) => {
   const input = text.split(' ');
   const command = input[0];
@@ -23,12 +25,18 @@ interface.on('line', (text) => {
 
   if(command == 'load') {
     if(moduleExists(path)) {
-      require(path);
+      modules[file] = require(path);
+      modules[file].load();
+
       console.log(`>>> ${file} loaded`);
     }
   } else if(command == 'unload') {
     if(moduleExists(path)) {
+      modules[file].unload();
+
+      delete modules[file];
       delete require.cache[require.resolve(path)];
+
       console.log(`>>> ${file} unloaded`);
     }
   } else {
