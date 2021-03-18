@@ -1,1 +1,4 @@
 vendor
+private.key
+public.key
+message.txt
