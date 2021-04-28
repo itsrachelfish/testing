@@ -61,6 +61,20 @@
                 data.currentCustomers += data.newCustomers;
             }
 
+            function findCeiling()
+            {
+                data.month++;
+                calculateChurn();
+                calculateRevenue();
+                createLogRow();
+                updateOutput();
+
+                // Once the number of customers we lose is greater than or equal to our new customers, we've hit the wall!
+                if(data.customersLost < data.newCustomers) {
+                    findCeiling();
+                }
+            }
+
             $(document).ready(function()
             {
                 console.log("howdy");
@@ -73,7 +87,7 @@
                     updateOutput();
                 });
 
-                $('.calculate').on('click', function() {
+                $('.calculateMonth').on('click', function() {
                     // If revenue is 0, we have to calculate it!
                     if(!data.revenue) {
                         calculateRevenue();
@@ -87,8 +101,13 @@
                     updateOutput();
                 });
 
-                $('.autoCalculate').on('click', function() {
+                $('.calculateCeiling').on('click', function() {
+                    if(!data.revenue) {
+                        calculateRevenue();
+                        createLogRow();
+                    }
 
+                    findCeiling();
                 });
 
                 $('.reset').on('click', function() {
@@ -145,8 +164,8 @@
         </h1>
 
         <div>
-            <button class="calculate">Calculate This Month</button>
-            <button class="autoCalculate">Find Ceiling</button>
+            <button class="calculateMonth">Calculate One Month</button>
+            <button class="calculateCeiling">Find Ceiling</button>
             <button class="reset">Reset</button>
         </div>
 
