@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>[Project Name Here]</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            /* Lookin' good */
+        </style>
+
+        <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
+
+        <script>
+            $(document).ready(function()
+            {
+                console.log("howdy");
+
+                let currentCustomers = $('[name="currentCustomers"]').value();
+                let newCustomers = $('[name="newCustomers"]').value();
+                let churnRate = $('[name="churnRate"]').value();
+                let customerRevenue = $('[name="customerRevenue"]').value();
+
+                let month = 0;
+                let customersLost = 0;
+                let revenue = 0;
+
+                $('.month').text(month.toString());
+                $('.customers').text(currentCustomers.toString());
+                $('.customersLost').text(customersLost.toString());
+                $('.revenue').text(revenue.toString());
+            });
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <input type="number" name="currentCustomers" value="10" /> Current Customers
+        </div>
+
+        <div>
+            <input type="number" name="newCustomers" value="10" /> New Customers Per Month
+        </div>
+
+        <div>
+            <input type="number" name="churnRate" value="10" /> Monthly Churn Rate
+        </div>
+
+        <div>
+            <input type="number" name="customerRevenue" value="100" /> Revenue Per Account
+        </div>
+
+        <h1>
+            Current Month - <span class="month"></span>
+        </h1>
+
+        <h1>
+            Current Customers - <span class="customers"></span>
+        </h1>
+
+        <h1>
+            Customers Lost This Month - <span class="customersLost"></span>
+        </h1>
+
+        <h1>
+            Revenue This Month - <span class="revenue"></span>
+        </h1>
+    </body>
+</html>
