@@ -15,23 +15,43 @@
         <script src="../../node_modules/wetfish-basic/dist/basic.js"></script>
 
         <script>
+            const data = {
+                currentCustomers: 0,
+                newCustomers: 0,
+                churnRate: 0,
+                customerRevenue: 0,
+                month: 0,
+                customersLost: 0,
+                revenue: 0,
+            };
+
+            function getInput()
+            {
+                data.currentCustomers = $('[name="currentCustomers"]').value();
+                data.newCustomers = $('[name="newCustomers"]').value();
+                data.churnRate = $('[name="churnRate"]').value();
+                data.customerRevenue = $('[name="customerRevenue"]').value();
+            }
+
+            function updateOutput()
+            {
+                $('.month').text(data.month.toString());
+                $('.customers').text(data.currentCustomers.toString());
+                $('.customersLost').text(data.customersLost.toString());
+                $('.revenue').text(data.revenue.toString());
+            }
+
             $(document).ready(function()
             {
                 console.log("howdy");
 
-                let currentCustomers = $('[name="currentCustomers"]').value();
-                let newCustomers = $('[name="newCustomers"]').value();
-                let churnRate = $('[name="churnRate"]').value();
-                let customerRevenue = $('[name="customerRevenue"]').value();
+                getInput();
+                updateOutput();
 
-                let month = 0;
-                let customersLost = 0;
-                let revenue = 0;
-
-                $('.month').text(month.toString());
-                $('.customers').text(currentCustomers.toString());
-                $('.customersLost').text(customersLost.toString());
-                $('.revenue').text(revenue.toString());
+                $('input').on('input change', function() {
+                    getInput();
+                    updateOutput();
+                });
             });
         </script>
     </head>
