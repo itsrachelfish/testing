@@ -86,6 +86,27 @@
                     createLogRow();
                     updateOutput();
                 });
+
+                $('.autoCalculate').on('click', function() {
+
+                });
+
+                $('.reset').on('click', function() {
+                    $('.output .row').remove();
+
+                    data.currentCustomers = 0;
+                    data.newCustomers = 0;
+                    data.churnRate = 0;
+                    data.customerRevenue = 0;
+                    data.month = 0;
+                    data.customersLost = 0;
+                    data.revenue = 0;
+
+                    getInput();
+                    calculateRevenue();
+                    updateOutput();
+                    createLogRow();
+                });
             });
         </script>
     </head>
@@ -125,6 +146,8 @@
 
         <div>
             <button class="calculate">Calculate This Month</button>
+            <button class="autoCalculate">Find Ceiling</button>
+            <button class="reset">Reset</button>
         </div>
 
         <h1>History</h1>
