@@ -23,6 +23,8 @@
                 month: 0,
                 customersLost: 0,
                 revenue: 0,
+                ceilingFound: false,
+                history: [],
             };
 
             function getInput()
@@ -43,7 +45,8 @@
 
             function createLogRow()
             {
-                $('.output').append(`<div class='row'>Month #${data.month}, Active Customers: ${data.currentCustomers}, Monthly Revenue: ${data.revenue}</div>`);
+                data.history.push({month: data.month, revenue: data.revenue});
+                $('.output').append(`<div class='row' id="month-${data.month}">Month #${data.month}, Active Customers: ${data.currentCustomers}, Monthly Revenue: ${data.revenue}</div>`);
             }
 
             function calculateRevenue()
@@ -54,7 +57,7 @@
             function calculateChurn()
             {
                 // Every month we lose the churnRate percentage of our customers
-                data.customersLost = Math.round(data.currentCustomers * (data.churnRate /  100));
+                data.customersLost = Math.floor(data.currentCustomers * (data.churnRate /  100));
                 data.currentCustomers -= data.customersLost;
 
                 // But we get more new customers every month!
@@ -72,7 +75,24 @@
                 // Once the number of customers we lose is greater than or equal to our new customers, we've hit the wall!
                 if(data.customersLost < data.newCustomers) {
                     findCeiling();
+                } else {
+                    data.ceilingFound = true;
                 }
+            }
+
+            function findWall()
+            {
+                if(!data.ceilingFound) {
+                    findCeiling();
+                }
+
+                data.history.forEach(function(row) {
+                    if(row.revenue < data.revenue * 0.75) {
+                        $(`#month-${row.month}`).style({'background-color': 'green'});
+                    } else {
+                        $(`#month-${row.month}`).style({'background-color': 'red'});
+                    }
+                });
             }
 
             $(document).ready(function()
@@ -101,13 +121,22 @@
                     updateOutput();
                 });
 
-                $('.calculateCeiling').on('click', function() {
+                $('.findCeiling').on('click', function() {
                     if(!data.revenue) {
                         calculateRevenue();
                         createLogRow();
                     }
 
                     findCeiling();
+                });
+
+                $('.findWall').on('click', function() {
+                    if(!data.revenue) {
+                        calculateRevenue();
+                        createLogRow();
+                    }
+
+                    findWall();
                 });
 
                 $('.reset').on('click', function() {
@@ -120,6 +149,8 @@
                     data.month = 0;
                     data.customersLost = 0;
                     data.revenue = 0;
+                    data.ceilingFound = false;
+                    data.history = [];
 
                     getInput();
                     calculateRevenue();
@@ -165,7 +196,8 @@
 
         <div>
             <button class="calculateMonth">Calculate One Month</button>
-            <button class="calculateCeiling">Find Ceiling</button>
+            <button class="findCeiling">Find Growth Ceiling</button>
+            <button class="findWall">Find Growth Wall</button>
             <button class="reset">Reset</button>
         </div>
 
