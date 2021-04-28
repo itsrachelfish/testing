@@ -27,10 +27,10 @@
 
             function getInput()
             {
-                data.currentCustomers = $('[name="currentCustomers"]').value();
-                data.newCustomers = $('[name="newCustomers"]').value();
-                data.churnRate = $('[name="churnRate"]').value();
-                data.customerRevenue = $('[name="customerRevenue"]').value();
+                data.currentCustomers = parseInt($('[name="currentCustomers"]').value());
+                data.newCustomers = parseInt($('[name="newCustomers"]').value());
+                data.churnRate = parseInt($('[name="churnRate"]').value());
+                data.customerRevenue = parseInt($('[name="customerRevenue"]').value());
             }
 
             function updateOutput()
@@ -39,6 +39,26 @@
                 $('.customers').text(data.currentCustomers.toString());
                 $('.customersLost').text(data.customersLost.toString());
                 $('.revenue').text(data.revenue.toString());
+            }
+
+            function createLogRow()
+            {
+                $('.output').append(`<div class='row'>Month #${data.month}, Active Customers: ${data.currentCustomers}, Monthly Revenue: ${data.revenue}</div>`);
+            }
+
+            function calculateRevenue()
+            {
+                data.revenue = data.currentCustomers * data.customerRevenue;
+            }
+
+            function calculateChurn()
+            {
+                // Every month we lose the churnRate percentage of our customers
+                data.customersLost = Math.round(data.currentCustomers * (data.churnRate /  100));
+                data.currentCustomers -= data.customersLost;
+
+                // But we get more new customers every month!
+                data.currentCustomers += data.newCustomers;
             }
 
             $(document).ready(function()
@@ -50,6 +70,20 @@
 
                 $('input').on('input change', function() {
                     getInput();
+                    updateOutput();
+                });
+
+                $('.calculate').on('click', function() {
+                    // If revenue is 0, we have to calculate it!
+                    if(!data.revenue) {
+                        calculateRevenue();
+                        createLogRow();
+                    }
+
+                    data.month++;
+                    calculateChurn();
+                    calculateRevenue();
+                    createLogRow();
                     updateOutput();
                 });
             });
@@ -66,7 +100,7 @@
         </div>
 
         <div>
-            <input type="number" name="churnRate" value="10" /> Monthly Churn Rate
+            <input type="number" name="churnRate" value="10" /> Monthly Churn Rate (%)
         </div>
 
         <div>
@@ -88,5 +122,13 @@
         <h1>
             Revenue This Month - <span class="revenue"></span>
         </h1>
+
+        <div>
+            <button class="calculate">Calculate This Month</button>
+        </div>
+
+        <h1>History</h1>
+
+        <div class="output"></div>
     </body>
 </html>
