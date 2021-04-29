@@ -1,0 +1,202 @@
+<html>
+  <body>
+    <style>
+      #chart {
+        width: 900px;
+        height: 400px;
+        padding: 5em;
+      }
+    </style>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <svg id="chart" />
+
+    <script>
+      class RevenueProjectionChart {
+        constructor(config) {
+          this.target = config.target;
+          this.now = d3.timeDay.floor(new Date());
+          this.series = config.series;
+
+          // set sizing
+          const domWidth = Math.floor(parseInt(d3.select(this.target).style('width'), 10));
+          this.size = {
+            width: config.width ? config.width : domWidth,
+            height: config.height ? config.height : 400,
+          };
+          this.axisFontSize = 12;
+          this.margin = { top: 20, bottom: 40, left: 10, right: 110 };
+          this.chartSize = {
+            width: this.size.width - this.margin.left - this.margin.right,
+            height: this.size.height - this.margin.top - this.margin.bottom,
+          };
+          this.pointRadius = Math.min(8, Math.max(3, (this.size.width * this.size.height) / 5e4));
+
+          // for axes
+          this.xTicks = this.chartSize.width / 80;
+          this.yTicks = this.chartSize.height / 50;
+
+          this.setScales();
+          this.draw();
+        }
+
+        setScales() {
+          this.projectionLength = this.series.values.length;
+          this.dates = d3.range(this.projectionLength).map((i) => d3.timeMonth.offset(this.now, i));
+          this.allPoints = this.series.values.map((p, i) => {
+            return {
+              i,
+              series: this.series,
+              value: p,
+              date: this.dates[i],
+            };
+          });
+          this.xScale = d3
+            .scaleUtc()
+            .domain(d3.extent(this.dates))
+            .range([0, this.chartSize.width]);
+
+          const valueMin = d3.min(this.series.values);
+          const valueMax = d3.max(this.series.values);
+          this.yScale = d3
+            .scaleLinear()
+            .domain([valueMin * 1, valueMax + (valueMax - valueMin) * 0.2])
+            .range([this.chartSize.height, 0]);
+        }
+
+        draw() {
+          const css = `
+          text { fill: #6d6156dd; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; }
+          .tick line { stroke: none }
+          .point { fill-opacity: 1; transition: fill-opacity 0.3s }
+          .hovered .point { fill-opacity: 0.2 }
+          .hovered .point.hovered { fill-opacity: 1 }
+          .connecting-line { stroke: rgb(239 227 199)}
+          .grid line { stroke: #6d615622 }
+          `;
+          if (!this.svg) {
+            d3.select(this.target).html('');
+            this.svg = d3
+              .select(this.target)
+              .append('svg')
+              .classed('revenue-projection-chart', true)
+              .attr('height', this.size.height)
+              .attr('width', this.size.width);
+            this.svg.append('style').text(css);
+            this.gridSelection = this.svg.append('g').attr('class', 'grid');
+            this.gridSelection.append('g').attr('class', 'x-grid');
+            this.gridSelection.append('g').attr('class', 'y-grid');
+            this.xAxisSelection = this.svg.append('g').attr('class', 'x-axis');
+            this.yAxisSelection = this.svg.append('g').attr('class', 'y-axis');
+            this.lineMarkSelection = this.svg.append('g').attr('class', 'line-mark');
+            this.tooltip = d3
+              .select('body')
+              .append('div')
+              .style('visibility', 'hidden')
+              .style('font-size', '0.9em')
+              .style('position', 'absolute')
+              .style('pointer-events', 'none')
+              .style('z-index', 999);
+          }
+          this.drawXAxis();
+          this.drawYAxis();
+          this.drawGrid();
+          this.drawAreas();
+        }
+
+        drawAreas() {
+          const baseArea = d3
+            .area()
+            .curve(d3.curveBasis)
+            .x((d, i) => this.xScale(this.dates[i]))
+            .y0((d) => this.chartSize.height)
+            .y1((d) => this.yScale(d));
+
+          this.lineMarkSelection
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+            .selectAll('path.series-line')
+            .data([this.series])
+            .join((enter) =>
+              enter
+                .append('path')
+                .attr('class', 'series-line')
+                // .attr('fill', 'none')
+                .attr('fill', (d) => d.color)
+                .style('fill-opacity', 0.7)
+                .attr('stroke', (d) => d.color)
+                .attr('stroke-width', 2.5)
+                .attr('stroke-linejoin', 'round')
+                .attr('stroke-linecap', 'round')
+            )
+            .attr('d', (d) => baseArea(d.values));
+
+
+        }
+
+        drawGrid() {
+          this.gridSelection.attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+          this.gridSelection
+            .select('.y-grid')
+            .selectAll('line')
+            .data(this.yScale.ticks(this.yTicks))
+            .join('line')
+            .transition()
+            .duration(500)
+            .attr('x1', 0)
+            .attr('x2', this.chartSize.width)
+            .attr('y1', this.yScale)
+            .attr('y2', this.yScale);
+        }
+
+        drawXAxis() {
+          const xAxis = d3
+            .axisBottom(this.xScale)
+            .ticks(this.chartSize.width / 80)
+            .tickFormat(d3.timeFormat(`%b '%y`));
+          // .tickFormat((d) => (this.xFeature.axisFormatter ? this.xFeature.axisFormatter(d) : d.toString()));
+          this.xAxisSelection
+            .attr('transform', `translate(${this.margin.left}, ${this.chartSize.height + this.margin.top})`)
+            .call(xAxis);
+          this.xAxisSelection.select('.domain').remove();
+        }
+
+        drawYAxis() {
+          const yAxis = d3
+            .axisRight(this.yScale)
+            .ticks(this.yTicks)
+            .tickFormat(d3.format('$.2s'));
+          this.yAxisSelection
+            .attr('transform', `translate(${this.chartSize.width + this.margin.left + 20},${this.margin.top})`)
+            .transition()
+            .duration(500)
+            .call(yAxis);
+          this.yAxisSelection.select('.domain').remove();
+          this.yAxisSelection.select('g.axis-title').remove();
+          this.yAxisSelection
+            .append('g')
+            .attr('class', 'axis-title')
+            .attr('transform', `translate(${-20}, ${0})`)
+            .append('text')
+            .attr('transform', 'rotate(90)')
+            .attr('text-anchor', 'middle')
+            .attr('x', this.chartSize.height / 2)
+            .attr('y', -this.margin.right - this.axisFontSize + 24)
+            .text('Monthly Recurring Revenue');
+        }
+
+        updateData(newSeries) {
+          this.series = newSeries;
+          this.setScales();
+          this.draw();
+        }
+      }
+
+      new RevenueProjectionChart({
+        // target: this.$refs.revprojectionchart,
+        target: '#chart',
+        series: {"values":[250000,260400,270072,279066.95999999996,287432.2728,295212.0137039999,302447.1727447199,309175.8706525895,315433.55970690824,321253.2105274246,326665.48579050484,331698.9017851695,336379.9786602076],"color":"#3C5CCF"},
+      });
+    </script>
+  </body>
+</html>
