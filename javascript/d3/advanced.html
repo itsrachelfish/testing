@@ -13,10 +13,9 @@
     <svg id="chart" />
 
     <script>
-      class RevenueProjectionChart {
+      class ExampleChart {
         constructor(config) {
           this.target = config.target;
-          this.now = d3.timeDay.floor(new Date());
           this.series = config.series;
 
           // set sizing
@@ -43,18 +42,17 @@
 
         setScales() {
           this.projectionLength = this.series.values.length;
-          this.dates = d3.range(this.projectionLength).map((i) => d3.timeMonth.offset(this.now, i));
           this.allPoints = this.series.values.map((p, i) => {
             return {
               i,
               series: this.series,
-              value: p,
-              date: this.dates[i],
+              value: p
             };
           });
+
           this.xScale = d3
-            .scaleUtc()
-            .domain(d3.extent(this.dates))
+            .scaleLinear()
+            .domain([0, this.projectionLength - 1])
             .range([0, this.chartSize.width]);
 
           const valueMin = d3.min(this.series.values);
@@ -80,7 +78,7 @@
             this.svg = d3
               .select(this.target)
               .append('svg')
-              .classed('revenue-projection-chart', true)
+              .classed('example-chart', true)
               .attr('height', this.size.height)
               .attr('width', this.size.width);
             this.svg.append('style').text(css);
@@ -99,6 +97,7 @@
               .style('pointer-events', 'none')
               .style('z-index', 999);
           }
+
           this.drawXAxis();
           this.drawYAxis();
           this.drawGrid();
@@ -106,32 +105,56 @@
         }
 
         drawAreas() {
-          const baseArea = d3
+          const beginningArea = d3
             .area()
             .curve(d3.curveBasis)
-            .x((d, i) => this.xScale(this.dates[i]))
+            .x((d, i) => this.xScale(i))
             .y0((d) => this.chartSize.height)
             .y1((d) => this.yScale(d));
 
+            const endArea = d3
+              .area()
+              .curve(d3.curveBasis)
+              .x((d, i) => this.xScale(i + 4))
+              .y0((d) => this.chartSize.height)
+              .y1((d) => this.yScale(d));
+
+          const beginning = this.series.values.slice(0, 5);
+          const end = this.series.values.slice(4);
+
           this.lineMarkSelection
             .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-            .selectAll('path.series-line')
+            .selectAll('path.before-wall')
             .data([this.series])
             .join((enter) =>
               enter
                 .append('path')
-                .attr('class', 'series-line')
-                // .attr('fill', 'none')
-                .attr('fill', (d) => d.color)
+                .attr('class', 'before-wall')
+                .attr('fill', "#3C5CCF")
                 .style('fill-opacity', 0.7)
-                .attr('stroke', (d) => d.color)
+                .attr('stroke', "#3C5CCF")
                 .attr('stroke-width', 2.5)
                 .attr('stroke-linejoin', 'round')
                 .attr('stroke-linecap', 'round')
             )
-            .attr('d', (d) => baseArea(d.values));
+            .attr('d', (d) => beginningArea(beginning));
 
-
+          this.lineMarkSelection
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+            .selectAll('path.after-wall')
+            .data([this.series])
+            .join((enter) =>
+              enter
+                .append('path')
+                .attr('class', 'after-wall')
+                .attr('fill', "#FF715B")
+                .style('fill-opacity', 0.7)
+                .attr('stroke', "#FF715B")
+                .attr('stroke-width', 2.5)
+                .attr('stroke-linejoin', 'round')
+                .attr('stroke-linecap', 'round')
+            )
+            .attr('d', (d) => endArea(end));
         }
 
         drawGrid() {
@@ -153,8 +176,13 @@
           const xAxis = d3
             .axisBottom(this.xScale)
             .ticks(this.chartSize.width / 80)
-            .tickFormat(d3.timeFormat(`%b '%y`));
-          // .tickFormat((d) => (this.xFeature.axisFormatter ? this.xFeature.axisFormatter(d) : d.toString()));
+            .tickFormat((d) => {
+              if(d == 0) {
+                return "";
+              } else {
+                return d;
+              }
+            });
           this.xAxisSelection
             .attr('transform', `translate(${this.margin.left}, ${this.chartSize.height + this.margin.top})`)
             .call(xAxis);
@@ -192,10 +220,9 @@
         }
       }
 
-      new RevenueProjectionChart({
-        // target: this.$refs.revprojectionchart,
+      new ExampleChart({
         target: '#chart',
-        series: {"values":[250000,260400,270072,279066.95999999996,287432.2728,295212.0137039999,302447.1727447199,309175.8706525895,315433.55970690824,321253.2105274246,326665.48579050484,331698.9017851695,336379.9786602076],"color":"#3C5CCF"},
+        series: {"values":[250000,260400,270072,279066.95999999996,287432.2728,295212.0137039999,302447.1727447199,309175.8706525895,315433.55970690824,321253.2105274246,326665.48579050484,331698.9017851695,336379.9786602076]},
       });
     </script>
   </body>
