@@ -14,7 +14,7 @@
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "history": "^1.12.5",
-    "jquery": "^2.1.4",
+    "jquery": "^3.5.0",
     "object-assign": "^4.0.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
