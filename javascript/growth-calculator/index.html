@@ -23,6 +23,7 @@
                 month: 0,
                 customersLost: 0,
                 revenue: 0,
+                growth: 0,
                 ceilingFound: false,
                 history: [],
             };
@@ -45,7 +46,14 @@
 
             function createLogRow()
             {
-                data.history.push({month: data.month, revenue: data.revenue});
+                // Calculate growth based on difference in revenue between months
+                const previous = data.history.slice(-1)[0];
+
+                if(previous) {
+                    data.growth = data.revenue - previous.revenue;
+                }
+
+                data.history.push({month: data.month, revenue: data.revenue, growth: data.growth});
                 $('.output').append(`<div class='row' id="month-${data.month}">Month #${data.month}, Active Customers: ${data.currentCustomers}, Monthly Revenue: ${data.revenue}</div>`);
             }
 
@@ -86,13 +94,28 @@
                     findCeiling();
                 }
 
+                const before = {total: 0, count: 0};
+                const after = {total: 0, count: 0};
+
                 data.history.forEach(function(row) {
                     if(row.revenue < data.revenue * 0.75) {
+                        before.total += row.growth;
+                        before.count++;
+
                         $(`#month-${row.month}`).style({'background-color': 'green'});
                     } else {
+                        after.total += row.growth;
+                        after.count++;
+
                         $(`#month-${row.month}`).style({'background-color': 'red'});
                     }
                 });
+
+                before.average = Math.round(before.total / before.count);
+                after.average = Math.round(after.total / after.count);
+
+                $('.beforeWall').text(`$${before.average} (First ${before.count} months)`);
+                $('.afterWall').text(`$${after.average} (Remaining ${after.count} months)`);
             }
 
             $(document).ready(function()
@@ -193,6 +216,14 @@
         <h1>
             Revenue This Month - <span class="revenue"></span>
         </h1>
+
+        <h2>
+            Average Growth per Month before the Growth Wall - <span class="beforeWall"></span>
+        </h2>
+
+        <h2>
+            Average Growth per Month after the Growth Wall - <span class="afterWall"></span>
+        </h2>
 
         <div>
             <button class="calculateMonth">Calculate One Month</button>
