@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Another rainbow, except a SVG</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body {
+                overflow: hidden;
+            }
+
+            .wrapper {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            circle {
+                transform-origin: center;
+            }
+
+            circle:nth-of-type(1) {
+                animation: rotate 10s linear infinite;
+            }
+
+            circle:nth-of-type(2) {
+                animation: rotate 8s linear infinite;
+            }
+
+            circle:nth-of-type(3) {
+                animation: rotate 6s linear infinite;
+            }
+
+            circle:nth-of-type(4) {
+                animation: rotate 5s linear infinite;
+            }
+
+            circle:nth-of-type(5) {
+                animation: rotate 3s linear infinite;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <svg viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                  circle {
+                    stroke: black;
+                  }
+                </style>
+
+                <circle
+                    cx="125"
+                    cy="125"
+                    r="30"
+                    fill="gold"
+                    id="circle"
+                    stroke-dasharray="80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" />
+
+                <circle
+                    cx="125"
+                    cy="125"
+                    r="40"
+                    fill="none"
+                    id="circle"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" />
+
+
+                <circle
+                    cx="125"
+                    cy="125"
+                    r="50"
+                    fill="none"
+                    id="circle"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="0.5px" />
+
+                <circle
+                    cx="125"
+                    cy="125"
+                    r="55"
+                    fill="none"
+                    id="circle"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" />
+
+                <circle
+                    cx="125"
+                    cy="125"
+                    r="65"
+                    fill="none"
+                    id="circle"
+                    stroke-dasharray="10, 5, 5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="0.25px" />
+
+
+            </svg>
+        </div>
+    </body>
+</html>
