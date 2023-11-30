@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Another rainbow, except a SVG</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            .wrapper {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .ground {
+                position: absolute;
+                top: 50%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: green;
+                clip-path: url(#myCurve);
+                padding: 6em 2em;
+                color: #fff;
+            }
+        </style>
+    </head>
+
+    <body>
+        <svg width="0" height="0">
+            <defs>
+              <clipPath id="myCurve" clipPathUnits="objectBoundingBox">
+                <path
+                  d="M 1 -0 L 1 1 L 0 1 L 0 0 C 0.35 0.2 0.65 0.2 1 -0 Z"
+                />
+              </clipPath>
+            </defs>
+          </svg>
+
+        <div class="ground">
+            Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+        </div>
+    </body>
+</html>
