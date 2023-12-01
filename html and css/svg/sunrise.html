@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Good Morning SVG</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body {
+                overflow: hidden;
+            }
+
+            .wrapper {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgb(31,62,153);
+                background: linear-gradient(180deg, rgba(31,62,153,1) 0%, rgba(43,83,195,1) 33%, rgba(225,255,247,1) 111%);
+//                background: radial-gradient(ellipse at bottom, rgba(225,255,247,1) 20%, rgba(43,83,195,1) 60%, rgba(31,62,153,1) 90%);
+            }
+
+            .ground {
+                position: absolute;
+                top: 69%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #1d3275;
+                clip-path: url(#groundCurve);
+                padding: 6em 2em;
+                color: #fff;
+                z-index: 2;
+            }
+
+            .text {
+                padding-top: 4em;
+                font-size:44px;
+            }
+
+            .accent {
+                position: absolute;
+                top: 65%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #f72e9e;
+                clip-path: url(#accentCurve);
+                padding: 6em 2em;
+                color: #fff;
+                z-index: 1;
+            }
+
+            svg {
+                mix-blend-mode: overlay;
+            }
+
+            circle {
+                transform-origin: 125px 175px;
+                stroke: rgba(225, 255, 247, 0.5);
+            }
+
+
+            circle.wind:nth-of-type(1) {
+                animation: rotate 10s linear infinite;
+            }
+
+            circle.wind:nth-of-type(2) {
+                animation: rotate 12s linear infinite;
+            }
+
+            circle.wind:nth-of-type(3) {
+                animation: rotate 14s linear infinite;
+            }
+
+            circle.wind:nth-of-type(4) {
+                animation: rotate 16s linear infinite;
+            }
+
+            circle.wind:nth-of-type(5) {
+                animation: rotate 18s linear infinite;
+            }
+
+            circle.cloud {
+                stroke: rgba(250, 107, 187, 0.44);
+                animation: rotate 24s linear infinite;
+            }
+
+            circle.center {
+                stroke: rgba(95, 252, 255, 0.7);
+                animation: rotate 6s linear infinite;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <svg width="0" height="0">
+            <defs>
+                  <clipPath id="groundCurve" clipPathUnits="objectBoundingBox">
+                    <path
+                        d="M 1 0 L 1 1 L 0 1 L 0 0 C 0.35 0.7 0.65 0.7 1 0 Z"
+                    />
+                </clipPath>
+            </defs>
+        </svg>
+
+        <svg width="0" height="0">
+            <defs>
+                  <clipPath id="accentCurve" clipPathUnits="objectBoundingBox">
+                    <path
+                        d="M 1 0 L 1 1 L 0 1 L 0 0 C 0.35 0.8 0.65 0.8 1 0 Z"
+                    />
+                </clipPath>
+            </defs>
+        </svg>
+
+        <div class="wrapper">
+            <svg viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="111"
+                    fill="none"
+                    class="cloud"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="10px" />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="77"
+                    fill="none"
+                    class="cloud"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="8px" />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="66"
+                    fill="none"
+                    class="cloud"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="12px" />
+
+                <g>
+                    <circle
+                    cx="125"
+                    cy="175"
+                    r="70"
+                    fill="none"
+                    class="wind"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="2px"  />
+
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="80"
+                    fill="none"
+                    class="wind"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="4px" />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="90"
+                    fill="none"
+                    class="wind"
+                    stroke-dasharray="5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="1px"  />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="100"
+                    fill="none"
+                    class="wind"
+                    stroke-dasharray="10, 5, 5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="2px" />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="120"
+                    fill="none"
+                    class="wind"
+                    stroke-dasharray="10, 5, 5, 80, 10, 20, 5, 10, 15, 5" stroke-linecap="round" stroke-width="1px" />
+                </g>
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="55"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="10, 5, 5, 70, 30" stroke-linecap="round" stroke-width="4px"  />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="30"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="70, 30" stroke-linecap="round" stroke-width="12px"  />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="25"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="70, 30" stroke-linecap="round" stroke-width="6px"  />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="20"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="70, 30" stroke-linecap="round" stroke-width="10px"  />
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="10"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="10, 20, 10" stroke-linecap="round" stroke-width="10px"  />
+
+
+                <circle
+                    cx="125"
+                    cy="175"
+                    r="5"
+                    fill="none"
+                    class="center"
+                    stroke-dasharray="10, 20, 10" stroke-linecap="round" stroke-width="10px"  />
+
+
+            </svg>
+        </div>
+
+        <div class="ground">
+            <div class="text">
+                Hello, Welcome to Wet.Fish 😊
+            </div>
+        </div>
+
+        <div class="accent"></div>
+    </body>
+</html>
