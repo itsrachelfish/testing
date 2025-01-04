@@ -12,6 +12,9 @@ import (
 var (
 	// Use mcu pin 10, corresponds to physical pin 19 on the pi
 	pin = rpio.Pin(10)
+
+	// Control the state of the blinking LED
+	blinking = false
 )
 
 func main() {
@@ -27,6 +30,10 @@ func main() {
 	// Set pin to output mode
 	pin.Output()
 
+	// Use a goroutine to start the LED blinking function in the background
+	go blink()
+
+	// Set up IO buffer to read user input
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Choose An Option: \n - On \n - Off \n - Blink")
 
@@ -36,6 +43,9 @@ func main() {
 		input = input[:len(input)-1]        // Remove trailing newline
 		input = strings.ToLower(input)		// Convert to lowercase
 
+		// Stop blinking once we receive user input
+		blinking = false
+
 		if input == "on" {
 			fmt.Println("LED On")
 			pin.High()
@@ -44,7 +54,7 @@ func main() {
 			pin.Low()
 		} else if input == "blink" {
 			fmt.Println("Blinking LED")
-			go blink()
+			blinking = true
 		} else {
 			fmt.Println("Error: Invalid option")
 		}
@@ -53,7 +63,9 @@ func main() {
 
 func blink() {
 	for {
-		pin.Toggle()
-		time.Sleep(time.Second / 5)
+		if blinking {
+			pin.Toggle()
+			time.Sleep(time.Second / 10)
+		}
 	}
 }
