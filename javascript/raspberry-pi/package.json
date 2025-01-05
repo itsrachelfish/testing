@@ -1,0 +1,13 @@
+{
+  "name": "raspberry-pi",
+  "version": "1.0.0",
+  "description": "testing raspberry pi gpio sensors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "node-dht-sensor": "^0.4.3"
+  }
+}
