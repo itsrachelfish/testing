@@ -2,16 +2,22 @@ const { SerialPort } = require('serialport');
 const ReadLine = require('readline');
 
 const port = new SerialPort({
-  path: '/dev/ttyACM0',
-  baudRate: 9600,
+    path: '/dev/ttyACM0',
+    baudRate: 9600,
 })
 
 const lineReader = ReadLine.createInterface({
-  input: port
+    input: port
 });
 
 lineReader.on('line', function (line) {
-  console.log(line);
+    try {
+        const sensorData = JSON.parse(line);
+        sensorData.timestamp = new Date().toISOString();
+        console.log(JSON.stringify(sensorData));
+    } catch(error) {
+        console.log(error);
+    }
 });
 
 port.on('error', function(err) {
